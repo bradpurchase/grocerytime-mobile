@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-const HomeScreen: React.FC = () => {
+const LoginScreen: React.FC = () => {
   return (
     <View
       style={{
@@ -9,8 +9,8 @@ const HomeScreen: React.FC = () => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <Text>Home Screen ✨</Text>
+      <Text>Login Screen ✨</Text>
     </View>
   )
 }
-export default HomeScreen
+export default LoginScreen
