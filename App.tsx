@@ -10,6 +10,7 @@
 
 import 'react-native-gesture-handler'
 import React from 'react'
+import { StatusBar } from 'react-native'
 
 import AuthContext from './src/context/AuthContext'
 
@@ -17,6 +18,7 @@ import Router from './src/Router'
 
 const App = () => (
   <AuthContext.Provider value={{ token: null }}>
+    <StatusBar barStyle="light-content" />
     <Router />
   </AuthContext.Provider>
 )

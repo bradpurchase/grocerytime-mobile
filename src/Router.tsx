@@ -16,7 +16,7 @@ const Router = () => {
           <Stack.Screen name="Home" component={HomeScreen} />
         ) : (
           <Stack.Screen
-            name="Onboarding"
+            name="Login"
             component={LoginScreen}
             options={{ headerShown: false }}
           />
