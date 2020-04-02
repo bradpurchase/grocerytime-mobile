@@ -1,17 +1,32 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 
-import colors from '../styles/colors'
-import Button from '../components/Button'
+import { useMutation } from '@apollo/react-hooks'
+import { LOGIN } from '../../queries/login'
+import * as TokenMutationTypes from '../../queries/__generated__/TokenMutation'
+
+import colors from '../../styles/colors'
+import Button from '../../components/Button'
 
 const LoginScreen: React.FC = () => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [submitting, setSubmitting] = useState<boolean>(false)
 
+  const [login, { error, data }] = useMutation<
+    TokenMutationTypes.TokenMutation,
+    TokenMutationTypes.TokenMutationVariables
+  >(LOGIN, {
+    variables: {
+      grantType: 'login',
+      email: email,
+      password: password,
+    },
+  })
+
   const handleLoginButtonPress = () => {
     setSubmitting(true)
-    console.log(email, password)
+    login()
   }
 
   return (
