@@ -6,7 +6,9 @@ import { LOGIN } from '../../queries/login'
 import * as TokenMutationTypes from '../../queries/__generated__/TokenMutation'
 
 import colors from '../../styles/colors'
+import fonts from '../../styles/fonts'
 import Button from '../../components/Button'
+import { ApolloError } from 'apollo-boost'
 
 const LoginScreen: React.FC = () => {
   const [email, setEmail] = useState<string>('')
@@ -21,6 +23,12 @@ const LoginScreen: React.FC = () => {
       grantType: 'login',
       email: email,
       password: password,
+    },
+    onError: (error: ApolloError) => {
+      console.log(error)
+    },
+    onCompleted: () => {
+      setSubmitting(false)
     },
   })
 
@@ -51,7 +59,15 @@ const LoginScreen: React.FC = () => {
           onChangeText={(text) => setPassword(text)}
           editable={!submitting}
         />
-        <Button label="Sign in" onPress={handleLoginButtonPress} />
+        <Button
+          label="Sign in"
+          onPress={handleLoginButtonPress}
+          disabled={email.length === 0 || password.length === 0 || submitting}
+        />
+        <Button
+          label="I don't have an account yet!"
+          onPress={handleLoginButtonPress}
+        />
       </View>
     </View>
   )
@@ -66,6 +82,7 @@ const styles = StyleSheet.create({
   },
   headingLabel: {
     color: colors.WHITE,
+    fontFamily: fonts.REGULAR,
     fontSize: 32,
     fontWeight: '800',
   },
@@ -77,6 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#333',
     borderRadius: 4,
     color: colors.WHITE,
+    fontFamily: fonts.REGULAR,
     fontWeight: '500',
     marginBottom: 20,
     height: 50,
