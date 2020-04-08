@@ -1,4 +1,4 @@
 const fonts = {
-  REGULAR: 'Rubik-Light',
+  REGULAR: 'Colfax-Regular',
 }
 export default fonts

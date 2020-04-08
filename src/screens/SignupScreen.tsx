@@ -1,26 +1,35 @@
 import React, { useState } from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
+import {
+  NavigationParams,
+  NavigationScreenProp,
+  NavigationState,
+} from 'react-navigation'
+import AsyncStorage from '@react-native-community/async-storage'
 
 import { useMutation } from '@apollo/react-hooks'
-import { LOGIN } from '../../queries/login'
-import * as TokenMutationTypes from '../../queries/__generated__/TokenMutation'
-
-import colors from '../../styles/colors'
-import fonts from '../../styles/fonts'
-import Button from '../../components/Button'
 import { ApolloError } from 'apollo-boost'
+import { SIGNUP } from '../queries/signup'
+import * as SignupMutationTypes from '../queries/__generated__/SignupMutation'
 
-const LoginScreen: React.FC = () => {
+import colors from '../styles/colors'
+import fonts from '../styles/fonts'
+import Button from '../components/Button'
+
+interface Props {
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>
+}
+
+const SignupScreen: React.FC<Props> = ({ navigation }: Props) => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [submitting, setSubmitting] = useState<boolean>(false)
 
-  const [login, { error, data }] = useMutation<
-    TokenMutationTypes.TokenMutation,
-    TokenMutationTypes.TokenMutationVariables
-  >(LOGIN, {
+  const [signup, { error, data }] = useMutation<
+    SignupMutationTypes.SignupMutation,
+    SignupMutationTypes.SignupMutationVariables
+  >(SIGNUP, {
     variables: {
-      grantType: 'login',
       email: email,
       password: password,
     },
@@ -28,18 +37,35 @@ const LoginScreen: React.FC = () => {
       console.log(error)
     },
     onCompleted: () => {
+      authenticateUser()
       setSubmitting(false)
     },
   })
 
-  const handleLoginButtonPress = () => {
+  const authenticateUser = async () => {
+    console.log(data)
+    try {
+      await AsyncStorage.multiSet([
+        ['@accessToken', data?.signup?.accessToken],
+        ['@accessToken', data?.signup?.refreshToken],
+        ['@accessToken', data?.signup?.expiresIn],
+      ])
+    } catch (e) {
+      //TODO better error handling
+      console.error(e)
+    }
+
+    //TODO transition to ListsScreen
+  }
+
+  const handleSignupButtonPress = () => {
     setSubmitting(true)
-    login()
+    signup()
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headingLabel}>Sign in 🔑</Text>
+      <Text style={styles.headingLabel}>Sign up 👋</Text>
       <View style={styles.form}>
         <TextInput
           placeholder="Email"
@@ -60,13 +86,9 @@ const LoginScreen: React.FC = () => {
           editable={!submitting}
         />
         <Button
-          label="Sign in"
-          onPress={handleLoginButtonPress}
+          label="Sign up"
+          onPress={handleSignupButtonPress}
           disabled={email.length === 0 || password.length === 0 || submitting}
-        />
-        <Button
-          label="I don't have an account yet!"
-          onPress={handleLoginButtonPress}
         />
       </View>
     </View>
@@ -101,4 +123,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 })
-export default LoginScreen
+export default SignupScreen

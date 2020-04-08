@@ -65,6 +65,18 @@
 		<string>Rubik-Medium.ttf</string>
 		<string>Rubik-MediumItalic.ttf</string>
 		<string>Rubik-Regular.ttf</string>
+		<string>Colfax-Black.otf</string>
+		<string>Colfax-BlackItalic.otf</string>
+		<string>Colfax-Bold.otf</string>
+		<string>Colfax-BoldItalic.otf</string>
+		<string>Colfax-Light.otf</string>
+		<string>Colfax-LightItalic.otf</string>
+		<string>Colfax-Medium.otf</string>
+		<string>Colfax-MediumItalic.otf</string>
+		<string>Colfax-Regular.otf</string>
+		<string>Colfax-RegularItalic.otf</string>
+		<string>Colfax-Thin.otf</string>
+		<string>Colfax-ThinItalic.otf</string>
 	</array>
 </dict>
 </plist>
