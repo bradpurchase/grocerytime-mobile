@@ -1,11 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
-import {
-  NavigationParams,
-  NavigationScreenProp,
-  NavigationState,
-} from 'react-navigation'
-import AsyncStorage from '@react-native-community/async-storage'
 
 import { useMutation } from '@apollo/react-hooks'
 import { ApolloError } from 'apollo-boost'
@@ -16,16 +10,16 @@ import colors from '../styles/colors'
 import fonts from '../styles/fonts'
 import Button from '../components/Button'
 
-interface Props {
-  navigation: NavigationScreenProp<NavigationState, NavigationParams>
-}
+import AuthContext from '../context/AuthContext'
 
-const SignupScreen: React.FC<Props> = ({ navigation }: Props) => {
+const SignupScreen: React.FC = () => {
+  const authContext = useContext(AuthContext)
+
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [submitting, setSubmitting] = useState<boolean>(false)
 
-  const [signup, { error, data }] = useMutation<
+  const [signup] = useMutation<
     SignupMutationTypes.SignupMutation,
     SignupMutationTypes.SignupMutationVariables
   >(SIGNUP, {
@@ -36,27 +30,11 @@ const SignupScreen: React.FC<Props> = ({ navigation }: Props) => {
     onError: (error: ApolloError) => {
       console.log(error)
     },
-    onCompleted: () => {
-      authenticateUser()
+    onCompleted: (data) => {
+      authContext.login(data.signup)
       setSubmitting(false)
     },
   })
-
-  const authenticateUser = async () => {
-    console.log(data)
-    try {
-      await AsyncStorage.multiSet([
-        ['@accessToken', data?.signup?.accessToken],
-        ['@accessToken', data?.signup?.refreshToken],
-        ['@accessToken', data?.signup?.expiresIn],
-      ])
-    } catch (e) {
-      //TODO better error handling
-      console.error(e)
-    }
-
-    //TODO transition to ListsScreen
-  }
 
   const handleSignupButtonPress = () => {
     setSubmitting(true)

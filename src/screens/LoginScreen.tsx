@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import {
   NavigationParams,
@@ -15,16 +15,20 @@ import colors from '../styles/colors'
 import fonts from '../styles/fonts'
 import Button from '../components/Button'
 
+import AuthContext from '../context/AuthContext'
+
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
 }
 
 const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
+  const authContext = useContext(AuthContext)
+
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [submitting, setSubmitting] = useState<boolean>(false)
 
-  const [login, { error, data }] = useMutation<
+  const [login] = useMutation<
     TokenMutationTypes.TokenMutation,
     TokenMutationTypes.TokenMutationVariables
   >(LOGIN, {
@@ -36,7 +40,8 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
     onError: (error: ApolloError) => {
       console.log(error)
     },
-    onCompleted: () => {
+    onCompleted: (data) => {
+      authContext.login(data.token)
       setSubmitting(false)
     },
   })

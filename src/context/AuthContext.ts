@@ -1,4 +1,14 @@
 import React from 'react'
 
-const AuthContext = React.createContext({})
+type AuthContextProps = {
+  token: string
+  login: (data: any) => void
+  logout: () => void
+}
+
+const AuthContext = React.createContext<AuthContextProps>({
+  token: '',
+  login: () => {},
+  logout: () => {},
+})
 export default AuthContext
