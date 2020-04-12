@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import React, { useState, useContext, useEffect } from 'react'
+import { Alert, View, Text, TextInput, StyleSheet } from 'react-native'
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -14,7 +14,6 @@ import * as TokenMutationTypes from '../queries/__generated__/TokenMutation'
 import colors from '../styles/colors'
 import fonts from '../styles/fonts'
 import Button from '../components/Button'
-import Input from '../components/Input'
 
 import AuthContext from '../context/AuthContext'
 
@@ -29,7 +28,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
   const [password, setPassword] = useState<string>('')
   const [submitting, setSubmitting] = useState<boolean>(false)
 
-  const [login] = useMutation<
+  const [login, { error }] = useMutation<
     TokenMutationTypes.TokenMutation,
     TokenMutationTypes.TokenMutationVariables
   >(LOGIN, {
@@ -42,10 +41,17 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
       console.log(error)
     },
     onCompleted: (data) => {
-      authContext.login(data.token)
+      console.log(data)
+      if (data.token) authContext.login(data.token)
       setSubmitting(false)
     },
   })
+
+  useEffect(() => {
+    error?.graphQLErrors.map(({ message }, i) => {
+      return Alert.alert('Please try again', message)
+    })
+  }, [error])
 
   const handleLoginButtonPress = () => {
     setSubmitting(true)
@@ -54,9 +60,11 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headingLabel}>Sign in 🔑</Text>
+      <Text style={styles.headingLabel}>Sign in</Text>
       <View style={styles.form}>
-        <Input
+        <TextInput
+          placeholderTextColor="#ddd"
+          style={styles.textInput}
           placeholder="Email"
           keyboardType="email-address"
           autoCompleteType="email"
@@ -64,7 +72,9 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
           onChangeText={(text) => setEmail(text)}
           editable={!submitting}
         />
-        <Input
+        <TextInput
+          placeholderTextColor="#ddd"
+          style={styles.textInput}
           placeholder="Password"
           secureTextEntry
           onChangeText={(text) => setPassword(text)}
