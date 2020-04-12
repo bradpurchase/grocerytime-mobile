@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -14,6 +14,7 @@ import * as TokenMutationTypes from '../queries/__generated__/TokenMutation'
 import colors from '../styles/colors'
 import fonts from '../styles/fonts'
 import Button from '../components/Button'
+import Input from '../components/Input'
 
 import AuthContext from '../context/AuthContext'
 
@@ -55,20 +56,16 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
     <View style={styles.container}>
       <Text style={styles.headingLabel}>Sign in 🔑</Text>
       <View style={styles.form}>
-        <TextInput
+        <Input
           placeholder="Email"
-          placeholderTextColor="#ddd"
-          style={styles.textInput}
           keyboardType="email-address"
           autoCompleteType="email"
           autoCapitalize="none"
           onChangeText={(text) => setEmail(text)}
           editable={!submitting}
         />
-        <TextInput
+        <Input
           placeholder="Password"
-          placeholderTextColor="#ddd"
-          style={styles.textInput}
           secureTextEntry
           onChangeText={(text) => setPassword(text)}
           editable={!submitting}
