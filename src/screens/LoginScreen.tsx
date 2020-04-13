@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Alert, View, Text, TextInput, StyleSheet } from 'react-native'
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
+
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -8,7 +9,7 @@ import {
 
 import { useMutation } from '@apollo/react-hooks'
 import { ApolloError } from 'apollo-boost'
-import { LOGIN } from '../queries/login'
+import { LOGIN_MUTATION } from '../queries/login'
 import * as TokenMutationTypes from '../queries/__generated__/TokenMutation'
 
 import colors from '../styles/colors'
@@ -31,7 +32,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
   const [login, { error }] = useMutation<
     TokenMutationTypes.TokenMutation,
     TokenMutationTypes.TokenMutationVariables
-  >(LOGIN, {
+  >(LOGIN_MUTATION, {
     variables: {
       grantType: 'login',
       email: email,

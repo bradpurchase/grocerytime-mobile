@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react'
+import { StatusBar, Button } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import AsyncStorage from '@react-native-community/async-storage'
 
-import HomeScreen from './screens/HomeScreen'
+import ListsScreen from './screens/ListsScreen'
 import LoginScreen from './screens/LoginScreen'
 import SignupScreen from './screens/SignupScreen'
 
 import AuthContext from './context/AuthContext'
+import colors from './styles/colors'
+import fonts from './styles/fonts'
 
 const Stack = createStackNavigator()
 
@@ -56,12 +59,31 @@ const Router = () => {
   }, [token])
 
   return (
-    <AuthContext.Provider value={{ token, login, logout }}> 
+    <AuthContext.Provider value={{ token, login, logout }}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: colors.BLACK },
+            headerTintColor: colors.WHITE,
+            headerTitleStyle: {
+              fontFamily: fonts.REGULAR,
+            },
+          }}>
           {token ? (
             <>
-              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen
+                name="Lists"
+                component={ListsScreen}
+                options={{
+                  headerRight: () => (
+                    <Button
+                      title="Log out"
+                      color={colors.WHITE}
+                      onPress={() => logout()}
+                    />
+                  ),
+                }}
+              />
             </>
           ) : (
             <>
@@ -78,6 +100,8 @@ const Router = () => {
             </>
           )}
         </Stack.Navigator>
+
+        <StatusBar barStyle="light-content" />
       </NavigationContainer>
     </AuthContext.Provider>
   )

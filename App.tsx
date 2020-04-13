@@ -13,13 +13,6 @@ import React from 'react'
 import { StatusBar } from 'react-native'
 import Router from './src/Router'
 
-const App = () => {
-  return (
-    <>
-      <StatusBar barStyle="light-content" />
-      <Router />
-    </>
-  )
-}
+const App = () => <Router />
 
 export default App

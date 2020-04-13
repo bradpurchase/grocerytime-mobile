@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
+import React, { useState, useContext, useEffect } from 'react'
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
 
 import { useMutation } from '@apollo/react-hooks'
 import { ApolloError } from 'apollo-boost'
-import { SIGNUP } from '../queries/signup'
+import { SIGNUP_MUTATION } from '../queries/signup'
 import * as SignupMutationTypes from '../queries/__generated__/SignupMutation'
 
 import colors from '../styles/colors'
@@ -19,10 +19,10 @@ const SignupScreen: React.FC = () => {
   const [password, setPassword] = useState<string>('')
   const [submitting, setSubmitting] = useState<boolean>(false)
 
-  const [signup] = useMutation<
+  const [signup, { error }] = useMutation<
     SignupMutationTypes.SignupMutation,
     SignupMutationTypes.SignupMutationVariables
-  >(SIGNUP, {
+  >(SIGNUP_MUTATION, {
     variables: {
       email: email,
       password: password,
@@ -35,6 +35,12 @@ const SignupScreen: React.FC = () => {
       setSubmitting(false)
     },
   })
+
+  useEffect(() => {
+    error?.graphQLErrors.map(({ message }, i) => {
+      return Alert.alert('Signup Failed', message)
+    })
+  }, [error])
 
   const handleSignupButtonPress = () => {
     setSubmitting(true)

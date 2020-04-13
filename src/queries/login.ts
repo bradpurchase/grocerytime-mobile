@@ -1,6 +1,6 @@
-import { gql } from 'apollo-boost'
+import {gql} from 'apollo-boost'
 
-export const LOGIN = gql`
+export const LOGIN_MUTATION = gql`
   mutation TokenMutation(
     $grantType: String!
     $email: String
