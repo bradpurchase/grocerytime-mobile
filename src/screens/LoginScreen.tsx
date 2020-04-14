@@ -50,7 +50,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
 
   useEffect(() => {
     error?.graphQLErrors.map(({ message }, i) => {
-      return Alert.alert('Please try again', message)
+      return Alert.alert('Login failed', message)
     })
   }, [error])
 

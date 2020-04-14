@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StatusBar, Button } from 'react-native'
+import { StatusBar, Button, ActivityIndicator } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -15,6 +15,7 @@ import fonts from './styles/fonts'
 const Stack = createStackNavigator()
 
 const Router = () => {
+  const [loaded, setLoaded] = useState<boolean>(false)
   const [token, setToken] = useState<string>('')
 
   const checkAuthentication = async () => {
@@ -25,6 +26,7 @@ const Router = () => {
       //TODO better error handling
       console.error(e)
     }
+    setLoaded(true)
   }
 
   const login = async (data: any) => {
@@ -58,6 +60,7 @@ const Router = () => {
     checkAuthentication()
   }, [token])
 
+  if (!loaded) return <ActivityIndicator size="large" />
   return (
     <AuthContext.Provider value={{ token, login, logout }}>
       <NavigationContainer>
