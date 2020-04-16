@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
-
 import {
   NavigationParams,
   NavigationScreenProp,

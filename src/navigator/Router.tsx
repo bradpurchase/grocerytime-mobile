@@ -4,15 +4,18 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import AsyncStorage from '@react-native-community/async-storage'
 
-import ListsScreen from './screens/ListsScreen'
-import LoginScreen from './screens/LoginScreen'
-import SignupScreen from './screens/SignupScreen'
+import LoginScreen from '../screens/LoginScreen'
+import SignupScreen from '../screens/SignupScreen'
+import ListsScreen from '../screens/ListsScreen/ListsScreen'
+import ListViewScreen from '../screens/ListViewScreen'
 
-import AuthContext from './context/AuthContext'
-import colors from './styles/colors'
-import fonts from './styles/fonts'
+import AuthContext from '../context/AuthContext'
+import colors from '../styles/colors'
+import fonts from '../styles/fonts'
 
-const Stack = createStackNavigator()
+import { RootStackParamList } from './types'
+
+const Stack = createStackNavigator<RootStackParamList>()
 
 const Router = () => {
   const [loaded, setLoaded] = useState<boolean>(false)
@@ -86,6 +89,11 @@ const Router = () => {
                     />
                   ),
                 }}
+              />
+              <Stack.Screen
+                name="ListView"
+                component={ListViewScreen}
+                options={({ route }) => ({ title: route.params.list.name })}
               />
             </>
           ) : (

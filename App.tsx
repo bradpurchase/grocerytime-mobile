@@ -10,8 +10,7 @@
 
 import 'react-native-gesture-handler'
 import React from 'react'
-import { StatusBar } from 'react-native'
-import Router from './src/Router'
+import Router from './src/navigator/Router'
 
 const App = () => <Router />
 

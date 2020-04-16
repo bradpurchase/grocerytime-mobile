@@ -8,6 +8,7 @@ import { AppRegistry, ActivityIndicator } from 'react-native'
 import { ApolloClient } from 'apollo-client'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { createHttpLink } from 'apollo-link-http'
+import { onError } from 'apollo-link-error'
 import { setContext } from 'apollo-link-context'
 
 import AsyncStorage from '@react-native-community/async-storage'
@@ -25,6 +26,10 @@ const AppComponent = () => {
 
   const loadConfigs = async () => {
     try {
+      const httpLink = createHttpLink({
+        uri: 'https://grocerytime.herokuapp.com/graphql',
+        credentials: 'include',
+      })
       const authLink = setContext(async (_, { headers }) => {
         const token = await AsyncStorage.getItem('@accessToken')
         return {
@@ -36,9 +41,9 @@ const AppComponent = () => {
           },
         }
       })
-      const httpLink = createHttpLink({
-        uri: 'https://grocerytime.herokuapp.com/graphql',
-        credentials: 'include',
+      const resetToken = onError(({ response, networkError }, cb) => {
+        console.log(response)
+        console.log(networkError)
       })
       const defaultOptions = {
         mutate: {
@@ -50,8 +55,9 @@ const AppComponent = () => {
         cache,
         storage: AsyncStorage,
       })
+      const authFlowLink = authLink.concat(resetToken)
       const client = new ApolloClient({
-        link: authLink.concat(httpLink),
+        link: authFlowLink.concat(httpLink),
         cache,
         defaultOptions,
       })

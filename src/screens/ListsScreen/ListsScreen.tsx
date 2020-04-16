@@ -8,11 +8,17 @@ import {
 } from 'react-native'
 
 import { useQuery } from '@apollo/react-hooks'
-import { ME_QUERY } from '../queries/me'
+import { ME_QUERY } from '../../queries/me'
 
-import ListItem from '../components/ListItem'
+import { ListCellNavigationProp } from '../../navigator/types'
 
-const ListsScreen: React.FC = () => {
+import ListCell from './ListCell'
+
+interface Props {
+  navigation: ListCellNavigationProp
+}
+
+const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
   const { loading, data, refetch } = useQuery(ME_QUERY)
 
   return (
@@ -22,7 +28,9 @@ const ListsScreen: React.FC = () => {
       ) : (
         <FlatList
           data={data.me.lists}
-          renderItem={({ item: list }) => <ListItem list={list} />}
+          renderItem={({ item: list }) => (
+            <ListCell list={list} navigation={navigation} />
+          )}
           refreshControl={
             <RefreshControl
               refreshing={data.networkStatus === 4}
