@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     color: colors.WHITE,
     fontFamily: fonts.REGULAR,
+    fontSize: 16,
     fontWeight: '500',
     marginBottom: 20,
     height: 50,
