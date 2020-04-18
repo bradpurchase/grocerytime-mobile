@@ -19,7 +19,11 @@ import { persistCache } from 'apollo-cache-persist'
 import { name as appName } from './app.json'
 import App from './App'
 
-import { getRefreshToken, setAccessToken } from './src/services/token'
+import {
+  getRefreshToken,
+  setAccessToken,
+  getAccessToken,
+} from './src/services/token'
 import { REFRESH_TOKEN_MUTATION } from './src/queries/refreshToken'
 
 const AppComponent = () => {
@@ -46,7 +50,7 @@ const AppComponent = () => {
         return {
           headers: {
             ...headers,
-            Authorization: authCreds,
+            authorization: authCreds,
           },
         }
       })
@@ -56,32 +60,40 @@ const AppComponent = () => {
             'Token is invalid or session has expired'
           if (graphQLErrors[0].message === sessionExpiredErrorMsg) {
             return new Observable(async () => {
+              const accessToken = await getAccessToken()
+              const refreshToken = await getRefreshToken()
               console.log(
-                'access token has expired... grabbing a new one using the refresh token',
+                `access token ${accessToken} has expired... grabbing a new one using the refresh token ${refreshToken}`,
               )
+              // TODO move retrieveNewAccessToken out of this file
               const retrieveNewAccessToken = async () => {
                 const refreshToken = await getRefreshToken()
-                await client
-                  .mutate({
-                    mutation: REFRESH_TOKEN_MUTATION,
-                    variables: {
-                      grantType: 'refreshToken',
-                      refreshToken: refreshToken,
-                    },
-                  })
+                const mutationJSON = JSON.stringify({
+                  query: REFRESH_TOKEN_MUTATION,
+                  variables: {
+                    grantType: 'refreshToken',
+                    refreshToken,
+                  },
+                  operationName: 'RefreshTokenMutation',
+                })
+                await fetch('https://grocerytime.herokuapp.com/graphql', {
+                  headers: {
+                    'content-type': 'application/json',
+                    authorization: 'lNFGdSC2wd8f2QnF:hk5A84JJjKWZdKH9',
+                  },
+                  method: 'POST',
+                  body: mutationJSON,
+                })
+                  .then((res) => res.json())
                   .then((data) => {
-                    //TODO this call is not successful because Apollo sends
-                    // the mutation with `Bearer ${token}` style authentication
-                    // headers.. need to figure out how to make client.mutate
-                    // use `key:secret:` style auth headers
-                    console.log(data)
-                    const tokens = data.token
+                    console.log(data.data)
+                    const tokens = data.data.token
                     setAccessToken(tokens)
                     return tokens.accessToken
                   })
-                  .catch((err) => {
-                    console.log(err)
-                    return
+                  .catch((e) => {
+                    //TODO couldn't get a new token with the refresh token,
+                    // perform logout action
                   })
               }
               await retrieveNewAccessToken()
