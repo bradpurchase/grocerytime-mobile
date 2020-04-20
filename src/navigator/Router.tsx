@@ -15,6 +15,8 @@ import fonts from '../styles/fonts'
 
 import { RootStackParamList } from './types'
 
+import { setAccessToken, clearTokens, getAccessToken } from '../services/token'
+
 const Stack = createStackNavigator<RootStackParamList>()
 
 const Router = () => {
@@ -23,23 +25,20 @@ const Router = () => {
 
   const checkAuthentication = async () => {
     try {
-      const token = await AsyncStorage.getItem('@accessToken')
+      const token = await getAccessToken()
       if (token) setToken(token)
     } catch (e) {
       //TODO better error handling
       console.error(e)
     }
+
     setLoaded(true)
   }
 
   const login = async (data: any) => {
     try {
-      await AsyncStorage.multiSet([
-        ['@accessToken', data.accessToken],
-        ['@refreshToken', data.refreshToken],
-        ['@expiresIn', data.expiresIn],
-      ])
-      setToken(data.accessToken)
+      const accessToken = await setAccessToken(data)
+      setToken(accessToken)
     } catch (e) {
       //TODO better error handling
       console.error(e)
@@ -48,7 +47,7 @@ const Router = () => {
 
   const logout = async () => {
     try {
-      await AsyncStorage.clear()
+      await clearTokens()
       setToken('')
     } catch (e) {
       console.error(e)

@@ -23,6 +23,7 @@ import {
   getRefreshToken,
   setAccessToken,
   getAccessToken,
+  retrieveNewAccessToken,
 } from './src/services/token'
 import { REFRESH_TOKEN_MUTATION } from './src/queries/refreshToken'
 
@@ -65,37 +66,6 @@ const AppComponent = () => {
               console.log(
                 `access token ${accessToken} has expired... grabbing a new one using the refresh token ${refreshToken}`,
               )
-              // TODO move retrieveNewAccessToken out of this file
-              const retrieveNewAccessToken = async () => {
-                const refreshToken = await getRefreshToken()
-                const mutationJSON = JSON.stringify({
-                  query: REFRESH_TOKEN_MUTATION,
-                  variables: {
-                    grantType: 'refreshToken',
-                    refreshToken,
-                  },
-                  operationName: 'RefreshTokenMutation',
-                })
-                await fetch('https://grocerytime.herokuapp.com/graphql', {
-                  headers: {
-                    'content-type': 'application/json',
-                    authorization: 'lNFGdSC2wd8f2QnF:hk5A84JJjKWZdKH9',
-                  },
-                  method: 'POST',
-                  body: mutationJSON,
-                })
-                  .then((res) => res.json())
-                  .then((data) => {
-                    console.log(data.data)
-                    const tokens = data.data.token
-                    setAccessToken(tokens)
-                    return tokens.accessToken
-                  })
-                  .catch((e) => {
-                    //TODO couldn't get a new token with the refresh token,
-                    // perform logout action
-                  })
-              }
               await retrieveNewAccessToken()
                 .then((newToken) => {
                   const headers = operation.getContext().headers
