@@ -1,39 +1,29 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
-import {
-  NavigationParams,
-  NavigationScreenProp,
-  NavigationState,
-} from 'react-navigation'
 
 import { useMutation } from '@apollo/react-hooks'
 import { ApolloError } from 'apollo-boost'
-import { LOGIN_MUTATION } from '../queries/login'
-import * as TokenMutationTypes from '../queries/__generated__/TokenMutation'
+import { SIGNUP_MUTATION } from '../../queries/signup'
+import * as SignupMutationTypes from '../../queries/__generated__/SignupMutation'
 
-import colors from '../styles/colors'
-import fonts from '../styles/fonts'
-import Button from '../components/Button'
+import colors from '../../styles/colors'
+import fonts from '../../styles/fonts'
+import Button from '../../components/Button'
 
-import AuthContext from '../context/AuthContext'
+import AuthContext from '../../context/AuthContext'
 
-interface Props {
-  navigation: NavigationScreenProp<NavigationState, NavigationParams>
-}
-
-const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
+const SignupScreen: React.FC = () => {
   const authContext = useContext(AuthContext)
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [submitting, setSubmitting] = useState<boolean>(false)
 
-  const [login, { error }] = useMutation<
-    TokenMutationTypes.TokenMutation,
-    TokenMutationTypes.TokenMutationVariables
-  >(LOGIN_MUTATION, {
+  const [signup, { error }] = useMutation<
+    SignupMutationTypes.SignupMutation,
+    SignupMutationTypes.SignupMutationVariables
+  >(SIGNUP_MUTATION, {
     variables: {
-      grantType: 'login',
       email: email,
       password: password,
     },
@@ -41,31 +31,30 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
       console.log(error)
     },
     onCompleted: (data) => {
-      console.log(data)
-      if (data.token) authContext.login(data.token)
+      authContext.login(data.signup)
       setSubmitting(false)
     },
   })
 
   useEffect(() => {
     error?.graphQLErrors.map(({ message }, i) => {
-      return Alert.alert('Login failed', message)
+      return Alert.alert('Signup Failed', message)
     })
   }, [error])
 
-  const handleLoginButtonPress = () => {
+  const handleSignupButtonPress = () => {
     setSubmitting(true)
-    login()
+    signup()
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headingLabel}>Sign in</Text>
+      <Text style={styles.headingLabel}>Sign up 👋</Text>
       <View style={styles.form}>
         <TextInput
+          placeholder="Email"
           placeholderTextColor="#ddd"
           style={styles.textInput}
-          placeholder="Email"
           keyboardType="email-address"
           autoCompleteType="email"
           autoCapitalize="none"
@@ -73,21 +62,17 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
           editable={!submitting}
         />
         <TextInput
+          placeholder="Password"
           placeholderTextColor="#ddd"
           style={styles.textInput}
-          placeholder="Password"
           secureTextEntry
           onChangeText={(text) => setPassword(text)}
           editable={!submitting}
         />
         <Button
-          label="Sign in"
-          onPress={handleLoginButtonPress}
+          label="Sign up"
+          onPress={handleSignupButtonPress}
           disabled={email.length === 0 || password.length === 0 || submitting}
-        />
-        <Button
-          label="I don't have an account yet!"
-          onPress={() => navigation.navigate('Signup')}
         />
       </View>
     </View>
@@ -116,11 +101,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     color: colors.WHITE,
     fontFamily: fonts.REGULAR,
-    fontSize: 16,
     fontWeight: '500',
     marginBottom: 20,
     height: 50,
     paddingHorizontal: 20,
   },
 })
-export default LoginScreen
+export default SignupScreen

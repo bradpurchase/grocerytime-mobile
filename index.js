@@ -4,6 +4,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { AppRegistry, ActivityIndicator } from 'react-native'
+import Config from 'react-native-config'
 
 import { ApolloClient } from 'apollo-client'
 import { ApolloProvider } from '@apollo/react-hooks'
@@ -21,11 +22,9 @@ import App from './App'
 
 import {
   getRefreshToken,
-  setAccessToken,
   getAccessToken,
   retrieveNewAccessToken,
 } from './src/services/token'
-import { REFRESH_TOKEN_MUTATION } from './src/queries/refreshToken'
 
 const AppComponent = () => {
   const [appState, setAppState] = useState({
@@ -36,7 +35,7 @@ const AppComponent = () => {
   const loadConfigs = async () => {
     try {
       const httpLink = createHttpLink({
-        uri: 'https://grocerytime.herokuapp.com/graphql',
+        uri: Config.API_BASE_URL,
         credentials: 'include',
       })
       const authLink = setContext(async (_, { headers }) => {
@@ -47,7 +46,7 @@ const AppComponent = () => {
         // const tokenExpired = currDate >= expiryDate
         const authCreds = token
           ? `Bearer ${token}`
-          : 'lNFGdSC2wd8f2QnF:hk5A84JJjKWZdKH9'
+          : `${Config.API_KEY}:${Config.API_SECRET}`
         return {
           headers: {
             ...headers,
@@ -61,11 +60,6 @@ const AppComponent = () => {
             'Token is invalid or session has expired'
           if (graphQLErrors[0].message === sessionExpiredErrorMsg) {
             return new Observable(async () => {
-              const accessToken = await getAccessToken()
-              const refreshToken = await getRefreshToken()
-              console.log(
-                `access token ${accessToken} has expired... grabbing a new one using the refresh token ${refreshToken}`,
-              )
               await retrieveNewAccessToken()
                 .then((newToken) => {
                   const headers = operation.getContext().headers

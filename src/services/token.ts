@@ -1,4 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage'
+import Config from 'react-native-config'
+
 import { REFRESH_TOKEN_MUTATION } from '../queries/refreshToken'
 
 export const getAccessToken = async (): Promise<string | null> => {
@@ -35,17 +37,16 @@ export const retrieveNewAccessToken = async (): Promise<string | null> => {
     },
     operationName: 'RefreshTokenMutation',
   })
-  await fetch('https://grocerytime.herokuapp.com/graphql', {
+  await fetch(Config.API_BASE_URL, {
     headers: {
       'content-type': 'application/json',
-      authorization: 'lNFGdSC2wd8f2QnF:hk5A84JJjKWZdKH9',
+      authorization: `${Config.API_KEY}:${Config.API_SECRET}`,
     },
     method: 'POST',
     body: mutationJSON,
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data.data)
       const tokens = data.data.token
       setAccessToken(tokens)
       return tokens.accessToken
