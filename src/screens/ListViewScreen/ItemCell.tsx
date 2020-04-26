@@ -1,23 +1,23 @@
 import * as React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
+import { Item } from './types'
+
 import colors from '../../styles/colors'
 import fonts from '../../styles/fonts'
-
-interface Item {
-  id: string
-  name: string
-  quantity: number
-}
 
 interface Props {
   item: Item
 }
 
 const ItemCell: React.FC<Props> = ({ item }) => {
+  const { name, quantity } = item
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{item.name} {item.quantity > 1 && `(${item.quantity})`}</Text>
+      <Text style={styles.title}>
+        {name} {quantity > 1 && `(${quantity})`}
+      </Text>
     </View>
   )
 }
@@ -26,9 +26,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.WHITE,
     borderBottomWidth: 1,
-    borderBottomColor: '#ebebeb',
+    borderBottomColor: '#f3f3f3',
     flex: 1,
     padding: 20,
+    paddingHorizontal: 30,
   },
   title: {
     color: colors.BLACK,
