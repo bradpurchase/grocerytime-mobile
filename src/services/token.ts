@@ -51,9 +51,9 @@ export const retrieveNewAccessToken = async (): Promise<string | null> => {
       setAccessToken(tokens)
       return tokens.accessToken
     })
-    .catch((e) => {
-      //TODO couldn't get a new token with the refresh token,
-      // perform logout action
+    .catch((err) => {
+      clearTokens()
+      console.error(err)
     })
   return null
 }

@@ -67,7 +67,7 @@ const Router = () => {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerStyle: { backgroundColor: colors.BLACK },
+            headerStyle: { backgroundColor: colors.RED },
             headerTintColor: colors.WHITE,
             headerTitleStyle: {
               fontFamily: fonts.REGULAR,

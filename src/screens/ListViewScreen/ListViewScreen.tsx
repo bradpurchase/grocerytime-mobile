@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View, TextInput, StyleSheet, ActivityIndicator } from 'react-native'
+import { View, StyleSheet, ActivityIndicator } from 'react-native'
 import { RouteProp } from '@react-navigation/native'
 
 import { RootStackParamList } from '../../navigator/types'
@@ -9,9 +9,7 @@ import { LIST_QUERY } from '../../queries/list'
 
 import ListContext from '../../context/ListContext'
 import ItemsList from './ItemsList'
-
-import colors from '../../styles/colors'
-import fonts from '../../styles/fonts'
+import AddItemInput from './AddItemInput'
 
 interface Props {
   route: RouteProp<RootStackParamList, 'ListView'>
@@ -33,11 +31,7 @@ const ListViewScreen: React.FC<Props> = ({ route }: Props) => {
   return (
     <ListContext.Provider value={{ data, refetch }}>
       <View style={styles.container}>
-        <TextInput
-          placeholder="Add an item to this list..."
-          placeholderTextColor="#666"
-          style={styles.textInput}
-        />
+        <AddItemInput />
         <ItemsList />
       </View>
     </ListContext.Provider>
@@ -47,21 +41,6 @@ const ListViewScreen: React.FC<Props> = ({ route }: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  emptyStateContainer: {
-    flex: 1,
-  },
-  textInput: {
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    color: colors.BLACK,
-    fontFamily: fonts.REGULAR,
-    fontSize: 16,
-    margin: 20,
-    height: 60,
-    paddingHorizontal: 24,
   },
 })
 

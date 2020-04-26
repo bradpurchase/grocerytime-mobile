@@ -20,11 +20,7 @@ import { persistCache } from 'apollo-cache-persist'
 import { name as appName } from './app.json'
 import App from './App'
 
-import {
-  getRefreshToken,
-  getAccessToken,
-  retrieveNewAccessToken,
-} from './src/services/token'
+import { retrieveNewAccessToken } from './src/services/token'
 
 const AppComponent = () => {
   const [appState, setAppState] = useState({
@@ -38,12 +34,8 @@ const AppComponent = () => {
         uri: Config.API_BASE_URL,
         credentials: 'include',
       })
-      const authLink = setContext(async (_, { headers }) => {
+      const headersLink = setContext(async (_, { headers }) => {
         const token = await AsyncStorage.getItem('@accessToken')
-        // const expiresIn = await AsyncStorage.getItem('@expiresIn')
-        // const expiryDate = new Date(expiresIn)
-        // const currDate = new Date()
-        // const tokenExpired = currDate >= expiryDate
         const authCreds = token
           ? `Bearer ${token}`
           : `${Config.API_KEY}:${Config.API_SECRET}`
@@ -66,7 +58,7 @@ const AppComponent = () => {
                   operation.setContext({
                     headers: {
                       ...headers,
-                      Authorization: `Bearer ${newToken}`,
+                      authorization: `Bearer ${newToken}`,
                     },
                   })
                   return forward(operation)
@@ -80,20 +72,19 @@ const AppComponent = () => {
       })
 
       const cache = new InMemoryCache()
-      const defaultOptions = {
-        mutate: {
-          errorPolicy: 'all',
-        },
-      }
       await persistCache({
         cache,
         storage: AsyncStorage,
       })
-      const authFlowLink = authLink.concat(authErrorLink)
+      const authLink = headersLink.concat(authErrorLink)
       const client = new ApolloClient({
-        link: authFlowLink.concat(httpLink),
+        link: authLink.concat(httpLink),
         cache,
-        defaultOptions,
+        defaultOptions: {
+          mutate: {
+            errorPolicy: 'all',
+          },
+        },
       })
 
       setAppState({ ready: true, client })

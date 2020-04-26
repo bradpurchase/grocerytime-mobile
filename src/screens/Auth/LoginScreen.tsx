@@ -41,7 +41,6 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
       console.log(error)
     },
     onCompleted: (data) => {
-      console.log(data)
       if (data.token) authContext.login(data.token)
       setSubmitting(false)
     },

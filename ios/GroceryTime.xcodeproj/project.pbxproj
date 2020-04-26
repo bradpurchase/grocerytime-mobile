@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* GroceryTimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* GroceryTimeTests.m */; };
+		00E970A266BF4F768305FF3B /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EB7EDEE385984017BFFC6116 /* FontAwesome.ttf */; };
 		00ED0DCA3872464DA60908BA /* Rubik-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0406ED1ECD914EAA8FBC76E5 /* Rubik-BlackItalic.ttf */; };
 		01687CFD6C0F2E96802C14BE /* libPods-GroceryTime-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED7EEC3EBE6409AF7BA26C7B /* libPods-GroceryTime-tvOS.a */; };
+		0714F76859B84C528309FE1B /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A24041C3DAE41E2B2D08D97 /* Fontisto.ttf */; };
 		092D1039B1AF4861A49BB32D /* Colfax-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D2C79A993928420285A2EC50 /* Colfax-RegularItalic.otf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
@@ -17,11 +19,13 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		188D3A2657E64016B45A4ADE /* Rubik-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 189C9EF18CB8480691BB4161 /* Rubik-LightItalic.ttf */; };
 		222B1FF9AD6C454EBF43A02D /* Rubik-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4EA108CABB5F4DF8A40DB370 /* Rubik-BoldItalic.ttf */; };
+		27A4CD8450524C90835FF637 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 29150CFB7A69490A9FDE0741 /* MaterialCommunityIcons.ttf */; };
 		2C8C24C6D7B8494C8F308B5E /* Colfax-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5558A08F84F942149F77E834 /* Colfax-ThinItalic.otf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* GroceryTimeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* GroceryTimeTests.m */; };
+		32CC1562FBFB41A2AB136E00 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6F2248FB508F4CAA9288D6FB /* MaterialIcons.ttf */; };
 		383DF002713384F69F65551A /* libPods-GroceryTime-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1CFD3738DCE9C74552929F5 /* libPods-GroceryTime-tvOSTests.a */; };
 		466988A80B6044A5BD21E742 /* Rubik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78EF8E027FDF45EE92E1C681 /* Rubik-Regular.ttf */; };
 		47F935365D754444BBEE0AEE /* Colfax-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = ABAE1F09D054449B94090122 /* Colfax-Regular.otf */; };
@@ -31,15 +35,27 @@
 		7320BE417ACA7333181CC2FB /* libPods-GroceryTime.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F847E8310E5801A78CC43E31 /* libPods-GroceryTime.a */; };
 		74FDC5E3961F4B4DB5860108 /* Rubik-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C854CB6B2A5947D5A44971FE /* Rubik-Black.ttf */; };
 		750E0E06F9D64A159353011B /* Colfax-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E794F7BB86A440EA896C4887 /* Colfax-Light.otf */; };
+		7938060B4C414B53936946E7 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 377F3470B81348B5A6729FED /* FontAwesome5_Brands.ttf */; };
 		85128A8D62FC40DB9E620C60 /* Rubik-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8331069CEF0446689B9C7AB6 /* Rubik-Medium.ttf */; };
 		86FB7390E61947E5B3B470D2 /* Colfax-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = AACFFAFF94EA4A4EA46BA769 /* Colfax-LightItalic.otf */; };
+		8DDEE905A2B2443097223A74 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6BA046D17AF2409E89D97A7E /* EvilIcons.ttf */; };
+		90327FBD2B0D4AD5980595E0 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7807466958A246008D753472 /* SimpleLineIcons.ttf */; };
 		9785D57AEB2E4FD3B694D05A /* Rubik-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3968743021C04DE09114876A /* Rubik-MediumItalic.ttf */; };
 		97DEB091C44F4C7E976E1391 /* Colfax-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3D51E871EEA747F79FDE67CF /* Colfax-Thin.otf */; };
+		9955665CCD4A4243B8AE7153 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2B86E3FDDB274507A549EB76 /* Octicons.ttf */; };
 		A43DF3487DED41558B35D777 /* Colfax-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7168E04AB2F84E93A566A248 /* Colfax-BoldItalic.otf */; };
 		AD6CD80E2957422795FA9A19 /* Colfax-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 230C29A1C6844BC4961474B4 /* Colfax-Black.otf */; };
 		B2570C263B764B3985EE0D8C /* Rubik-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 347E65FDDBD34E29B52333A9 /* Rubik-Italic.ttf */; };
+		B350787DF14049C69622A78D /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 321FAF1FF6F34C0C9C7704A7 /* Entypo.ttf */; };
+		C190A4D298E649D4A2BAD164 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4411EBF2B7E84BF08A210128 /* Foundation.ttf */; };
+		D3A0AA2855384989B4038692 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EBFA431BB7A349D9AD9A2790 /* Zocial.ttf */; };
+		D53169A0907C4251B11ED555 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 347202BFC64A4EDAB3C72C53 /* Feather.ttf */; };
 		D6A4E1766DC04907B81CB749 /* Colfax-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E6BF6AA140BA465F81CC6836 /* Colfax-Bold.otf */; };
+		E45F06F2042C4F3F9661AE83 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8469F5EAEB1F44998BF06B9F /* AntDesign.ttf */; };
+		E564C9419D004C59A2D83042 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9EACF13F04184D7D83811D83 /* FontAwesome5_Solid.ttf */; };
+		EEBA496726F24EEF943EA088 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B7C16259C4A4D05B26D87B3 /* FontAwesome5_Regular.ttf */; };
 		F06377155313779EDF8EBC49 /* libPods-GroceryTime-GroceryTimeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 940849F9CA4A03EADB59374E /* libPods-GroceryTime-GroceryTimeTests.a */; };
+		F83B69FB40ED4B0B8A632F8E /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB083A482AB14A9AA8C57C74 /* Ionicons.ttf */; };
 		FE4DC8CF22C44CCF946510E7 /* Colfax-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 151788CAE909455DA2408CE3 /* Colfax-Medium.otf */; };
 		FF8EB7E006F8411F8E2F021D /* Rubik-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3EB7737C2A84E469C709C76 /* Rubik-Bold.ttf */; };
 /* End PBXBuildFile section */
@@ -80,19 +96,32 @@
 		189C9EF18CB8480691BB4161 /* Rubik-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-LightItalic.ttf"; path = "../src/assets/fonts/Rubik/Rubik-LightItalic.ttf"; sourceTree = "<group>"; };
 		230C29A1C6844BC4961474B4 /* Colfax-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Colfax-Black.otf"; path = "../src/assets/fonts/Colfax/Colfax-Black.otf"; sourceTree = "<group>"; };
 		254FD6C918AF4696BC14786D /* Colfax-MediumItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Colfax-MediumItalic.otf"; path = "../src/assets/fonts/Colfax/Colfax-MediumItalic.otf"; sourceTree = "<group>"; };
+		29150CFB7A69490A9FDE0741 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		2B86E3FDDB274507A549EB76 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* GroceryTime-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GroceryTime-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* GroceryTime-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GroceryTime-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		321FAF1FF6F34C0C9C7704A7 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		347202BFC64A4EDAB3C72C53 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		347E65FDDBD34E29B52333A9 /* Rubik-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Italic.ttf"; path = "../src/assets/fonts/Rubik/Rubik-Italic.ttf"; sourceTree = "<group>"; };
+		377F3470B81348B5A6729FED /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		3968743021C04DE09114876A /* Rubik-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-MediumItalic.ttf"; path = "../src/assets/fonts/Rubik/Rubik-MediumItalic.ttf"; sourceTree = "<group>"; };
+		3A24041C3DAE41E2B2D08D97 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
 		3D51E871EEA747F79FDE67CF /* Colfax-Thin.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Colfax-Thin.otf"; path = "../src/assets/fonts/Colfax/Colfax-Thin.otf"; sourceTree = "<group>"; };
+		4411EBF2B7E84BF08A210128 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		4EA108CABB5F4DF8A40DB370 /* Rubik-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-BoldItalic.ttf"; path = "../src/assets/fonts/Rubik/Rubik-BoldItalic.ttf"; sourceTree = "<group>"; };
 		4F5D13409C9E5D7A68345F78 /* Pods-GroceryTime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GroceryTime.debug.xcconfig"; path = "Target Support Files/Pods-GroceryTime/Pods-GroceryTime.debug.xcconfig"; sourceTree = "<group>"; };
 		5558A08F84F942149F77E834 /* Colfax-ThinItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Colfax-ThinItalic.otf"; path = "../src/assets/fonts/Colfax/Colfax-ThinItalic.otf"; sourceTree = "<group>"; };
+		6B7C16259C4A4D05B26D87B3 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
+		6BA046D17AF2409E89D97A7E /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		6F2248FB508F4CAA9288D6FB /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		7168E04AB2F84E93A566A248 /* Colfax-BoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Colfax-BoldItalic.otf"; path = "../src/assets/fonts/Colfax/Colfax-BoldItalic.otf"; sourceTree = "<group>"; };
+		7807466958A246008D753472 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		78EF8E027FDF45EE92E1C681 /* Rubik-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Regular.ttf"; path = "../src/assets/fonts/Rubik/Rubik-Regular.ttf"; sourceTree = "<group>"; };
 		8331069CEF0446689B9C7AB6 /* Rubik-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Medium.ttf"; path = "../src/assets/fonts/Rubik/Rubik-Medium.ttf"; sourceTree = "<group>"; };
+		8469F5EAEB1F44998BF06B9F /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		84CBA0ED1B93ABDADF1341C7 /* Pods-GroceryTime-GroceryTimeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GroceryTime-GroceryTimeTests.debug.xcconfig"; path = "Target Support Files/Pods-GroceryTime-GroceryTimeTests/Pods-GroceryTime-GroceryTimeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		940849F9CA4A03EADB59374E /* libPods-GroceryTime-GroceryTimeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GroceryTime-GroceryTimeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9EACF13F04184D7D83811D83 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		A02A0BE4BCF7DAA383E8C393 /* Pods-GroceryTime-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GroceryTime-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-GroceryTime-tvOS/Pods-GroceryTime-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		A3EB7737C2A84E469C709C76 /* Rubik-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Bold.ttf"; path = "../src/assets/fonts/Rubik/Rubik-Bold.ttf"; sourceTree = "<group>"; };
 		AACFFAFF94EA4A4EA46BA769 /* Colfax-LightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Colfax-LightItalic.otf"; path = "../src/assets/fonts/Colfax/Colfax-LightItalic.otf"; sourceTree = "<group>"; };
@@ -102,10 +131,13 @@
 		C854CB6B2A5947D5A44971FE /* Rubik-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Rubik-Black.ttf"; path = "../src/assets/fonts/Rubik/Rubik-Black.ttf"; sourceTree = "<group>"; };
 		D2C79A993928420285A2EC50 /* Colfax-RegularItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Colfax-RegularItalic.otf"; path = "../src/assets/fonts/Colfax/Colfax-RegularItalic.otf"; sourceTree = "<group>"; };
 		D6781BF164B4EA0420AC13C6 /* Pods-GroceryTime-GroceryTimeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GroceryTime-GroceryTimeTests.release.xcconfig"; path = "Target Support Files/Pods-GroceryTime-GroceryTimeTests/Pods-GroceryTime-GroceryTimeTests.release.xcconfig"; sourceTree = "<group>"; };
+		DB083A482AB14A9AA8C57C74 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		DCACAC17DAF9E933A9F7967D /* Pods-GroceryTime-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GroceryTime-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-GroceryTime-tvOSTests/Pods-GroceryTime-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E6BF6AA140BA465F81CC6836 /* Colfax-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Colfax-Bold.otf"; path = "../src/assets/fonts/Colfax/Colfax-Bold.otf"; sourceTree = "<group>"; };
 		E794F7BB86A440EA896C4887 /* Colfax-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Colfax-Light.otf"; path = "../src/assets/fonts/Colfax/Colfax-Light.otf"; sourceTree = "<group>"; };
+		EB7EDEE385984017BFFC6116 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		EBA6DEA9D969A223971A9614 /* Pods-GroceryTime-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GroceryTime-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-GroceryTime-tvOSTests/Pods-GroceryTime-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		EBFA431BB7A349D9AD9A2790 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		ED7EEC3EBE6409AF7BA26C7B /* libPods-GroceryTime-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GroceryTime-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -267,6 +299,22 @@
 				D2C79A993928420285A2EC50 /* Colfax-RegularItalic.otf */,
 				3D51E871EEA747F79FDE67CF /* Colfax-Thin.otf */,
 				5558A08F84F942149F77E834 /* Colfax-ThinItalic.otf */,
+				8469F5EAEB1F44998BF06B9F /* AntDesign.ttf */,
+				321FAF1FF6F34C0C9C7704A7 /* Entypo.ttf */,
+				6BA046D17AF2409E89D97A7E /* EvilIcons.ttf */,
+				347202BFC64A4EDAB3C72C53 /* Feather.ttf */,
+				EB7EDEE385984017BFFC6116 /* FontAwesome.ttf */,
+				377F3470B81348B5A6729FED /* FontAwesome5_Brands.ttf */,
+				6B7C16259C4A4D05B26D87B3 /* FontAwesome5_Regular.ttf */,
+				9EACF13F04184D7D83811D83 /* FontAwesome5_Solid.ttf */,
+				3A24041C3DAE41E2B2D08D97 /* Fontisto.ttf */,
+				4411EBF2B7E84BF08A210128 /* Foundation.ttf */,
+				DB083A482AB14A9AA8C57C74 /* Ionicons.ttf */,
+				29150CFB7A69490A9FDE0741 /* MaterialCommunityIcons.ttf */,
+				6F2248FB508F4CAA9288D6FB /* MaterialIcons.ttf */,
+				2B86E3FDDB274507A549EB76 /* Octicons.ttf */,
+				7807466958A246008D753472 /* SimpleLineIcons.ttf */,
+				EBFA431BB7A349D9AD9A2790 /* Zocial.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -437,6 +485,22 @@
 				092D1039B1AF4861A49BB32D /* Colfax-RegularItalic.otf in Resources */,
 				97DEB091C44F4C7E976E1391 /* Colfax-Thin.otf in Resources */,
 				2C8C24C6D7B8494C8F308B5E /* Colfax-ThinItalic.otf in Resources */,
+				E45F06F2042C4F3F9661AE83 /* AntDesign.ttf in Resources */,
+				B350787DF14049C69622A78D /* Entypo.ttf in Resources */,
+				8DDEE905A2B2443097223A74 /* EvilIcons.ttf in Resources */,
+				D53169A0907C4251B11ED555 /* Feather.ttf in Resources */,
+				00E970A266BF4F768305FF3B /* FontAwesome.ttf in Resources */,
+				7938060B4C414B53936946E7 /* FontAwesome5_Brands.ttf in Resources */,
+				EEBA496726F24EEF943EA088 /* FontAwesome5_Regular.ttf in Resources */,
+				E564C9419D004C59A2D83042 /* FontAwesome5_Solid.ttf in Resources */,
+				0714F76859B84C528309FE1B /* Fontisto.ttf in Resources */,
+				C190A4D298E649D4A2BAD164 /* Foundation.ttf in Resources */,
+				F83B69FB40ED4B0B8A632F8E /* Ionicons.ttf in Resources */,
+				27A4CD8450524C90835FF637 /* MaterialCommunityIcons.ttf in Resources */,
+				32CC1562FBFB41A2AB136E00 /* MaterialIcons.ttf in Resources */,
+				9955665CCD4A4243B8AE7153 /* Octicons.ttf in Resources */,
+				90327FBD2B0D4AD5980595E0 /* SimpleLineIcons.ttf in Resources */,
+				D3A0AA2855384989B4038692 /* Zocial.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
