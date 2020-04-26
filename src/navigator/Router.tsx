@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { StatusBar, Button, ActivityIndicator } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { enableScreens } from 'react-native-screens'
 
 import LoginScreen from '../screens/Auth/LoginScreen'
 import SignupScreen from '../screens/Auth/SignupScreen'
@@ -17,6 +18,7 @@ import { RootStackParamList } from './types'
 import { setAccessToken, clearTokens, getAccessToken } from '../services/token'
 
 const Stack = createStackNavigator<RootStackParamList>()
+enableScreens()
 
 const Router = () => {
   const [loaded, setLoaded] = useState<boolean>(false)
@@ -25,7 +27,9 @@ const Router = () => {
   const checkAuthentication = async () => {
     try {
       const token = await getAccessToken()
-      if (token) setToken(token)
+      if (token) {
+        setToken(token)
+      }
     } catch (e) {
       //TODO better error handling
       console.error(e)
@@ -56,10 +60,6 @@ const Router = () => {
   useEffect(() => {
     checkAuthentication()
   }, [])
-
-  useEffect(() => {
-    checkAuthentication()
-  }, [token])
 
   if (!loaded) return <ActivityIndicator size="large" />
   return (

@@ -76,8 +76,10 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
           style={styles.textInput}
           placeholder="Password"
           secureTextEntry
+          returnKeyType="done"
           onChangeText={(text) => setPassword(text)}
           editable={!submitting}
+          onSubmitEditing={() => handleLoginButtonPress()}
         />
         <Button
           label="Sign in"

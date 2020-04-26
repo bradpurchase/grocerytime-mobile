@@ -47,7 +47,13 @@ export const retrieveNewAccessToken = async (): Promise<string | null> => {
   })
     .then((res) => res.json())
     .then((data) => {
+      console.log(data)
       const tokens = data.data.token
+      if (!tokens) {
+        throw new Error(
+          `couldn't retrieve new access token with refresh token ${refreshToken}`,
+        )
+      }
       setAccessToken(tokens)
       return tokens.accessToken
     })
@@ -59,9 +65,8 @@ export const retrieveNewAccessToken = async (): Promise<string | null> => {
 }
 
 export const clearTokens = async (): Promise<any> => {
-  try {
-    await AsyncStorage.clear()
-  } catch (e) {
-    console.error(e)
+  const asyncStorageKeys = await AsyncStorage.getAllKeys()
+  if (asyncStorageKeys.length > 0) {
+    AsyncStorage.clear()
   }
 }

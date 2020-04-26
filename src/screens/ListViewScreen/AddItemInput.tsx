@@ -38,7 +38,6 @@ const AddItemInput: React.FC = () => {
 
   const resetInput = () => {
     textInputRef.current?.clear()
-    textInputRef.current?.focus()
   }
 
   const handleAddItem = () => {
@@ -48,7 +47,10 @@ const AddItemInput: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.icon} source={require('../../assets/icons/Plus.png')} />
+      <Image
+        style={styles.icon}
+        source={require('../../assets/icons/Plus.png')}
+      />
       <TextInput
         style={styles.textInput}
         placeholder="Add an item..."
@@ -59,7 +61,6 @@ const AddItemInput: React.FC = () => {
         onSubmitEditing={() => handleAddItem()}
       />
     </View>
-    
   )
 }
 
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ddd',
     borderRadius: 64,
     color: colors.BLACK,
-    flexDirection: 'row', 
+    flexDirection: 'row',
     fontFamily: fonts.REGULAR,
     margin: 20,
     height: 50,
