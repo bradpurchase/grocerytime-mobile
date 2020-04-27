@@ -1,5 +1,10 @@
 import * as React from 'react'
-import { View, StyleSheet, ActivityIndicator } from 'react-native'
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  InteractionManager,
+} from 'react-native'
 import { RouteProp } from '@react-navigation/native'
 
 import { RootStackParamList } from '../../navigator/types'

@@ -10,7 +10,7 @@ interface Props {
   item: Item
 }
 
-const ItemCell: React.FC<Props> = ({ item }) => {
+const ItemCell: React.FC<Props> = React.memo(({ item }) => {
   const { name, quantity } = item
 
   return (
@@ -20,7 +20,7 @@ const ItemCell: React.FC<Props> = ({ item }) => {
       </Text>
     </View>
   )
-}
+})
 
 const styles = StyleSheet.create({
   container: {

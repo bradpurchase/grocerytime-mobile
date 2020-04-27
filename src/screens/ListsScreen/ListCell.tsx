@@ -17,17 +17,15 @@ interface Props {
   navigation: ListCellNavigationProp
 }
 
-const ListCell: React.FC<Props> = ({ list, navigation }: Props) => {
-  return (
-    <TouchableWithoutFeedback
-      onPress={() => navigation.navigate('ListView', { list })}>
-      <View style={styles.container}>
-        <Text style={styles.title}>{list.name}</Text>
-        <Text style={styles.subtitle}>{list.id}</Text>
-      </View>
-    </TouchableWithoutFeedback>
-  )
-}
+const ListCell: React.FC<Props> = React.memo(({ list, navigation }: Props) => (
+  <TouchableWithoutFeedback
+    onPress={() => navigation.navigate('ListView', { list })}>
+    <View style={styles.container}>
+      <Text style={styles.title}>{list.name}</Text>
+      <Text style={styles.subtitle}>{list.id}</Text>
+    </View>
+  </TouchableWithoutFeedback>
+))
 
 const styles = StyleSheet.create({
   container: {

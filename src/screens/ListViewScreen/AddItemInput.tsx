@@ -10,7 +10,7 @@ import * as AddItemToListTypes from '../../queries/__generated__/AddItemToList'
 import colors from '../../styles/colors'
 import fonts from '../../styles/fonts'
 
-const AddItemInput: React.FC = () => {
+const AddItemInput: React.FC = React.memo(() => {
   const listContext = React.useContext(ListContext)
   const { data, refetch } = listContext
   if (!data) return null
@@ -62,7 +62,7 @@ const AddItemInput: React.FC = () => {
       />
     </View>
   )
-}
+})
 
 const styles = StyleSheet.create({
   container: {

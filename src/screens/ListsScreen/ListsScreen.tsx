@@ -18,7 +18,7 @@ interface Props {
   navigation: ListCellNavigationProp
 }
 
-const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
+const ListsScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
   const { loading, data, refetch } = useQuery(ME_QUERY)
 
   return (
@@ -29,7 +29,7 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
         <FlatList
           data={data.me.lists}
           renderItem={({ item: list }) => (
-            <ListCell list={list} navigation={navigation} />
+            <ListCell key={list.id} list={list} navigation={navigation} />
           )}
           refreshControl={
             <RefreshControl
@@ -41,7 +41,7 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
       )}
     </View>
   )
-}
+})
 
 const styles = StyleSheet.create({
   container: {
