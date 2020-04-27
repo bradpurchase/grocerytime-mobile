@@ -11,3 +11,8 @@ export type ListCellNavigationProp = StackNavigationProp<
   RootStackParamList,
   'Lists'
 >
+
+export type LoginNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'Login'
+>

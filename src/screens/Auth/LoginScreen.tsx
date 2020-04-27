@@ -1,15 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
-import {
-  NavigationParams,
-  NavigationScreenProp,
-  NavigationState,
-} from 'react-navigation'
 
 import { useMutation } from '@apollo/react-hooks'
 import { ApolloError } from 'apollo-boost'
 import { LOGIN_MUTATION } from '../../queries/login'
 import * as TokenMutationTypes from '../../queries/__generated__/TokenMutation'
+
+import { LoginNavigationProp } from '../../navigator/types'
 
 import colors from '../../styles/colors'
 import fonts from '../../styles/fonts'
@@ -18,7 +15,7 @@ import Button from '../../components/Button'
 import AuthContext from '../../context/AuthContext'
 
 interface Props {
-  navigation: NavigationScreenProp<NavigationState, NavigationParams>
+  navigation: LoginNavigationProp
 }
 
 const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {

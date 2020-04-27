@@ -4,9 +4,10 @@ import {
   RefreshControl,
   Text,
   TouchableOpacity,
+  SectionList,
   StyleSheet,
 } from 'react-native'
-import { SwipeListView } from 'react-native-swipe-list-view'
+//import { SwipeListView } from 'react-native-swipe-list-view'
 
 import ListContext from '../../context/ListContext'
 
@@ -23,7 +24,7 @@ import colors from '../../styles/colors'
 
 import { Item } from './types'
 
-const ItemsList: React.FC = () => {
+const ItemsList: React.FC = React.memo(() => {
   const listContext = React.useContext(ListContext)
   const { data, refetch } = listContext
 
@@ -76,8 +77,7 @@ const ItemsList: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <SwipeListView
-        useSectionList
+      <SectionList
         sections={itemsData}
         renderSectionHeader={({ section: { title } }) => (
           <SectionCell title={title} />
@@ -96,13 +96,10 @@ const ItemsList: React.FC = () => {
             onRefresh={() => refetch()}
           />
         }
-        disableRightSwipe
-        renderHiddenItem={renderHiddenItem}
-        rightOpenValue={-100}
       />
     </View>
   )
-}
+})
 
 const styles = StyleSheet.create({
   container: {
