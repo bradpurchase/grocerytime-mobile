@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     fontFamily: fonts.REGULAR,
     margin: 20,
+    marginHorizontal: 10,
     height: 50,
     paddingHorizontal: 20,
   },

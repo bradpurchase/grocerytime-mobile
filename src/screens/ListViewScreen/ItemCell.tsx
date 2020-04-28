@@ -2,6 +2,7 @@ import * as React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
 import { Item } from './types'
+import Checkbox from '../../components/Checkbox'
 
 import colors from '../../styles/colors'
 import fonts from '../../styles/fonts'
@@ -13,9 +14,17 @@ interface Props {
 const ItemCell: React.FC<Props> = React.memo(({ item }) => {
   const { name, quantity } = item
 
+  const [checked, setChecked] = React.useState(false)
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
+      <Checkbox checked={checked} onPress={() => setChecked(!checked)} />
+      <Text
+        style={StyleSheet.flatten([
+          styles.title,
+          checked && styles.strikedTitle,
+        ])}
+        onPress={() => setChecked(!checked)}>
         {name} {quantity > 1 && `(${quantity})`}
       </Text>
     </View>
@@ -25,17 +34,25 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.WHITE,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f3f3f3',
+    borderRadius: 8,
     flex: 1,
-    padding: 20,
-    paddingHorizontal: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 18,
+    marginHorizontal: 10,
+    marginBottom: 10,
   },
   title: {
     color: colors.BLACK,
     fontFamily: fonts.REGULAR,
     fontSize: 16,
     fontWeight: '400',
+    flexDirection: 'column',
+    marginLeft: 15,
+  },
+  strikedTitle: {
+    textDecorationLine: 'line-through',
+    textDecorationStyle: 'solid',
   },
 })
 

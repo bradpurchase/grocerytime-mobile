@@ -7,12 +7,17 @@ export type RootStackParamList = {
   ListView: { list: { id: string; name: string } }
 }
 
+export type LoginNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'Login'
+>
+
 export type ListCellNavigationProp = StackNavigationProp<
   RootStackParamList,
   'Lists'
 >
 
-export type LoginNavigationProp = StackNavigationProp<
+export type ListViewNavigationProp = StackNavigationProp<
   RootStackParamList,
-  'Login'
+  'ListView'
 >
