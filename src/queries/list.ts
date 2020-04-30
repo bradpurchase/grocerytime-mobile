@@ -9,6 +9,7 @@ export const LIST_QUERY = gql`
         id
         name
         quantity
+        completed
       }
     }
   }

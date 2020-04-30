@@ -4,29 +4,50 @@ import { View, Text, StyleSheet } from 'react-native'
 import { Item } from './types'
 import Checkbox from '../../components/Checkbox'
 
+import { useMutation } from '@apollo/react-hooks'
+import { UPDATE_ITEM_MUTATION } from '../../queries/updateItem'
+
 import colors from '../../styles/colors'
 import fonts from '../../styles/fonts'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 interface Props {
   item: Item
 }
 
 const ItemCell: React.FC<Props> = React.memo(({ item }) => {
-  const { name, quantity } = item
+  const { id, name, quantity, completed } = item
 
-  const [checked, setChecked] = React.useState(false)
+  const [updateItem] = useMutation(UPDATE_ITEM_MUTATION, {
+    variables: {
+      itemId: id,
+      completed: !completed,
+    },
+    optimisticResponse: {
+      __typename: 'Mutation',
+      updateItem: {
+        __typename: 'Item',
+        id: id,
+        completed: !completed,
+      },
+    },
+  })
 
   return (
     <View style={styles.container}>
-      <Checkbox checked={checked} onPress={() => setChecked(!checked)} />
-      <Text
-        style={StyleSheet.flatten([
-          styles.title,
-          checked && styles.strikedTitle,
-        ])}
-        onPress={() => setChecked(!checked)}>
-        {name} {quantity > 1 && `(${quantity})`}
-      </Text>
+      <TouchableOpacity
+        activeOpacity={0.9}
+        style={styles.checkboxTapArea}
+        onPress={() => updateItem()}>
+        <Checkbox checked={completed} />
+        <Text
+          style={StyleSheet.flatten([
+            styles.title,
+            completed && styles.strikedTitle,
+          ])}>
+          {name} {quantity > 1 && `(${quantity})`}
+        </Text>
+      </TouchableOpacity>
     </View>
   )
 })
@@ -41,6 +62,10 @@ const styles = StyleSheet.create({
     padding: 18,
     marginHorizontal: 10,
     marginBottom: 10,
+  },
+  checkboxTapArea: {
+    flexDirection: 'row',
+    width: 200,
   },
   title: {
     color: colors.BLACK,

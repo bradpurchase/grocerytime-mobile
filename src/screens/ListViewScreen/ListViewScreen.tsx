@@ -53,6 +53,27 @@ const ListViewScreen: React.FC<Props> = React.memo(
           console.log(`Tapped buttonIdx ${buttonIdx}`)
           if (buttonIdx === 0) {
             shareActionSheet()
+          } else if (buttonIdx === 1) {
+            deleteListConfirmationActionSheet()
+          }
+        },
+      )
+    }
+
+    const deleteListConfirmationActionSheet = () => {
+      //TODO consider: if the list is shared, do we need to do anything
+      // different when deleting it? (at least a diff message)
+      return ActionSheetIOS.showActionSheetWithOptions(
+        {
+          message:
+            'Are you sure you want to delete this list? You cannot undo this action.',
+          options: ['Delete', 'Dismiss'],
+          destructiveButtonIndex: 0,
+          cancelButtonIndex: 1,
+        },
+        (buttonIdx) => {
+          if (buttonIdx === 0) {
+            //TODO call delete list mutation
           }
         },
       )

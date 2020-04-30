@@ -7,7 +7,6 @@ import {
   SectionList,
   StyleSheet,
 } from 'react-native'
-//import { SwipeListView } from 'react-native-swipe-list-view'
 
 import ListContext from '../../context/ListContext'
 
@@ -18,9 +17,6 @@ import * as DeleteItemTypes from '../../queries/__generated__/DeleteItem'
 import EmptyState from '../../components/EmptyState'
 import SectionCell from './SectionCell'
 import ItemCell from './ItemCell'
-
-import fonts from '../../styles/fonts'
-import colors from '../../styles/colors'
 
 import { Item } from './types'
 
@@ -107,28 +103,6 @@ const styles = StyleSheet.create({
   },
   backTextWhite: {
     color: '#FFF',
-  },
-  rowBack: {
-    alignItems: 'center',
-    backgroundColor: 'red',
-    color: colors.WHITE,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingLeft: 15,
-  },
-  backRightBtn: {
-    alignItems: 'center',
-    bottom: 0,
-    justifyContent: 'center',
-    position: 'absolute',
-    top: 0,
-    width: 75,
-  },
-  backRightBtnRight: {
-    backgroundColor: 'red',
-    fontFamily: fonts.REGULAR,
-    right: 0,
   },
 })
 
