@@ -9,13 +9,15 @@ import {
 } from 'react-native'
 import { RouteProp } from '@react-navigation/native'
 
-import { RootStackParamList } from '../../navigator/types'
+import {
+  RootStackParamList,
+  ListViewNavigationProp,
+} from '../../navigator/types'
 
 import { useQuery } from '@apollo/react-hooks'
 import { LIST_QUERY } from '../../queries/list'
 
 import ListContext from '../../context/ListContext'
-import { ListViewNavigationProp } from '../../navigator/types'
 
 import ItemsList from './ItemsList'
 import AddItemInput from './AddItemInput'

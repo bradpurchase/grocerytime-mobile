@@ -4,24 +4,21 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: me
+// GraphQL mutation operation: CreateList
 // ====================================================
 
-export interface me_me_lists {
+export interface CreateList_createList {
   __typename: "List";
   id: string;
-  name: string;
-  itemsCount: number | null;
 }
 
-export interface me_me {
-  __typename: "User";
-  lists: (me_me_lists | null)[] | null;
-}
-
-export interface me {
+export interface CreateList {
   /**
-   * Retrieve the current user
+   * Create a grocery list
    */
-  me: me_me | null;
+  createList: CreateList_createList | null;
+}
+
+export interface CreateListVariables {
+  name: string;
 }

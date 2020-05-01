@@ -8,6 +8,7 @@ enableScreens()
 import LoginScreen from '../screens/Auth/LoginScreen'
 import SignupScreen from '../screens/Auth/SignupScreen'
 import ListsScreen from '../screens/ListsScreen/ListsScreen'
+import NewListScreen from '../screens/NewListScreen/NewListScreen'
 import ListViewScreen from '../screens/ListViewScreen/ListViewScreen'
 
 import AuthContext from '../context/AuthContext'
@@ -18,7 +19,8 @@ import { RootStackParamList } from './types'
 
 import { setAccessToken, clearTokens, getAccessToken } from '../services/token'
 
-const Stack = createStackNavigator<RootStackParamList>()
+const MainStack = createStackNavigator<RootStackParamList>()
+const RootStack = createStackNavigator<RootStackParamList>()
 
 const Router = () => {
   const [loaded, setLoaded] = useState<boolean>(false)
@@ -61,11 +63,54 @@ const Router = () => {
     checkAuthentication()
   }, [])
 
-  if (!loaded) return <ActivityIndicator size="large" />
+  const MainStackScreen = () => (
+    <MainStack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: colors.RED },
+        headerTintColor: colors.WHITE,
+        headerTitleStyle: {
+          fontFamily: fonts.REGULAR,
+        },
+      }}>
+      {token ? (
+        <>
+          <RootStack.Screen name="Lists" component={ListsScreen} />
+          <RootStack.Screen
+            name="ListView"
+            component={ListViewScreen}
+            options={({ route }) => ({ title: route.params.list.name })}
+          />
+        </>
+      ) : (
+        <>
+          <RootStack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name="Signup"
+            component={SignupScreen}
+            options={{ headerShown: false }}
+          />
+        </>
+      )}
+    </MainStack.Navigator>
+  )
+
+  if (!loaded) {
+    return <ActivityIndicator size="large" />
+  }
+
+  // We use two different stack navigators here because some of them need to be
+  // opened in modal mode, like SettingsScreen and NewListScreen
+  //
+  //TODO would love to find a cleaner way to do this.. this seems bizzare
   return (
     <AuthContext.Provider value={{ token, login, logout }}>
       <NavigationContainer>
-        <Stack.Navigator
+        <RootStack.Navigator
+          mode="modal"
           screenOptions={{
             headerStyle: { backgroundColor: colors.RED },
             headerTintColor: colors.WHITE,
@@ -73,42 +118,17 @@ const Router = () => {
               fontFamily: fonts.REGULAR,
             },
           }}>
-          {token ? (
-            <>
-              <Stack.Screen
-                name="Lists"
-                component={ListsScreen}
-                options={{
-                  headerRight: () => (
-                    <Button
-                      title="Log out"
-                      color={colors.WHITE}
-                      onPress={() => logout()}
-                    />
-                  ),
-                }}
-              />
-              <Stack.Screen
-                name="ListView"
-                component={ListViewScreen}
-                options={({ route }) => ({ title: route.params.list.name })}
-              />
-            </>
-          ) : (
-            <>
-              <Stack.Screen
-                name="Login"
-                component={LoginScreen}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="Signup"
-                component={SignupScreen}
-                options={{ headerShown: false }}
-              />
-            </>
-          )}
-        </Stack.Navigator>
+          <RootStack.Screen
+            name="Main"
+            component={MainStackScreen}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name="NewList"
+            component={NewListScreen}
+            options={{ title: 'New List' }}
+          />
+        </RootStack.Navigator>
 
         <StatusBar barStyle="light-content" />
       </NavigationContainer>

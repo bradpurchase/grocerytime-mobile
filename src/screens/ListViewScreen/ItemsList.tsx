@@ -61,16 +61,6 @@ const ItemsList: React.FC = React.memo(() => {
     })
   }
 
-  const renderHiddenItem = (data: any) => (
-    <View style={styles.rowBack}>
-      <TouchableOpacity
-        style={[styles.backRightBtn, styles.backRightBtnRight]}
-        onPress={() => handleDeleteItem(data)}>
-        <Text style={styles.backTextWhite}>Delete</Text>
-      </TouchableOpacity>
-    </View>
-  )
-
   return (
     <View style={styles.container}>
       <SectionList

@@ -10,6 +10,7 @@ import fonts from '../../styles/fonts'
 interface List {
   id: string
   name: string
+  itemsCount: number
 }
 
 interface Props {
@@ -17,30 +18,35 @@ interface Props {
   navigation: ListCellNavigationProp
 }
 
-const ListCell: React.FC<Props> = React.memo(({ list, navigation }: Props) => (
-  <TouchableWithoutFeedback
-    onPress={() => navigation.navigate('ListView', { list })}>
-    <View style={styles.container}>
-      <Text style={styles.title}>{list.name}</Text>
-      <Text style={styles.subtitle}>{list.id}</Text>
-    </View>
-  </TouchableWithoutFeedback>
-))
+const ListCell: React.FC<Props> = React.memo(({ list, navigation }: Props) => {
+  const { name, itemsCount } = list
+
+  return (
+    <TouchableWithoutFeedback
+      onPress={() => navigation.navigate('ListView', { list })}>
+      <View style={styles.container}>
+        <Text style={styles.title}>{name}</Text>
+        <Text style={styles.subtitle}>{itemsCount} items</Text>
+      </View>
+    </TouchableWithoutFeedback>
+  )
+})
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.WHITE,
+    borderRadius: 8,
     flex: 1,
+    marginHorizontal: 10,
     marginBottom: 10,
     padding: 20,
-    width: '100%',
   },
   title: {
     color: colors.BLACK,
     fontFamily: fonts.REGULAR,
     fontSize: 17,
     fontWeight: '600',
-    lineHeight: 40,
+    marginBottom: 10,
   },
   subtitle: {
     color: colors.DARK_GREY,

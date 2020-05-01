@@ -1,4 +1,4 @@
-import {gql} from 'apollo-boost'
+import { gql } from 'apollo-boost'
 
 export const ME_QUERY = gql`
   query me {
@@ -6,6 +6,7 @@ export const ME_QUERY = gql`
       lists {
         id
         name
+        itemsCount
       }
     }
   }

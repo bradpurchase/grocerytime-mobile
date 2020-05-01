@@ -12,6 +12,7 @@ export interface List_list_items {
   id: string;
   name: string;
   quantity: number;
+  completed: boolean;
 }
 
 export interface List_list {
