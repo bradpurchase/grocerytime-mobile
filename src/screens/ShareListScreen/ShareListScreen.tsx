@@ -50,7 +50,10 @@ const ShareListScreen: React.FC<Props> = React.memo(
           GroceryTime!
         </Text>
         <View style={styles.buttonContainer}>
-          <Button label="Share this List" onPress={shareActionSheet(list)} />
+          <Button
+            label="Share this List"
+            onPress={() => shareActionSheet(list)}
+          />
         </View>
       </View>
     )

@@ -65,7 +65,12 @@ const ListsScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
         <FlatList
           data={data.me.lists}
           renderItem={({ item: list }) => (
-            <ListCell key={list.id} list={list} navigation={navigation} />
+            <ListCell
+              key={list.id}
+              list={list}
+              navigation={navigation}
+              refetchList={() => refetch()}
+            />
           )}
           refreshControl={
             <RefreshControl

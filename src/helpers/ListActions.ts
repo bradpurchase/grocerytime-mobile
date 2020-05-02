@@ -12,7 +12,10 @@ export const shareActionSheet = (list: List) => {
   )
 }
 
-const deleteListConfirmationActionSheet = () => {
+const deleteListConfirmationActionSheet = (
+  list: List,
+  deleteList: Function,
+) => {
   return ActionSheetIOS.showActionSheetWithOptions(
     {
       message:
@@ -23,13 +26,13 @@ const deleteListConfirmationActionSheet = () => {
     },
     (buttonIdx) => {
       if (buttonIdx === 0) {
-        //TODO call delete list mutation
+        deleteList({ variables: { listId: list.id } })
       }
     },
   )
 }
 
-export const listActionSheet = (list: List) => {
+export const listActionSheet = (list: List, deleteList: Function) => {
   return ActionSheetIOS.showActionSheetWithOptions(
     {
       options: ['Share with others...', 'Delete list...', 'Dismiss'],
@@ -41,7 +44,7 @@ export const listActionSheet = (list: List) => {
       if (buttonIdx === 0) {
         shareActionSheet(list)
       } else if (buttonIdx === 1) {
-        deleteListConfirmationActionSheet()
+        deleteListConfirmationActionSheet(list, deleteList)
       }
     },
   )

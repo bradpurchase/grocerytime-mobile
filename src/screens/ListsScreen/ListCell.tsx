@@ -3,6 +3,10 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 import { ListCellNavigationProp } from '../../navigator/types'
 
+import { useMutation } from '@apollo/react-hooks'
+import { DELETE_LIST_MUTATION } from '../../queries/deleteList'
+import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
+
 import { listActionSheet } from '../../helpers/ListActions'
 import { List } from '../../types/List'
 import colors from '../../styles/colors'
@@ -11,23 +15,39 @@ import fonts from '../../styles/fonts'
 interface Props {
   list: List
   navigation: ListCellNavigationProp
+  refetchList: () => void
 }
 
-const ListCell: React.FC<Props> = React.memo(({ list, navigation }: Props) => {
-  const { name, itemsCount } = list
+const ListCell: React.FC<Props> = React.memo(
+  ({ list, navigation, refetchList }: Props) => {
+    const { name, itemsCount } = list
 
-  return (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={() => navigation.navigate('ListView', { list })}
-      onLongPress={() => listActionSheet(list)}>
-      <View style={styles.container}>
-        <Text style={styles.title}>{name}</Text>
-        <Text style={styles.subtitle}>{itemsCount} items</Text>
-      </View>
-    </TouchableOpacity>
-  )
-})
+    //TODO figure out how to avoid needing to share this useMutation
+    // everywhere and just do it in listActionSheet()
+    const [deleteList] = useMutation<
+      DeleteListTypes.DeleteList,
+      DeleteListTypes.DeleteListVariables
+    >(DELETE_LIST_MUTATION, {
+      onCompleted: (data) => {
+        if (data.deleteList?.id) {
+          refetchList()
+        }
+      },
+    })
+
+    return (
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => navigation.navigate('ListView', { list })}
+        onLongPress={() => listActionSheet(list, deleteList)}>
+        <View style={styles.container}>
+          <Text style={styles.title}>{name}</Text>
+          <Text style={styles.subtitle}>{itemsCount} items</Text>
+        </View>
+      </TouchableOpacity>
+    )
+  },
+)
 
 const styles = StyleSheet.create({
   container: {

@@ -4,21 +4,21 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: CreateList
+// GraphQL mutation operation: DeleteList
 // ====================================================
 
-export interface CreateList_createList {
+export interface DeleteList_deleteList {
   __typename: "List";
   id: string;
 }
 
-export interface CreateList {
+export interface DeleteList {
   /**
-   * Create a list
+   * Delete a list
    */
-  createList: CreateList_createList | null;
+  deleteList: DeleteList_deleteList | null;
 }
 
-export interface CreateListVariables {
-  name: string;
+export interface DeleteListVariables {
+  listId: string;
 }
