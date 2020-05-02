@@ -4,7 +4,6 @@ import {
   StyleSheet,
   ActivityIndicator,
   Image,
-  ActionSheetIOS,
   TouchableOpacity,
 } from 'react-native'
 import { RouteProp } from '@react-navigation/native'
@@ -18,6 +17,8 @@ import { useQuery } from '@apollo/react-hooks'
 import { LIST_QUERY } from '../../queries/list'
 
 import ListContext from '../../context/ListContext'
+import { listActionSheet } from '../../helpers/ListActions'
+import { List } from '../../types/List'
 
 import ItemsList from './ItemsList'
 import AddItemInput from './AddItemInput'
@@ -29,64 +30,18 @@ interface Props {
 
 const ListViewScreen: React.FC<Props> = React.memo(
   ({ route, navigation }: Props) => {
+    const list: List = route.params.list
+
     const { loading, data, refetch } = useQuery(LIST_QUERY, {
-      variables: { id: route.params.list.id },
+      variables: { id: list.id },
     })
-
-    const shareActionSheet = () => {
-      const shareUrl = `https://groceryti.me/share/${route.params.list.id}`
-      return ActionSheetIOS.showShareActionSheetWithOptions(
-        {
-          message: `I'd like to work on my grocery list "${route.params.list.name}" with you in the app GroceryTime. Click here to join: ${shareUrl}`,
-        },
-        (error) => console.log(error),
-        (success, method) => console.log(success, method),
-      )
-    }
-
-    const menuActionSheet = () => {
-      return ActionSheetIOS.showActionSheetWithOptions(
-        {
-          options: ['Share with others...', 'Delete list...', 'Dismiss'],
-          destructiveButtonIndex: 1,
-          cancelButtonIndex: 2,
-        },
-        (buttonIdx) => {
-          console.log(`Tapped buttonIdx ${buttonIdx}`)
-          if (buttonIdx === 0) {
-            shareActionSheet()
-          } else if (buttonIdx === 1) {
-            deleteListConfirmationActionSheet()
-          }
-        },
-      )
-    }
-
-    const deleteListConfirmationActionSheet = () => {
-      //TODO consider: if the list is shared, do we need to do anything
-      // different when deleting it? (at least a diff message)
-      return ActionSheetIOS.showActionSheetWithOptions(
-        {
-          message:
-            'Are you sure you want to delete this list? You cannot undo this action.',
-          options: ['Delete', 'Dismiss'],
-          destructiveButtonIndex: 0,
-          cancelButtonIndex: 1,
-        },
-        (buttonIdx) => {
-          if (buttonIdx === 0) {
-            //TODO call delete list mutation
-          }
-        },
-      )
-    }
 
     React.useLayoutEffect(() => {
       navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity
             style={styles.headerButton}
-            onPress={() => menuActionSheet()}>
+            onPress={() => listActionSheet(list)}>
             <Image
               style={styles.icon}
               source={require('../../assets/icons/MenuVerticalWhite.png')}
@@ -94,7 +49,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
           </TouchableOpacity>
         ),
       })
-    }, [])
+    }, [navigation])
 
     if (loading) {
       return (

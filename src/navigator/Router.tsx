@@ -9,6 +9,7 @@ import LoginScreen from '../screens/Auth/LoginScreen'
 import SignupScreen from '../screens/Auth/SignupScreen'
 import ListsScreen from '../screens/ListsScreen/ListsScreen'
 import NewListScreen from '../screens/NewListScreen/NewListScreen'
+import ShareListScreen from '../screens/ShareListScreen/ShareListScreen'
 import ListViewScreen from '../screens/ListViewScreen/ListViewScreen'
 
 import AuthContext from '../context/AuthContext'
@@ -127,6 +128,11 @@ const Router = () => {
             name="NewList"
             component={NewListScreen}
             options={{ title: 'New List' }}
+          />
+          <RootStack.Screen
+            name="ShareList"
+            component={ShareListScreen}
+            options={{ title: 'Share List' }}
           />
         </RootStack.Navigator>
 

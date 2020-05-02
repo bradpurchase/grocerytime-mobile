@@ -8,12 +8,8 @@ import {
   Alert,
   StyleSheet,
 } from 'react-native'
-import { RouteProp } from '@react-navigation/native'
 
-import {
-  NewListNavigationProp,
-  RootStackParamList,
-} from '../../navigator/types'
+import { NewListNavigationProp } from '../../navigator/types'
 
 import { useMutation } from '@apollo/react-hooks'
 import { CREATE_LIST_MUTATION } from '../../queries/createList'
@@ -32,6 +28,7 @@ type FormData = {
 
 const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
   const [formData, setFormData] = React.useState<FormData>({ name: '' })
+  const nameEmpty = formData.name.length === 0
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -45,12 +42,12 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
       headerRight: () => (
         <TouchableOpacity
           style={styles.headerButton}
-          activeOpacity={formData.name.length === 0 ? 1 : 0.7}
-          onPress={() => createList()}>
+          activeOpacity={nameEmpty ? 1 : 0.7}
+          onPress={() => (nameEmpty ? {} : createList())}>
           <Text
             style={StyleSheet.flatten([
               styles.headerButtonLabel,
-              { opacity: formData.name.length === 0 ? 0.7 : 1 },
+              { opacity: nameEmpty ? 0.7 : 1 },
             ])}>
             Done
           </Text>
@@ -68,7 +65,12 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
     },
     onCompleted: (data) => {
       if (data.createList?.id) {
-        navigation.goBack()
+        navigation.navigate('ShareList', {
+          list: {
+            id: data.createList.id,
+            name: formData.name,
+          },
+        })
       }
     },
   })
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
     width: 70,
   },
   headerButtonLabel: {
-    color: '#fff',
+    color: colors.WHITE,
     fontFamily: fonts.REGULAR,
     fontSize: 16,
   },

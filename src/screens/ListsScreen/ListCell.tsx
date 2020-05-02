@@ -1,17 +1,12 @@
 import * as React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 import { ListCellNavigationProp } from '../../navigator/types'
 
+import { listActionSheet } from '../../helpers/ListActions'
+import { List } from '../../types/List'
 import colors from '../../styles/colors'
 import fonts from '../../styles/fonts'
-
-interface List {
-  id: string
-  name: string
-  itemsCount: number
-}
 
 interface Props {
   list: List
@@ -22,13 +17,15 @@ const ListCell: React.FC<Props> = React.memo(({ list, navigation }: Props) => {
   const { name, itemsCount } = list
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => navigation.navigate('ListView', { list })}>
+    <TouchableOpacity
+      activeOpacity={1}
+      onPress={() => navigation.navigate('ListView', { list })}
+      onLongPress={() => listActionSheet(list)}>
       <View style={styles.container}>
         <Text style={styles.title}>{name}</Text>
         <Text style={styles.subtitle}>{itemsCount} items</Text>
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   )
 })
 

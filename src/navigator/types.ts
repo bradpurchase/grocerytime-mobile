@@ -6,6 +6,7 @@ export type RootStackParamList = {
   Signup: undefined
   Lists: undefined
   NewList: undefined
+  ShareList: { list: { id: string; name: string } }
   ListView: { list: { id: string; name: string } }
 }
 
@@ -22,6 +23,11 @@ export type ListCellNavigationProp = StackNavigationProp<
 export type NewListNavigationProp = StackNavigationProp<
   RootStackParamList,
   'NewList'
+>
+
+export type ShareListNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'ShareList'
 >
 
 export type ListViewNavigationProp = StackNavigationProp<
