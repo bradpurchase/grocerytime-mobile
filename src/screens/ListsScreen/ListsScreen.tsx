@@ -30,7 +30,7 @@ const ListsScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
       refetch()
     })
     return refetchOnFocus
-  }, [navigation])
+  }, [])
 
   React.useLayoutEffect(() => {
     navigation.setOptions({

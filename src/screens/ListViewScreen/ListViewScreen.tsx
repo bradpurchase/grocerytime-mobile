@@ -13,8 +13,10 @@ import {
   ListViewNavigationProp,
 } from '../../navigator/types'
 
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import { LIST_QUERY } from '../../queries/list'
+import { DELETE_LIST_MUTATION } from '../../queries/deleteList'
+import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
 
 import ListContext from '../../context/ListContext'
 import { listActionSheet } from '../../helpers/ListActions'
@@ -36,12 +38,23 @@ const ListViewScreen: React.FC<Props> = React.memo(
       variables: { id: list.id },
     })
 
+    const [deleteList] = useMutation<
+      DeleteListTypes.DeleteList,
+      DeleteListTypes.DeleteListVariables
+    >(DELETE_LIST_MUTATION, {
+      onCompleted: (data) => {
+        if (data.deleteList?.id) {
+          navigation.popToTop()
+        }
+      },
+    })
+
     React.useLayoutEffect(() => {
       navigation.setOptions({
         headerRight: () => (
           <TouchableOpacity
             style={styles.headerButton}
-            onPress={() => listActionSheet(list)}>
+            onPress={() => listActionSheet(list, deleteList)}>
             <Image
               style={styles.icon}
               source={require('../../assets/icons/MenuVerticalWhite.png')}
