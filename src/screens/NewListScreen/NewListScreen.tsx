@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from 'react-native'
 
-import { NewListNavigationProp } from '../../navigator/types'
+import { NewListNavigationProp } from '../../types/Navigation'
 
 import { useMutation } from '@apollo/react-hooks'
 import { CREATE_LIST_MUTATION } from '../../queries/createList'

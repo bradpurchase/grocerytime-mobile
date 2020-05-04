@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
-import { ListCellNavigationProp } from '../../navigator/types'
+import { ListCellNavigationProp } from '../../types/Navigation'
 
 import { useMutation } from '@apollo/react-hooks'
 import { DELETE_LIST_MUTATION } from '../../queries/deleteList'
@@ -29,6 +29,7 @@ const ListCell: React.FC<Props> = React.memo(
       DeleteListTypes.DeleteListVariables
     >(DELETE_LIST_MUTATION, {
       onCompleted: (data) => {
+        console.log(data)
         if (data.deleteList?.id) {
           refetchList()
         }
@@ -39,7 +40,15 @@ const ListCell: React.FC<Props> = React.memo(
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => navigation.navigate('ListView', { list })}
-        onLongPress={() => listActionSheet(list, deleteList)}>
+        onLongPress={() =>
+          listActionSheet(
+            list,
+            () => {
+              navigation.navigate('RenameList', { list })
+            },
+            deleteList,
+          )
+        }>
         <View style={styles.container}>
           <Text style={styles.title}>{name}</Text>
           <Text style={styles.subtitle}>{itemsCount} items</Text>

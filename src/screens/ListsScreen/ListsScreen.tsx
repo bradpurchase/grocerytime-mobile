@@ -12,7 +12,7 @@ import {
 import { useQuery } from '@apollo/react-hooks'
 import { ME_QUERY } from '../../queries/me'
 
-import { ListCellNavigationProp } from '../../navigator/types'
+import { ListCellNavigationProp } from '../../types/Navigation'
 import AuthContext from '../../context/AuthContext'
 
 import ListCell from './ListCell'

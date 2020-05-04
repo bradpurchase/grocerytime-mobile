@@ -6,7 +6,7 @@ import { ApolloError } from 'apollo-boost'
 import { LOGIN_MUTATION } from '../../queries/login'
 import * as TokenMutationTypes from '../../queries/__generated__/TokenMutation'
 
-import { LoginNavigationProp } from '../../navigator/types'
+import { LoginNavigationProp } from '../../types/Navigation'
 
 import colors from '../../styles/colors'
 import fonts from '../../styles/fonts'

@@ -5,7 +5,7 @@ import { RouteProp } from '@react-navigation/native'
 import {
   RootStackParamList,
   ShareListNavigationProp,
-} from '../../navigator/types'
+} from '../../types/Navigation'
 
 import { List } from '../../types/List'
 import { shareActionSheet } from '../../helpers/ListActions'

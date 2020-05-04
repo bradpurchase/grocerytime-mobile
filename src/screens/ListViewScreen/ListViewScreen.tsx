@@ -11,7 +11,7 @@ import { RouteProp } from '@react-navigation/native'
 import {
   RootStackParamList,
   ListViewNavigationProp,
-} from '../../navigator/types'
+} from '../../types/Navigation'
 
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { LIST_QUERY } from '../../queries/list'
@@ -54,7 +54,15 @@ const ListViewScreen: React.FC<Props> = React.memo(
         headerRight: () => (
           <TouchableOpacity
             style={styles.headerButton}
-            onPress={() => listActionSheet(list, deleteList)}>
+            onPress={() =>
+              listActionSheet(
+                list,
+                () => {
+                  navigation.navigate('RenameList', { list })
+                },
+                deleteList,
+              )
+            }>
             <Image
               style={styles.icon}
               source={require('../../assets/icons/MenuVerticalWhite.png')}

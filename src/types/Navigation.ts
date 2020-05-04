@@ -1,4 +1,5 @@
 import { StackNavigationProp } from '@react-navigation/stack'
+import { List } from './List'
 
 export type RootStackParamList = {
   Main: undefined
@@ -6,8 +7,9 @@ export type RootStackParamList = {
   Signup: undefined
   Lists: undefined
   NewList: undefined
-  ShareList: { list: { id: string; name: string } }
-  ListView: { list: { id: string; name: string } }
+  RenameList: { list: List }
+  ShareList: { list: List }
+  ListView: { list: List }
 }
 
 export type LoginNavigationProp = StackNavigationProp<
@@ -23,6 +25,11 @@ export type ListCellNavigationProp = StackNavigationProp<
 export type NewListNavigationProp = StackNavigationProp<
   RootStackParamList,
   'NewList'
+>
+
+export type RenameListNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'RenameList'
 >
 
 export type ShareListNavigationProp = StackNavigationProp<

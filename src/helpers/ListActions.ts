@@ -32,18 +32,28 @@ const deleteListConfirmationActionSheet = (
   )
 }
 
-export const listActionSheet = (list: List, deleteList: Function) => {
+export const listActionSheet = (
+  list: List,
+  renameList: Function,
+  deleteList: Function,
+) => {
   return ActionSheetIOS.showActionSheetWithOptions(
     {
-      options: ['Share with others...', 'Delete list...', 'Dismiss'],
-      destructiveButtonIndex: 1,
-      cancelButtonIndex: 2,
+      options: [
+        'Rename list...',
+        'Share with others...',
+        'Delete list...',
+        'Dismiss',
+      ],
+      destructiveButtonIndex: 2,
+      cancelButtonIndex: 3,
     },
     (buttonIdx) => {
-      console.log(`Tapped buttonIdx ${buttonIdx}`)
       if (buttonIdx === 0) {
-        shareActionSheet(list)
+        renameList()
       } else if (buttonIdx === 1) {
+        shareActionSheet(list)
+      } else if (buttonIdx === 2) {
         deleteListConfirmationActionSheet(list, deleteList)
       }
     },

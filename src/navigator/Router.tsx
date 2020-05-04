@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StatusBar, Button, ActivityIndicator } from 'react-native'
+import { StatusBar, ActivityIndicator } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { enableScreens } from 'react-native-screens'
@@ -16,7 +16,7 @@ import AuthContext from '../context/AuthContext'
 import colors from '../styles/colors'
 import fonts from '../styles/fonts'
 
-import { RootStackParamList } from './types'
+import { RootStackParamList } from '../types/Navigation'
 
 import { setAccessToken, clearTokens, getAccessToken } from '../services/token'
 
@@ -126,6 +126,11 @@ const Router = () => {
           />
           <RootStack.Screen
             name="NewList"
+            component={NewListScreen}
+            options={{ title: 'New List' }}
+          />
+          <RootStack.Screen
+            name="RenameList"
             component={NewListScreen}
             options={{ title: 'New List' }}
           />
