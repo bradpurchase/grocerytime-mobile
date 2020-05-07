@@ -102,6 +102,7 @@ const RenameListScreen: React.FC<Props> = React.memo(
                 placeholderTextColor="#666"
                 placeholder={item}
                 clearButtonMode="while-editing"
+                autoCapitalize="words"
                 defaultValue={route.params.list.name}
                 onChangeText={(text) =>
                   setFormData({ ...formData, name: text })

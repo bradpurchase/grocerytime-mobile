@@ -6,6 +6,7 @@ import {
   RefreshControl,
   TouchableOpacity,
   Image,
+  Alert,
   StyleSheet,
 } from 'react-native'
 
@@ -21,23 +22,37 @@ interface Props {
   navigation: ListCellNavigationProp
 }
 
-const ListsScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
+const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
   const { loading, data, refetch } = useQuery(ME_QUERY)
   const authContext = React.useContext(AuthContext)
 
   React.useEffect(() => {
     const refetchOnFocus = navigation.addListener('focus', () => {
+      console.log('[refetchOnFocus] refetching lists...')
       refetch()
     })
     return refetchOnFocus
-  }, [])
+  }, [navigation])
+
+  const settingsAlert = () =>
+    Alert.alert('Log out?', 'Are you sure you want to log out?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Log Out',
+        onPress: () => authContext.logout(),
+      },
+    ])
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
         <TouchableOpacity
           style={styles.headerButton}
-          onPress={() => authContext.logout()}>
+          onPress={() => settingsAlert()}>
           <Image
             style={styles.icon}
             source={require('../../assets/icons/Settings.png')}
@@ -82,7 +97,7 @@ const ListsScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
       )}
     </View>
   )
-})
+}
 
 const styles = StyleSheet.create({
   container: {

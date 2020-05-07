@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   SectionList,
   TextInput,
+  Keyboard,
   Alert,
   StyleSheet,
 } from 'react-native'
@@ -65,6 +66,7 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
     },
     onCompleted: (data) => {
       if (data.createList?.id) {
+        Keyboard.dismiss()
         navigation.navigate('ShareList', {
           list: {
             id: data.createList.id,
@@ -104,6 +106,7 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
               placeholderTextColor="#666"
               placeholder={item}
               clearButtonMode="while-editing"
+              autoCapitalize="words"
               onChangeText={(text) => setFormData({ ...formData, name: text })}
             />
           </View>

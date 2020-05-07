@@ -125,9 +125,12 @@ const App = () => {
   // opened in modal mode, like SettingsScreen and NewListScreen
   //
   //TODO would love to find a cleaner way to do this.. this seems bizzare
+  const linking = {
+    prefixes: ['grocerytime://'],
+  }
   return (
     <AuthContext.Provider value={{ token, login, logout }}>
-      <NavigationContainer>
+      <NavigationContainer linking={linking}>
         <RootStack.Navigator
           mode="modal"
           screenOptions={{

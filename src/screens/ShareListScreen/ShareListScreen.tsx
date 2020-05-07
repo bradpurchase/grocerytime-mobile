@@ -1,5 +1,11 @@
 import * as React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import {
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native'
 
 import { RouteProp } from '@react-navigation/native'
 import {
@@ -37,7 +43,7 @@ const ShareListScreen: React.FC<Props> = React.memo(
     })
 
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text style={styles.heading}>Your list was created!</Text>
         <Text style={styles.textLabel}>
           Next, share this list with others. Tap the button below to share this
@@ -55,7 +61,7 @@ const ShareListScreen: React.FC<Props> = React.memo(
             onPress={() => shareActionSheet(list)}
           />
         </View>
-      </View>
+      </ScrollView>
     )
   },
 )
