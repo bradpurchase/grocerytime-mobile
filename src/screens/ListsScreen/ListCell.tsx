@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { TouchableOpacity, Text } from 'react-native'
+import { useTheme } from '@react-navigation/native'
 
 import { ListCellNavigationProp } from '../../types/Navigation'
 
@@ -9,8 +10,6 @@ import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
 
 import { listActionSheet } from '../../helpers/ListActions'
 import { List } from '../../types/List'
-import colors from '../../styles/colors'
-import fonts from '../../styles/fonts'
 
 interface Props {
   list: List
@@ -20,6 +19,8 @@ interface Props {
 
 const ListCell: React.FC<Props> = React.memo(
   ({ list, navigation, refetchList }: Props) => {
+    const { colors } = useTheme()
+
     const { name, itemsCount } = list
 
     //TODO figure out how to avoid needing to share this useMutation
@@ -38,6 +39,14 @@ const ListCell: React.FC<Props> = React.memo(
 
     return (
       <TouchableOpacity
+        style={{
+          backgroundColor: colors.card,
+          borderRadius: 8,
+          flex: 1,
+          marginHorizontal: 10,
+          marginBottom: 10,
+          padding: 20,
+        }}
         activeOpacity={1}
         onPress={() => navigation.navigate('ListView', { list })}
         onLongPress={() =>
@@ -49,36 +58,23 @@ const ListCell: React.FC<Props> = React.memo(
             deleteList,
           )
         }>
-        <View style={styles.container}>
-          <Text style={styles.title}>{name}</Text>
-          <Text style={styles.subtitle}>{itemsCount} items</Text>
-        </View>
+        <Text
+          style={{
+            color: colors.text,
+            fontSize: 16,
+            marginBottom: 10,
+          }}>
+          {name}
+        </Text>
+        <Text
+          style={{
+            color: colors.subtitle,
+            fontSize: 14,
+          }}>
+          {itemsCount} items
+        </Text>
       </TouchableOpacity>
     )
   },
 )
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.WHITE,
-    borderRadius: 8,
-    flex: 1,
-    marginHorizontal: 10,
-    marginBottom: 10,
-    padding: 20,
-  },
-  title: {
-    color: colors.BLACK,
-    fontFamily: fonts.REGULAR,
-    fontSize: 17,
-    fontWeight: '600',
-    marginBottom: 10,
-  },
-  subtitle: {
-    color: colors.DARK_GREY,
-    fontFamily: fonts.REGULAR,
-    fontSize: 15,
-  },
-})
-
 export default ListCell

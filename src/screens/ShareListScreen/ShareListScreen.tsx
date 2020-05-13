@@ -18,7 +18,6 @@ import { shareActionSheet } from '../../helpers/ListActions'
 
 import Button from '../../components/Button'
 import colors from '../../styles/colors'
-import fonts from '../../styles/fonts'
 
 interface Props {
   route: RouteProp<RootStackParamList, 'ShareList'>
@@ -81,20 +80,17 @@ const styles = StyleSheet.create({
   },
   headerButtonLabel: {
     color: colors.WHITE,
-    fontFamily: fonts.REGULAR,
     fontSize: 16,
   },
   heading: {
     textAlign: 'center',
-    fontSize: 18,
-    fontWeight: '500',
-    fontFamily: fonts.REGULAR,
+    fontSize: 24,
+    fontWeight: '700',
     marginBottom: 30,
   },
   textLabel: {
     textAlign: 'center',
     color: colors.DARK_GREY,
-    fontFamily: fonts.REGULAR,
     fontSize: 16,
     lineHeight: 22,
     marginBottom: 30,

@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import fonts from '../styles/fonts'
+import { Text, View } from 'react-native'
+import { useTheme } from '@react-navigation/native'
 
 interface Props {
   title: string
@@ -8,32 +8,28 @@ interface Props {
 }
 
 const EmptyState: React.FC<Props> = (props) => {
+  const { colors } = useTheme()
   const { title, body } = props
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      {body && <Text style={styles.body}>{body}</Text>}
+    <View
+      style={{
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'center',
+      }}>
+      <Text
+        style={{
+          color: colors.text,
+          fontSize: 21,
+          fontWeight: '500',
+          marginBottom: 10,
+        }}>
+        {title}
+      </Text>
+      {body && <Text style={{ color: colors.subtitle, fontSize: 18 }}>{body}</Text>}
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  title: {
-    fontFamily: fonts.REGULAR,
-    fontSize: 21,
-    fontWeight: '500',
-    marginBottom: 10,
-  },
-  body: {
-    fontSize: 16,
-    fontFamily: fonts.REGULAR,
-  },
-})
 
 export default EmptyState

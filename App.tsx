@@ -16,6 +16,9 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { enableScreens } from 'react-native-screens'
 enableScreens()
 
+import { AppearanceProvider, useColorScheme } from 'react-native-appearance'
+import { LightTheme, DarkTheme } from './src/styles/themes'
+
 import LoginScreen from './src/screens/Auth/LoginScreen'
 import SignupScreen from './src/screens/Auth/SignupScreen'
 
@@ -27,8 +30,8 @@ import ShareListScreen from './src/screens/ShareListScreen/ShareListScreen'
 import ListViewScreen from './src/screens/ListViewScreen/ListViewScreen'
 
 import AuthContext from './src/context/AuthContext'
+
 import colors from './src/styles/colors'
-import fonts from './src/styles/fonts'
 
 import { RootStackParamList } from './src/types/Navigation'
 
@@ -42,6 +45,9 @@ const MainStack = createStackNavigator<RootStackParamList>()
 const RootStack = createStackNavigator<RootStackParamList>()
 
 const App = () => {
+  // Subscribe to system color scheme changes (light/dark)
+  const scheme = useColorScheme()
+
   const [loaded, setLoaded] = useState<boolean>(false)
   const [token, setToken] = useState<string>('')
 
@@ -82,15 +88,19 @@ const App = () => {
     checkAuthentication()
   }, [])
 
+  const screenOptions = {
+    headerStyle: {
+      backgroundColor: colors.RED,
+      shadowRadius: 0,
+      shadowOffset: {
+        height: 0,
+        width: 0,
+      },
+    },
+    headerTintColor: colors.WHITE,
+  }
   const MainStackScreen = () => (
-    <MainStack.Navigator
-      screenOptions={{
-        headerStyle: { backgroundColor: colors.RED },
-        headerTintColor: colors.WHITE,
-        headerTitleStyle: {
-          fontFamily: fonts.REGULAR,
-        },
-      }}>
+    <MainStack.Navigator screenOptions={screenOptions}>
       {token ? (
         <>
           <RootStack.Screen name="Lists" component={ListsScreen} />
@@ -121,49 +131,46 @@ const App = () => {
     return <ActivityIndicator size="large" />
   }
 
-  // We use two different stack navigators here because some of them need to be
-  // opened in modal mode, like SettingsScreen and NewListScreen
-  //
-  //TODO would love to find a cleaner way to do this.. this seems bizzare
   const linking = {
     prefixes: ['grocerytime://'],
+    config: {
+      ListView: {
+        path: 'list/:id',
+      },
+    },
   }
   return (
     <AuthContext.Provider value={{ token, login, logout }}>
-      <NavigationContainer linking={linking}>
-        <RootStack.Navigator
-          mode="modal"
-          screenOptions={{
-            headerStyle: { backgroundColor: colors.RED },
-            headerTintColor: colors.WHITE,
-            headerTitleStyle: {
-              fontFamily: fonts.REGULAR,
-            },
-          }}>
-          <RootStack.Screen
-            name="Main"
-            component={MainStackScreen}
-            options={{ headerShown: false }}
-          />
-          <RootStack.Screen
-            name="NewList"
-            component={NewListScreen}
-            options={{ title: 'New List' }}
-          />
-          <RootStack.Screen
-            name="RenameList"
-            component={RenameListScreen}
-            options={{ title: 'Rename List' }}
-          />
-          <RootStack.Screen
-            name="ShareList"
-            component={ShareListScreen}
-            options={{ title: 'Share List' }}
-          />
-        </RootStack.Navigator>
+      <AppearanceProvider>
+        <NavigationContainer
+          theme={scheme === 'dark' ? DarkTheme : LightTheme}
+          linking={linking}>
+          <RootStack.Navigator mode="modal" screenOptions={screenOptions}>
+            <RootStack.Screen
+              name="Main"
+              component={MainStackScreen}
+              options={{ headerShown: false }}
+            />
+            <RootStack.Screen
+              name="NewList"
+              component={NewListScreen}
+              options={{ title: 'New List' }}
+            />
+            <RootStack.Screen
+              name="RenameList"
+              component={RenameListScreen}
+              options={{ title: 'Rename List' }}
+            />
+            <RootStack.Screen
+              name="ShareList"
+              component={ShareListScreen}
+              options={{ title: 'Share List' }}
+            />
+          </RootStack.Navigator>
 
-        <StatusBar barStyle="light-content" />
-      </NavigationContainer>
+          <StatusBar barStyle="light-content" />
+        </NavigationContainer>
+      </AppearanceProvider>
     </AuthContext.Provider>
   )
 }

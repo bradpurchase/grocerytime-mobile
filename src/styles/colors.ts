@@ -1,8 +1,14 @@
 const colors = {
-  RED: '#e53e3e',
   BLACK: '#000',
+  WHITE: '#fff',
+  RED: '#e53e3e',
+  LIGHTEST_GREY: 'rgba(242, 242, 247, 1)',
+  LIGHT_GREY: '#ddd',
   MEDIUM_GREY: '#717171',
   DARK_GREY: '#666',
-  WHITE: '#fff',
+  BG_LIGHT: 'rgba(242, 242, 247, 1)',
+  BG_DARK: 'rgba(28, 28, 30, 1)',
+  CARD_LIGHT: '#fff',
+  CARD_DARK: 'rgba(72, 72, 74, 1)',
 }
 export default colors

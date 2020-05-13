@@ -1,16 +1,16 @@
 import * as React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import colors from '../styles/colors'
-import fonts from '../styles/fonts'
 
 interface Props {
   label: string
   onPress: () => void
   disabled?: boolean
+  transparent?: boolean
 }
 
 const Button: React.FC<Props> = (props) => {
-  const { label, onPress, disabled } = props
+  const { label, onPress, disabled, transparent } = props
 
   const handleOnPress = () => {
     if (disabled) return null
@@ -22,7 +22,12 @@ const Button: React.FC<Props> = (props) => {
       onPress={handleOnPress}
       style={styles.container}
       activeOpacity={disabled ? 1 : 0.9}>
-      <View style={disabled ? styles.disabledButton : styles.button}>
+      <View
+        style={StyleSheet.flatten([
+          styles.button,
+          disabled && styles.disabledButton,
+          transparent && styles.transparentButton,
+        ])}>
         <Text style={styles.text}>{label}</Text>
       </View>
     </TouchableOpacity>
@@ -36,23 +41,22 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   button: {
-    backgroundColor: colors.WHITE,
+    backgroundColor: colors.RED,
     borderRadius: 4,
     opacity: 1,
-    paddingVertical: 12,
+    paddingVertical: 16,
     width: '100%',
   },
   disabledButton: {
-    backgroundColor: colors.WHITE,
-    borderRadius: 4,
-    opacity: 0.5,
-    paddingVertical: 12,
-    width: '100%',
+    opacity: 0.9,
+  },
+  transparentButton: {
+    backgroundColor: 'transparent',
   },
   text: {
-    color: colors.BLACK,
-    fontFamily: fonts.REGULAR,
-    fontWeight: '700',
+    color: colors.WHITE,
+    fontSize: 16,
+    fontWeight: '500',
     height: 20,
     textAlign: 'center',
   },

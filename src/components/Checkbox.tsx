@@ -1,19 +1,23 @@
 import * as React from 'react'
-import { StyleSheet, TouchableOpacity, Text, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 interface Props {
   checked: boolean
-  onPress?: () => void
+  onPress: () => void
 }
 
 const Checkbox: React.FC<Props> = (props) => {
   const { checked, onPress } = props
 
+  const handleOnPress = () => {
+    onPress()
+  }
+
   return (
     <TouchableOpacity
       activeOpacity={0.9}
       style={styles.container}
-      onPress={onPress}>
+      onPress={handleOnPress}>
       <View
         style={StyleSheet.flatten([
           styles.checkbox,

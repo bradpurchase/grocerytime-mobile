@@ -61,11 +61,11 @@ const AppComponent = () => {
                       authorization: `Bearer ${newToken}`,
                     },
                   })
-                  return forward(operation)
                 })
                 .catch((err) => {
                   console.log(err)
                 })
+              return forward(operation)
             })
           }
         }

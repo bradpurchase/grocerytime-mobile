@@ -50,9 +50,8 @@ export const retrieveNewAccessToken = async (): Promise<string | null> => {
       console.log(data)
       const tokens = data.data.token
       if (!tokens) {
-        throw new Error(
-          `couldn't retrieve new access token with refresh token ${refreshToken}`,
-        )
+        clearTokens()
+        return null
       }
       setAccessToken(tokens)
       return tokens.accessToken

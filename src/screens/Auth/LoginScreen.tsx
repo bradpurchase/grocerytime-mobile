@@ -1,5 +1,15 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { View, Text, TextInput, StyleSheet, Alert } from 'react-native'
+import {
+  View,
+  ScrollView,
+  Dimensions,
+  ImageBackground,
+  Image,
+  TextInput,
+  StyleSheet,
+  Alert,
+} from 'react-native'
+const { width, height } = Dimensions.get('window')
 
 import { useMutation } from '@apollo/react-hooks'
 import { ApolloError } from 'apollo-boost'
@@ -9,7 +19,6 @@ import * as TokenMutationTypes from '../../queries/__generated__/TokenMutation'
 import { LoginNavigationProp } from '../../types/Navigation'
 
 import colors from '../../styles/colors'
-import fonts from '../../styles/fonts'
 import Button from '../../components/Button'
 
 import AuthContext from '../../context/AuthContext'
@@ -56,38 +65,50 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headingLabel}>Sign in</Text>
-      <View style={styles.form}>
-        <TextInput
-          placeholderTextColor="#ddd"
-          style={styles.textInput}
-          placeholder="Email"
-          keyboardType="email-address"
-          autoCompleteType="email"
-          autoCapitalize="none"
-          onChangeText={(text) => setEmail(text)}
-          editable={!submitting}
-        />
-        <TextInput
-          placeholderTextColor="#ddd"
-          style={styles.textInput}
-          placeholder="Password"
-          secureTextEntry
-          returnKeyType="done"
-          onChangeText={(text) => setPassword(text)}
-          editable={!submitting}
-          onSubmitEditing={() => handleLoginButtonPress()}
-        />
-        <Button
-          label="Sign in"
-          onPress={handleLoginButtonPress}
-          disabled={email.length === 0 || password.length === 0 || submitting}
-        />
-        <Button
-          label="I don't have an account yet!"
-          onPress={() => navigation.navigate('Signup')}
-        />
-      </View>
+      <ImageBackground
+        style={styles.bgImage}
+        source={require('../../assets/images/AuthScreensBG.png')}>
+        <ScrollView contentContainerStyle={styles.formContainer}>
+          <Image
+            style={styles.logo}
+            source={require('../../assets/images/LogoWhite.png')}
+          />
+          <View style={styles.form}>
+            <TextInput
+              placeholderTextColor="#666"
+              style={styles.textInput}
+              placeholder="Email"
+              keyboardType="email-address"
+              autoCompleteType="email"
+              autoCapitalize="none"
+              onChangeText={(text) => setEmail(text)}
+              editable={!submitting}
+            />
+            <TextInput
+              placeholderTextColor="#666"
+              style={styles.textInput}
+              placeholder="Password"
+              secureTextEntry
+              returnKeyType="done"
+              onChangeText={(text) => setPassword(text)}
+              editable={!submitting}
+              onSubmitEditing={() => handleLoginButtonPress()}
+            />
+            <Button
+              label="Log in"
+              onPress={handleLoginButtonPress}
+              disabled={
+                email.length === 0 || password.length === 0 || submitting
+              }
+            />
+            <Button
+              label="I don't have an account yet!"
+              onPress={() => navigation.navigate('Signup')}
+              transparent
+            />
+          </View>
+        </ScrollView>
+      </ImageBackground>
     </View>
   )
 }
@@ -95,28 +116,44 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: colors.BLACK,
     flex: 1,
     justifyContent: 'center',
   },
+  bgImage: {
+    width: width,
+    height: height,
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    resizeMode: 'contain',
+  },
+  logo: {
+    justifyContent: 'center',
+    resizeMode: 'contain',
+    width: '50%',
+  },
+  formContainer: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    width: width,
+  },
   headingLabel: {
     color: colors.WHITE,
-    fontFamily: fonts.REGULAR,
     fontSize: 32,
-    fontWeight: '800',
+    fontWeight: '500',
   },
   form: {
     width: '80%',
-    marginTop: 50,
+    marginTop: 20,
   },
   textInput: {
-    backgroundColor: '#333',
+    backgroundColor: colors.WHITE,
     borderRadius: 4,
-    color: colors.WHITE,
-    fontFamily: fonts.REGULAR,
+    color: colors.BLACK,
     fontSize: 16,
     fontWeight: '500',
-    marginBottom: 20,
+    marginBottom: 15,
     height: 50,
     paddingHorizontal: 20,
   },

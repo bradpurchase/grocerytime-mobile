@@ -8,7 +8,6 @@ import { ADD_ITEM_TO_LIST_MUTATION } from '../../queries/addItemToList'
 import * as AddItemToListTypes from '../../queries/__generated__/AddItemToList'
 
 import colors from '../../styles/colors'
-import fonts from '../../styles/fonts'
 
 const AddItemInput: React.FC = React.memo(() => {
   const listContext = React.useContext(ListContext)
@@ -59,6 +58,8 @@ const AddItemInput: React.FC = React.memo(() => {
         ref={textInputRef}
         onChangeText={(text) => setItem(text)}
         onSubmitEditing={() => handleAddItem()}
+        autoCorrect={false}
+        autoCapitalize="words"
       />
     </View>
   )
@@ -67,15 +68,14 @@ const AddItemInput: React.FC = React.memo(() => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: '#ddd',
-    borderRadius: 64,
+    backgroundColor: colors.LIGHT_GREY,
+    borderRadius: 8,
     color: colors.BLACK,
     flexDirection: 'row',
-    fontFamily: fonts.REGULAR,
     margin: 20,
     marginHorizontal: 10,
-    height: 50,
-    paddingHorizontal: 20,
+    paddingHorizontal: 22,
+    paddingVertical: 18,
   },
   icon: {
     alignItems: 'center',

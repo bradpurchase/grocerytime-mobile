@@ -20,7 +20,6 @@ import { UPDATE_LIST_MUTATION } from '../../queries/updateList'
 import * as UpdateListTypes from '../../queries/__generated__/UpdateList'
 
 import colors from '../../styles/colors'
-import fonts from '../../styles/fonts'
 
 interface Props {
   route: RouteProp<RootStackParamList, 'RenameList'>
@@ -131,7 +130,6 @@ const styles = StyleSheet.create({
   },
   headerButtonLabel: {
     color: colors.WHITE,
-    fontFamily: fonts.REGULAR,
     fontSize: 16,
   },
   inputCell: {
@@ -141,7 +139,6 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontFamily: fonts.REGULAR,
     fontWeight: '500',
     padding: 10,
     paddingHorizontal: 20,
@@ -149,13 +146,11 @@ const styles = StyleSheet.create({
   },
   input: {
     flexDirection: 'column',
-    fontFamily: fonts.REGULAR,
     fontSize: 16,
     paddingVertical: 5,
   },
   sectionFooter: {
     color: colors.MEDIUM_GREY,
-    fontFamily: fonts.REGULAR,
     fontSize: 14,
     lineHeight: 22,
     marginTop: 25,

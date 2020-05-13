@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text } from 'react-native'
+import { useTheme } from '@react-navigation/native'
 
 import { Item } from './types'
 import Checkbox from '../../components/Checkbox'
@@ -7,8 +8,6 @@ import Checkbox from '../../components/Checkbox'
 import { useMutation } from '@apollo/react-hooks'
 import { UPDATE_ITEM_MUTATION } from '../../queries/updateItem'
 
-import colors from '../../styles/colors'
-import fonts from '../../styles/fonts'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 interface Props {
@@ -16,6 +15,8 @@ interface Props {
 }
 
 const ItemCell: React.FC<Props> = React.memo(({ item }) => {
+  const { colors } = useTheme()
+
   const { id, name, quantity, completed } = item
 
   const [updateItem] = useMutation(UPDATE_ITEM_MUTATION, {
@@ -34,51 +35,39 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
   })
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        backgroundColor: colors.card,
+        borderRadius: 8,
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 18,
+        marginHorizontal: 10,
+        marginBottom: 10,
+      }}>
       <TouchableOpacity
         activeOpacity={0.9}
-        style={styles.checkboxTapArea}
+        style={{
+          flexDirection: 'row',
+          width: 200,
+        }}
         onPress={() => updateItem()}>
-        <Checkbox checked={completed} />
+        <Checkbox checked={completed} onPress={() => updateItem()} />
         <Text
-          style={StyleSheet.flatten([
-            styles.title,
-            completed && styles.strikedTitle,
-          ])}>
+          style={{
+            color: colors.text,
+            fontSize: 16,
+            fontWeight: '400',
+            flexDirection: 'column',
+            marginLeft: 15,
+            textDecorationLine: completed ? 'line-through' : 'none',
+          }}>
           {name} {quantity > 1 && `(${quantity})`}
         </Text>
       </TouchableOpacity>
     </View>
   )
-})
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.WHITE,
-    borderRadius: 8,
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 18,
-    marginHorizontal: 10,
-    marginBottom: 10,
-  },
-  checkboxTapArea: {
-    flexDirection: 'row',
-    width: 200,
-  },
-  title: {
-    color: colors.BLACK,
-    fontFamily: fonts.REGULAR,
-    fontSize: 16,
-    fontWeight: '400',
-    flexDirection: 'column',
-    marginLeft: 15,
-  },
-  strikedTitle: {
-    textDecorationLine: 'line-through',
-    textDecorationStyle: 'solid',
-  },
 })
 
 export default ItemCell

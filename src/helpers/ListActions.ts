@@ -19,7 +19,7 @@ const deleteListConfirmationActionSheet = (
   return ActionSheetIOS.showActionSheetWithOptions(
     {
       message:
-        'Are you sure you want to delete this list? If this list is shared, the other members will be notified. You cannot undo this action.',
+        'Are you sure you want to delete this list and its items? If this list is shared, the other members will be notified. You cannot undo this action.',
       options: ['Delete', 'Dismiss'],
       destructiveButtonIndex: 0,
       cancelButtonIndex: 1,
@@ -39,12 +39,7 @@ export const listActionSheet = (
 ) => {
   return ActionSheetIOS.showActionSheetWithOptions(
     {
-      options: [
-        'Rename list...',
-        'Share with others...',
-        'Delete list...',
-        'Dismiss',
-      ],
+      options: ['Rename list...', 'Share list...', 'Delete list...', 'Dismiss'],
       destructiveButtonIndex: 2,
       cancelButtonIndex: 3,
     },
