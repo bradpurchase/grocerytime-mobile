@@ -140,8 +140,8 @@ const App = () => {
     },
   }
   return (
-    <AuthContext.Provider value={{ token, login, logout }}>
-      <AppearanceProvider>
+    <AppearanceProvider>
+      <AuthContext.Provider value={{ token, login, logout }}>
         <NavigationContainer
           theme={scheme === 'dark' ? DarkTheme : LightTheme}
           linking={linking}>
@@ -170,8 +170,8 @@ const App = () => {
 
           <StatusBar barStyle="light-content" />
         </NavigationContainer>
-      </AppearanceProvider>
-    </AuthContext.Provider>
+      </AuthContext.Provider>
+    </AppearanceProvider>
   )
 }
 export default App

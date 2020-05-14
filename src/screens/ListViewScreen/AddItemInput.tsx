@@ -1,5 +1,7 @@
 import * as React from 'react'
-import { View, TextInput, Image, StyleSheet } from 'react-native'
+import { View, TextInput, Image } from 'react-native'
+import { useTheme } from '@react-navigation/native'
+import { useColorScheme } from 'react-native-appearance'
 
 import ListContext from '../../context/ListContext'
 
@@ -7,9 +9,10 @@ import { useMutation } from '@apollo/react-hooks'
 import { ADD_ITEM_TO_LIST_MUTATION } from '../../queries/addItemToList'
 import * as AddItemToListTypes from '../../queries/__generated__/AddItemToList'
 
-import colors from '../../styles/colors'
-
 const AddItemInput: React.FC = React.memo(() => {
+  const { colors } = useTheme()
+  const colorScheme = useColorScheme()
+
   const listContext = React.useContext(ListContext)
   const { data, refetch } = listContext
   if (!data) return null
@@ -45,15 +48,33 @@ const AddItemInput: React.FC = React.memo(() => {
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        alignItems: 'center',
+        backgroundColor: colors.card,
+        borderRadius: 8,
+        color: colors.text,
+        flexDirection: 'row',
+        margin: 20,
+        marginHorizontal: 10,
+        paddingHorizontal: 22,
+        paddingVertical: 18,
+      }}>
       <Image
-        style={styles.icon}
-        source={require('../../assets/icons/Plus.png')}
+        style={{ alignItems: 'center', marginRight: 10, resizeMode: 'stretch' }}
+        source={
+          colorScheme === 'dark'
+            ? require('../../assets/icons/PlusWhite.png')
+            : require('../../assets/icons/Plus.png')
+        }
       />
       <TextInput
-        style={styles.textInput}
+        style={{
+          flex: 1,
+          fontSize: 16,
+        }}
         placeholder="Add an item..."
-        placeholderTextColor="#666"
+        placeholderTextColor={colorScheme === 'dark' ? '#999' : '#666'}
         returnKeyType="done"
         ref={textInputRef}
         onChangeText={(text) => setItem(text)}
@@ -64,28 +85,4 @@ const AddItemInput: React.FC = React.memo(() => {
     </View>
   )
 })
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: colors.LIGHT_GREY,
-    borderRadius: 8,
-    color: colors.BLACK,
-    flexDirection: 'row',
-    margin: 20,
-    marginHorizontal: 10,
-    paddingHorizontal: 22,
-    paddingVertical: 18,
-  },
-  icon: {
-    alignItems: 'center',
-    marginRight: 10,
-    resizeMode: 'stretch',
-  },
-  textInput: {
-    flex: 1,
-    fontSize: 16,
-  },
-})
-
 export default AddItemInput

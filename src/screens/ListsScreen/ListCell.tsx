@@ -32,6 +32,7 @@ const ListCell: React.FC<Props> = React.memo(
       onCompleted: (data) => {
         console.log(data)
         if (data.deleteList?.id) {
+          console.log('calling refetchList()')
           refetchList()
         }
       },
@@ -62,6 +63,7 @@ const ListCell: React.FC<Props> = React.memo(
           style={{
             color: colors.text,
             fontSize: 16,
+            fontWeight: 'bold',
             marginBottom: 10,
           }}>
           {name}
@@ -69,7 +71,7 @@ const ListCell: React.FC<Props> = React.memo(
         <Text
           style={{
             color: colors.subtitle,
-            fontSize: 14,
+            fontSize: 15,
           }}>
           {itemsCount} items
         </Text>

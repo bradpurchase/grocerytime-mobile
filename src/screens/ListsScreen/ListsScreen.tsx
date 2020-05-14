@@ -79,6 +79,7 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
       ) : (
         <FlatList
           data={data.me.lists}
+          extraData={refetch()}
           renderItem={({ item: list }) => (
             <ListCell
               key={list.id}

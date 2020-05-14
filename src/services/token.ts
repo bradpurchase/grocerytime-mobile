@@ -37,6 +37,7 @@ export const retrieveNewAccessToken = async (): Promise<string | null> => {
     },
     operationName: 'RefreshTokenMutation',
   })
+  let token = ''
   await fetch(Config.API_BASE_URL, {
     headers: {
       'content-type': 'application/json',
@@ -54,13 +55,13 @@ export const retrieveNewAccessToken = async (): Promise<string | null> => {
         return null
       }
       setAccessToken(tokens)
-      return tokens.accessToken
+      token = tokens.accessToken
     })
     .catch((err) => {
       clearTokens()
       console.error(err)
     })
-  return null
+  return token
 }
 
 export const clearTokens = async (): Promise<any> => {

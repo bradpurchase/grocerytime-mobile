@@ -11,7 +11,7 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import { createHttpLink } from 'apollo-link-http'
 import { onError } from 'apollo-link-error'
 import { setContext } from 'apollo-link-context'
-import { Observable } from 'apollo-link'
+import { fromPromise } from 'apollo-link'
 
 import AsyncStorage from '@react-native-community/async-storage'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -51,22 +51,18 @@ const AppComponent = () => {
           const sessionExpiredErrorMsg =
             'Token is invalid or session has expired'
           if (graphQLErrors[0].message === sessionExpiredErrorMsg) {
-            return new Observable(async () => {
-              await retrieveNewAccessToken()
-                .then((newToken) => {
-                  const headers = operation.getContext().headers
-                  operation.setContext({
-                    headers: {
-                      ...headers,
-                      authorization: `Bearer ${newToken}`,
-                    },
-                  })
+            return fromPromise(
+              retrieveNewAccessToken().then((newToken) => {
+                console.log(newToken)
+                const headers = operation.getContext().headers
+                operation.setContext({
+                  headers: {
+                    ...headers,
+                    authorization: `Bearer ${newToken}`,
+                  },
                 })
-                .catch((err) => {
-                  console.log(err)
-                })
-              return forward(operation)
-            })
+              }),
+            ).flatMap(() => forward(operation))
           }
         }
       })
