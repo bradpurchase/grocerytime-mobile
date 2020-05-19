@@ -11,6 +11,10 @@ export const LIST_QUERY = gql`
         quantity
         completed
       }
+      listUsers {
+        userId
+        creator
+      }
     }
   }
 `

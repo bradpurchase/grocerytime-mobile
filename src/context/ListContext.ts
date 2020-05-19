@@ -1,19 +1,11 @@
 import React from 'react'
-
-type Item = {
-  id: string
-  listId: string
-  userId: string
-  name: string
-  quantity: number
-  createdAt: string
-  updatedAt: string
-}
+import { Item, ListUser } from '../types'
 
 type List = {
   id: string
   name: string
   items: Item[]
+  listUsers: ListUser[]
 }
 
 type ListQueryData = {

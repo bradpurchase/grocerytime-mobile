@@ -50,18 +50,22 @@ const AddItemInput: React.FC = React.memo(() => {
   return (
     <View
       style={{
-        alignItems: 'center',
-        backgroundColor: colors.card,
-        borderRadius: 8,
-        color: colors.text,
+        backgroundColor: colorScheme === 'dark' ? colors.card : '#ddd',
+        borderRadius: 64,
         flexDirection: 'row',
-        margin: 20,
-        marginHorizontal: 10,
-        paddingHorizontal: 22,
-        paddingVertical: 18,
+        zIndex: 9999,
+        padding: 20,
+        paddingHorizontal: 25,
+        alignSelf: 'center',
+        margin: 10,
+        marginVertical: 20,
       }}>
       <Image
-        style={{ alignItems: 'center', marginRight: 10, resizeMode: 'stretch' }}
+        style={{
+          alignItems: 'center',
+          marginRight: 10,
+          resizeMode: 'stretch',
+        }}
         source={
           colorScheme === 'dark'
             ? require('../../assets/icons/PlusWhite.png')

@@ -1,12 +1,5 @@
 import * as React from 'react'
-import {
-  View,
-  RefreshControl,
-  Text,
-  TouchableOpacity,
-  SectionList,
-  StyleSheet,
-} from 'react-native'
+import { View, RefreshControl, SectionList, StyleSheet } from 'react-native'
 
 import ListContext from '../../context/ListContext'
 
@@ -17,6 +10,7 @@ import * as DeleteItemTypes from '../../queries/__generated__/DeleteItem'
 import EmptyState from '../../components/EmptyState'
 import SectionCell from './SectionCell'
 import ItemCell from './ItemCell'
+import AddItemInput from './AddItemInput'
 
 import { Item } from './types'
 
@@ -35,10 +29,8 @@ const ItemsList: React.FC = React.memo(() => {
       console.log(data)
       refetch()
     },
-    onError: (error) => {
-      console.log(error)
-    },
   })
+  if (error) console.log(error)
 
   // Need to represent it like this for the SectionList
   //TODO: classify these items for each department in the grocery store
@@ -63,6 +55,8 @@ const ItemsList: React.FC = React.memo(() => {
 
   return (
     <View style={styles.container}>
+      <AddItemInput />
+
       <SectionList
         sections={itemsData}
         renderSectionHeader={({ section: { title } }) => (

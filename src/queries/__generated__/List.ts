@@ -15,11 +15,18 @@ export interface List_list_items {
   completed: boolean;
 }
 
+export interface List_list_listUsers {
+  __typename: "ListUser";
+  userId: string;
+  creator: boolean;
+}
+
 export interface List_list {
   __typename: "List";
   id: string;
   name: string;
   items: (List_list_items | null)[] | null;
+  listUsers: (List_list_listUsers | null)[] | null;
 }
 
 export interface List {

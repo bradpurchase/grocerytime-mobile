@@ -7,11 +7,13 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { RouteProp } from '@react-navigation/native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import {
   RootStackParamList,
   ListViewNavigationProp,
 } from '../../types/Navigation'
+import { List } from '../../types/List'
 
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { LIST_QUERY } from '../../queries/list'
@@ -20,10 +22,10 @@ import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
 
 import ListContext from '../../context/ListContext'
 import { listActionSheet } from '../../helpers/ListActions'
-import { List } from '../../types/List'
 
 import ItemsList from './ItemsList'
 import AddItemInput from './AddItemInput'
+import HeaderTitle from './HeaderTitle'
 
 interface Props {
   route: RouteProp<RootStackParamList, 'ListView'>
@@ -34,7 +36,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
   ({ route, navigation }: Props) => {
     const list: List = route.params.list
 
-    const { loading, data, refetch } = useQuery(LIST_QUERY, {
+    const { loading, data, error, refetch } = useQuery(LIST_QUERY, {
       variables: { id: list.id },
     })
 
@@ -51,6 +53,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
 
     React.useLayoutEffect(() => {
       navigation.setOptions({
+        headerTitle: () => <HeaderTitle loading={loading} list={data?.list} />,
         headerRight: () => (
           <TouchableOpacity
             style={styles.headerButton}
@@ -84,7 +87,6 @@ const ListViewScreen: React.FC<Props> = React.memo(
     return (
       <ListContext.Provider value={{ data, refetch }}>
         <View style={styles.container}>
-          <AddItemInput />
           <ItemsList />
         </View>
       </ListContext.Provider>
@@ -95,6 +97,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    position: 'relative',
   },
   headerButton: {
     flex: 1,
