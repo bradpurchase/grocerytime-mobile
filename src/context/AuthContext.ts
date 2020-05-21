@@ -1,6 +1,6 @@
 import React from 'react'
 
-type AuthContextProps = {
+export type AuthContextProps = {
   token: string
   login: (data: any) => void
   logout: () => void

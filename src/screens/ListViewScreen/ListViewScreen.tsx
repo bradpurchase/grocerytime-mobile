@@ -35,7 +35,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
   ({ route, navigation }: Props) => {
     const list: List = route.params.list
 
-    const { loading, data, error, refetch } = useQuery(LIST_QUERY, {
+    const { loading, data, refetch } = useQuery(LIST_QUERY, {
       variables: { id: list.id },
     })
 

@@ -9,18 +9,20 @@ import {
 } from 'react-native'
 
 import { RouteProp, useTheme } from '@react-navigation/native'
+
 import {
   RootStackParamList,
   JoinListNavigationProp,
 } from '../../types/Navigation'
+import { List } from '../../types'
 
-import { List } from '../../types/List'
-import { shareActionSheet } from '../../helpers/ListActions'
-
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks'
+import { ME_QUERY } from '../../queries/me'
 import { SHAREABLE_LIST_QUERY } from '../../queries/list'
+import { ADD_LIST_USER_MUTATION } from '../../queries/addListUser'
+import * as AddListUserMutationTypes from '../../queries/__generated__/AddListUser'
 
-import { getAccessToken } from '../../services/token'
+import AuthContext, { AuthContextProps } from '../../context/AuthContext'
 
 import Button from '../../components/Button'
 
@@ -33,46 +35,53 @@ const JoinListScreen: React.FC<Props> = React.memo(
   ({ route, navigation }: Props) => {
     const { colors } = useTheme()
 
-    //TODO just join and redirect if logged in
+    const authContext: AuthContextProps = React.useContext(AuthContext)
 
     const [formData, setFormData] = React.useState({
       email: '',
       password: '',
       submitting: false,
     })
-    const [tokenData, setTokenData] = React.useState({
-      loading: true,
-      token: '',
+
+    const listId = route.params.id
+    const {
+      loading,
+      data: sharableListData,
+      error: sharableListQueryError,
+    } = useQuery(SHAREABLE_LIST_QUERY, {
+      variables: { id: listId },
+    })
+    if (sharableListQueryError) console.log(sharableListQueryError)
+
+    const [addListUser, { error }] = useMutation<
+      AddListUserMutationTypes.AddListUser,
+      AddListUserMutationTypes.AddListUserVariables
+    >(ADD_LIST_USER_MUTATION, {
+      onCompleted: () => {
+        const list: List = { id: listId }
+        navigation.navigate('ListView', {
+          list,
+        })
+      },
     })
 
-    const checkAuthentication = async () => {
-      try {
-        const token = await getAccessToken()
-        if (token) {
-          setTokenData({ loading: false, token })
-        } else {
-          setTokenData({ ...tokenData, loading: false })
-        }
-      } catch (e) {
-        //TODO better error handling
-        console.error(e)
-      }
-    }
+    const [getCurrentUser, { data: meData }] = useLazyQuery(ME_QUERY)
+    console.log(meData)
+    // if (meData.me) {
+    //   addListUser({
+    //     variables: {
+    //       userId: meData.me.id,
+    //       listId: listId,
+    //     },
+    //   })
+    // }
 
     React.useEffect(() => {
-      checkAuthentication()
-    }, [])
-
-    React.useEffect(() => {
-      if (tokenData.token.length > 0) {
+      if (authContext.token.length > 0) {
         console.log('we have token, just join and redirect to list')
+        getCurrentUser()
       }
-    }, [tokenData])
-
-    const { loading, data, error } = useQuery(SHAREABLE_LIST_QUERY, {
-      variables: { id: route.params.id },
-    })
-    if (error) console.log(error)
+    }, [authContext.token])
 
     React.useLayoutEffect(() => {
       navigation.setOptions({
@@ -99,10 +108,18 @@ const JoinListScreen: React.FC<Props> = React.memo(
       })
     })
 
-    if (loading || tokenData.loading) {
+    const handleSignup = () => {
+      console.log('TODO handleSignup')
+    }
+
+    if (loading) {
       return (
         <View
-          style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
+          style={{
+            alignItems: 'center',
+            flex: 1,
+            justifyContent: 'center',
+          }}>
           <ActivityIndicator size="large" />
         </View>
       )
@@ -124,7 +141,7 @@ const JoinListScreen: React.FC<Props> = React.memo(
             marginBottom: 30,
             lineHeight: 25,
           }}>
-          You've been invited to join {data.sharableList.name}
+          You've been invited to join {sharableListData.sharableList.name}
         </Text>
         <Text
           style={{
@@ -164,7 +181,12 @@ const JoinListScreen: React.FC<Props> = React.memo(
             keyboardType="email-address"
             autoCompleteType="email"
             autoCapitalize="none"
-            onChangeText={(text) => setFormData({ ...formData, email: text })}
+            onChangeText={(text) =>
+              setFormData({
+                ...formData,
+                email: text,
+              })
+            }
             editable={!formData.submitting}
           />
           <TextInput
@@ -183,13 +205,16 @@ const JoinListScreen: React.FC<Props> = React.memo(
             secureTextEntry
             returnKeyType="done"
             onChangeText={(text) =>
-              setFormData({ ...formData, password: text })
+              setFormData({
+                ...formData,
+                password: text,
+              })
             }
             editable={!formData.submitting}
           />
           <Button
             label="Sign up and Join List"
-            onPress={() => shareActionSheet(list)}
+            onPress={() => handleSignup()}
             disabled={
               formData.email.length === 0 ||
               formData.password.length === 0 ||
