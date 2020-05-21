@@ -21,6 +21,7 @@ import { LightTheme, DarkTheme } from './src/styles/themes'
 
 import LoginScreen from './src/screens/Auth/LoginScreen'
 import SignupScreen from './src/screens/Auth/SignupScreen'
+import JoinListScreen from './src/screens/JoinListScreen/JoinListScreen'
 
 import ListsScreen from './src/screens/ListsScreen/ListsScreen'
 import NewListScreen from './src/screens/NewListScreen/NewListScreen'
@@ -107,7 +108,9 @@ const App = () => {
           <RootStack.Screen
             name="ListView"
             component={ListViewScreen}
-            options={({ route }) => ({ title: route.params.list.name })}
+            options={({ route }) => ({
+              title: route.params.list.name,
+            })}
           />
         </>
       ) : (
@@ -124,6 +127,11 @@ const App = () => {
           />
         </>
       )}
+      <RootStack.Screen
+        name="JoinList"
+        component={JoinListScreen}
+        options={{ title: 'Join List' }}
+      />
     </MainStack.Navigator>
   )
 
@@ -131,11 +139,12 @@ const App = () => {
     return <ActivityIndicator size="large" />
   }
 
+  // https://groceryti.me/share/927e5d2e-7d79-4e9a-b12d-a8b372441bee
   const linking = {
     prefixes: ['grocerytime://'],
     config: {
-      ListView: {
-        path: 'list/:id',
+      JoinList: {
+        path: 'joinlist/:id',
       },
     },
   }

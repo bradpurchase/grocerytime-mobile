@@ -18,3 +18,11 @@ export const LIST_QUERY = gql`
     }
   }
 `
+
+export const SHAREABLE_LIST_QUERY = gql`
+  query SharableList($id: ID!) {
+    sharableList(id: $id) {
+      name
+    }
+  }
+`

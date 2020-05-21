@@ -51,11 +51,10 @@ const AddItemInput: React.FC = React.memo(() => {
     <View
       style={{
         backgroundColor: colorScheme === 'dark' ? colors.card : '#ddd',
-        borderRadius: 64,
+        borderRadius: 8,
         flexDirection: 'row',
         zIndex: 9999,
-        padding: 20,
-        paddingHorizontal: 25,
+        padding: 18,
         alignSelf: 'center',
         margin: 10,
         marginVertical: 20,

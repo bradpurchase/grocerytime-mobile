@@ -94,8 +94,8 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
         )}
         renderSectionFooter={() => (
           <Text style={styles.sectionFooter}>
-            After creating this list you will be sent to a screen that will
-            allow you to share it and work on it with others.
+            After creating this list, you can share it with others and work on
+            it together.
           </Text>
         )}
         renderItem={({ item }) => (
@@ -151,8 +151,8 @@ const styles = StyleSheet.create({
   },
   sectionFooter: {
     color: colors.MEDIUM_GREY,
-    fontSize: 14,
-    lineHeight: 22,
+    fontSize: 15,
+    lineHeight: 24,
     marginTop: 25,
     paddingHorizontal: 20,
     textAlign: 'center',

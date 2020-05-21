@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { RouteProp } from '@react-navigation/native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import {
   RootStackParamList,

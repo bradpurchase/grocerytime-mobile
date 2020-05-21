@@ -43,8 +43,8 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
         flexDirection: 'row',
         alignItems: 'center',
         padding: 18,
-        marginHorizontal: 10,
-        marginBottom: 10,
+        marginHorizontal: 8,
+        marginBottom: 8,
       }}>
       <TouchableOpacity
         activeOpacity={0.9}
