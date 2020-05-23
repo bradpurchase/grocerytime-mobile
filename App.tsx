@@ -16,6 +16,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { enableScreens } from 'react-native-screens'
 enableScreens()
 
+import { useApolloClient } from '@apollo/react-hooks'
+
 import { AppearanceProvider, useColorScheme } from 'react-native-appearance'
 import { LightTheme, DarkTheme } from './src/styles/themes'
 
@@ -46,6 +48,8 @@ const MainStack = createStackNavigator<RootStackParamList>()
 const RootStack = createStackNavigator<RootStackParamList>()
 
 const App = () => {
+  const client = useApolloClient()
+
   // Subscribe to system color scheme changes (light/dark)
   const scheme = useColorScheme()
 
@@ -80,6 +84,7 @@ const App = () => {
     try {
       await clearTokens()
       setToken('')
+      await client.clearStore() // clear ApolloClient store
     } catch (e) {
       console.error(e)
     }

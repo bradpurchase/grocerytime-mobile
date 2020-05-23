@@ -16,11 +16,10 @@ import {
 } from '../../types/Navigation'
 import { List } from '../../types'
 
-import { useQuery, useLazyQuery, useMutation } from '@apollo/react-hooks'
-import { ME_QUERY } from '../../queries/me'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import { SHAREABLE_LIST_QUERY } from '../../queries/list'
-import { ADD_LIST_USER_MUTATION } from '../../queries/addListUser'
-import * as AddListUserMutationTypes from '../../queries/__generated__/AddListUser'
+import { JOIN_LIST_MUTATION } from '../../queries/joinList'
+import * as JoinListMutationTypes from '../../queries/__generated__/JoinList'
 
 import AuthContext, { AuthContextProps } from '../../context/AuthContext'
 
@@ -53,33 +52,25 @@ const JoinListScreen: React.FC<Props> = React.memo(
     })
     if (sharableListQueryError) console.log(sharableListQueryError)
 
-    const [addListUser, { error }] = useMutation<
-      AddListUserMutationTypes.AddListUser,
-      AddListUserMutationTypes.AddListUserVariables
-    >(ADD_LIST_USER_MUTATION, {
-      onCompleted: () => {
-        const list: List = { id: listId }
-        navigation.navigate('ListView', {
-          list,
-        })
-      },
-    })
-
-    const [getCurrentUser, { data: meData }] = useLazyQuery(ME_QUERY)
-    console.log(meData)
-    // if (meData.me) {
-    //   addListUser({
-    //     variables: {
-    //       userId: meData.me.id,
-    //       listId: listId,
-    //     },
-    //   })
-    // }
+    const [joinList] = useMutation<
+      JoinListMutationTypes.JoinList,
+      JoinListMutationTypes.JoinListVariables
+    >(JOIN_LIST_MUTATION)
 
     React.useEffect(() => {
       if (authContext.token.length > 0) {
         console.log('we have token, just join and redirect to list')
-        getCurrentUser()
+        joinList({
+          variables: {
+            listId: listId,
+          },
+        }).then((data) => {
+          console.log('here', data)
+          const list: List = { id: listId }
+          navigation.push('ListView', {
+            list,
+          })
+        })
       }
     }, [authContext.token])
 

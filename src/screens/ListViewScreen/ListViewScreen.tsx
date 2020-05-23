@@ -23,7 +23,6 @@ import ListContext from '../../context/ListContext'
 import { listActionSheet } from '../../helpers/ListActions'
 
 import ItemsList from './ItemsList'
-import AddItemInput from './AddItemInput'
 import HeaderTitle from './HeaderTitle'
 
 interface Props {

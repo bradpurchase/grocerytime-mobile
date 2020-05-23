@@ -7,9 +7,17 @@
 // GraphQL query operation: Me
 // ====================================================
 
+export interface Me_me_lists {
+  __typename: "List";
+  id: string;
+  name: string;
+  itemsCount: number | null;
+}
+
 export interface Me_me {
   __typename: "User";
   id: string;
+  lists: (Me_me_lists | null)[] | null;
 }
 
 export interface Me {
