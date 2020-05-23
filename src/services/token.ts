@@ -31,18 +31,13 @@ export const retrieveNewAccessToken = async (): Promise<string | null> => {
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data)
       const tokens = data.data.token
       if (!tokens) {
         clearTokens()
         return null
       }
-      const currentUser: CurrentUser = {
-        id: tokens.userId,
-        token: tokens.accessToken,
-      }
-      setCurrentUser(currentUser)
-      token = currentUser.token
+      setCurrentUser(tokens)
+      token = tokens.accessToken
     })
     .catch((err) => {
       clearTokens()

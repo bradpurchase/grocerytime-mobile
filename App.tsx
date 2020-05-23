@@ -11,7 +11,7 @@
 import 'react-native-gesture-handler'
 import React, { useState, useEffect } from 'react'
 
-import { StatusBar, ActivityIndicator } from 'react-native'
+import { StatusBar, ActivityIndicator, useColorScheme } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -20,7 +20,6 @@ enableScreens()
 
 import { useApolloClient } from '@apollo/react-hooks'
 
-import { AppearanceProvider, useColorScheme } from 'react-native-appearance'
 import { LightTheme, DarkTheme } from './src/styles/themes'
 
 import LoginScreen from './src/screens/Auth/LoginScreen'
@@ -154,36 +153,34 @@ const App = () => {
   }
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
-      <AppearanceProvider>
-        <NavigationContainer
-          theme={scheme === 'dark' ? DarkTheme : LightTheme}
-          linking={linking}>
-          <RootStack.Navigator mode="modal" screenOptions={screenOptions}>
-            <RootStack.Screen
-              name="Main"
-              component={MainStackScreen}
-              options={{ headerShown: false }}
-            />
-            <RootStack.Screen
-              name="NewList"
-              component={NewListScreen}
-              options={{ title: 'New List' }}
-            />
-            <RootStack.Screen
-              name="RenameList"
-              component={RenameListScreen}
-              options={{ title: 'Rename List' }}
-            />
-            <RootStack.Screen
-              name="ShareList"
-              component={ShareListScreen}
-              options={{ title: 'Share List' }}
-            />
-          </RootStack.Navigator>
+      <NavigationContainer
+        theme={scheme === 'dark' ? DarkTheme : LightTheme}
+        linking={linking}>
+        <RootStack.Navigator mode="modal" screenOptions={screenOptions}>
+          <RootStack.Screen
+            name="Main"
+            component={MainStackScreen}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name="NewList"
+            component={NewListScreen}
+            options={{ title: 'New List' }}
+          />
+          <RootStack.Screen
+            name="RenameList"
+            component={RenameListScreen}
+            options={{ title: 'Rename List' }}
+          />
+          <RootStack.Screen
+            name="ShareList"
+            component={ShareListScreen}
+            options={{ title: 'Share List' }}
+          />
+        </RootStack.Navigator>
 
-          <StatusBar barStyle="light-content" />
-        </NavigationContainer>
-      </AppearanceProvider>
+        <StatusBar barStyle="light-content" />
+      </NavigationContainer>
     </AuthContext.Provider>
   )
 }

@@ -22,7 +22,7 @@ import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
 import AuthContext from '../../context/AuthContext'
 import ListContext from '../../context/ListContext'
 import { listActionSheet } from '../../helpers/ListActions'
-import { getListCreator, currentUserIsCreator } from '../../services/list'
+import { currentUserIsCreator } from '../../services/list'
 
 import ItemsList from './ItemsList'
 import HeaderTitle from './HeaderTitle'
@@ -89,7 +89,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
           headerRight: () => <></>,
         })
       }
-    }, [navigation])
+    }, [loading])
 
     if (loading) {
       return (

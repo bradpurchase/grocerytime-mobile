@@ -5,6 +5,7 @@
 import React, { useState, useEffect } from 'react'
 import { AppRegistry, ActivityIndicator } from 'react-native'
 import Config from 'react-native-config'
+import { AppearanceProvider } from 'react-native-appearance'
 
 import { ApolloClient } from 'apollo-client'
 import { ApolloProvider } from '@apollo/react-hooks'
@@ -53,6 +54,7 @@ const AppComponent = () => {
           if (graphQLErrors[0].message === sessionExpiredErrorMsg) {
             return fromPromise(
               retrieveNewAccessToken().then((newToken) => {
+                console.log(newToken)
                 const headers = operation.getContext().headers
                 operation.setContext({
                   headers: {
@@ -93,9 +95,11 @@ const AppComponent = () => {
   }, [])
 
   return appState.ready ? (
-    <ApolloProvider client={appState.client}>
-      <App />
-    </ApolloProvider>
+    <AppearanceProvider>
+      <ApolloProvider client={appState.client}>
+        <App />
+      </ApolloProvider>
+    </AppearanceProvider>
   ) : (
     <ActivityIndicator size="large" />
   )

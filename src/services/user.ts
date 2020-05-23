@@ -9,7 +9,6 @@ export const getCurrentUser = async (): Promise<CurrentUser | null> => {
 }
 
 export const setCurrentUser = async (data: any): Promise<CurrentUser> => {
-  console.log(data.userId)
   await AsyncStorage.multiSet([
     ['@userId', data.userId],
     ['@accessToken', data.accessToken],
