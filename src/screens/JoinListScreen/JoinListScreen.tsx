@@ -58,7 +58,7 @@ const JoinListScreen: React.FC<Props> = React.memo(
     >(JOIN_LIST_MUTATION)
 
     React.useEffect(() => {
-      if (authContext.token.length > 0) {
+      if (authContext.user?.token && authContext.user.token.length > 0) {
         console.log('we have token, just join and redirect to list')
         joinList({
           variables: {
@@ -72,7 +72,7 @@ const JoinListScreen: React.FC<Props> = React.memo(
           })
         })
       }
-    }, [authContext.token])
+    }, [authContext.user])
 
     React.useLayoutEffect(() => {
       navigation.setOptions({

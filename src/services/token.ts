@@ -1,26 +1,9 @@
 import AsyncStorage from '@react-native-community/async-storage'
 import Config from 'react-native-config'
 
+import { CurrentUser } from '../types'
+import { setCurrentUser } from './user'
 import { REFRESH_TOKEN_MUTATION } from '../queries/refreshToken'
-
-export const getAccessToken = async (): Promise<string | null> => {
-  const token = await AsyncStorage.getItem('@accessToken')
-  return token
-}
-
-export const setAccessToken = async (data: any): Promise<string> => {
-  await AsyncStorage.multiSet([
-    ['@accessToken', data.accessToken],
-    ['@refreshToken', data.refreshToken],
-    ['@expiresIn', data.expiresIn],
-  ])
-  return data.accessToken
-}
-
-export const getTokenExpiry = async (): Promise<string | null> => {
-  const expiresIn = await AsyncStorage.getItem('@expiresIn')
-  return expiresIn
-}
 
 export const getRefreshToken = async (): Promise<string | null> => {
   const token = await AsyncStorage.getItem('@refreshToken')
@@ -37,7 +20,7 @@ export const retrieveNewAccessToken = async (): Promise<string | null> => {
     },
     operationName: 'RefreshTokenMutation',
   })
-  let token = ''
+  let token = null
   await fetch(Config.API_BASE_URL, {
     headers: {
       'content-type': 'application/json',
@@ -54,8 +37,12 @@ export const retrieveNewAccessToken = async (): Promise<string | null> => {
         clearTokens()
         return null
       }
-      setAccessToken(tokens)
-      token = tokens.accessToken
+      const currentUser: CurrentUser = {
+        id: tokens.userId,
+        token: tokens.accessToken,
+      }
+      setCurrentUser(currentUser)
+      token = currentUser.token
     })
     .catch((err) => {
       clearTokens()

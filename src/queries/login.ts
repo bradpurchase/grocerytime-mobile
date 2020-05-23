@@ -7,6 +7,7 @@ export const LOGIN_MUTATION = gql`
     $password: String
   ) {
     token(grantType: $grantType, email: $email, password: $password) {
+      userId
       accessToken
       refreshToken
       expiresIn

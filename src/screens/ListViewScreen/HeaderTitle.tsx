@@ -2,18 +2,16 @@ import * as React from 'react'
 import { Text, View } from 'react-native'
 import colors from '../../styles/colors'
 
-import { List, ListUser } from '../../types'
+import { List } from '../../types'
+import { listIsShared } from '../../services/list'
 
 interface Props {
-  loading: boolean
   list: List
+  isCreator: boolean
 }
 
-const HeaderTitle: React.FC<Props> = React.memo(({ loading, list }: Props) => {
-  if (loading) return null
-
+const HeaderTitle: React.FC<Props> = ({ list, isCreator }: Props) => {
   const listUsers = list.listUsers
-  const isShared = listUsers?.some((listUser: ListUser) => !listUser.creator)
   const numShared = listUsers && listUsers.length - 1 // subtract one to exclude the current user
 
   return (
@@ -28,7 +26,7 @@ const HeaderTitle: React.FC<Props> = React.memo(({ loading, list }: Props) => {
         }}>
         {list.name}
       </Text>
-      {isShared && (
+      {listIsShared(list) && (
         <Text
           style={{
             textAlign: 'center',
@@ -36,12 +34,18 @@ const HeaderTitle: React.FC<Props> = React.memo(({ loading, list }: Props) => {
             fontSize: 12,
             fontWeight: '400',
           }}>
-          Shared with {numShared}{' '}
-          {numShared && numShared > 1 ? 'people' : 'person'}
+          Shared with{' '}
+          {isCreator ? (
+            <>
+              {numShared} {numShared && numShared > 1 ? 'people' : 'person'}
+            </>
+          ) : (
+            <>you</>
+          )}
         </Text>
       )}
     </View>
   )
-})
+}
 
 export default HeaderTitle

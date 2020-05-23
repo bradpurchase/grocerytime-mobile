@@ -19,8 +19,10 @@ import { LIST_QUERY } from '../../queries/list'
 import { DELETE_LIST_MUTATION } from '../../queries/deleteList'
 import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
 
+import AuthContext from '../../context/AuthContext'
 import ListContext from '../../context/ListContext'
 import { listActionSheet } from '../../helpers/ListActions'
+import { getListCreator, currentUserIsCreator } from '../../services/list'
 
 import ItemsList from './ItemsList'
 import HeaderTitle from './HeaderTitle'
@@ -32,10 +34,13 @@ interface Props {
 
 const ListViewScreen: React.FC<Props> = React.memo(
   ({ route, navigation }: Props) => {
-    const list: List = route.params.list
+    const authContext = React.useContext(AuthContext)
+    const currentUserId = authContext.user?.id as string
+
+    const listParam: List = route.params.list
 
     const { loading, data, refetch } = useQuery(LIST_QUERY, {
-      variables: { id: list.id },
+      variables: { id: listParam.id },
     })
 
     const [deleteList] = useMutation<
@@ -49,28 +54,41 @@ const ListViewScreen: React.FC<Props> = React.memo(
       },
     })
 
-    React.useLayoutEffect(() => {
-      navigation.setOptions({
-        headerTitle: () => <HeaderTitle loading={loading} list={data?.list} />,
-        headerRight: () => (
-          <TouchableOpacity
-            style={styles.headerButton}
-            onPress={() =>
-              listActionSheet(
-                list,
-                () => {
-                  navigation.navigate('RenameList', { list })
-                },
-                deleteList,
-              )
-            }>
-            <Image
-              style={styles.icon}
-              source={require('../../assets/icons/MenuVerticalWhite.png')}
-            />
-          </TouchableOpacity>
-        ),
-      })
+    const list: List = data && data.list
+    const isCreator: boolean = data
+      ? currentUserIsCreator(currentUserId, list)
+      : false
+
+    React.useEffect(() => {
+      if (loading) return
+      if (isCreator) {
+        navigation.setOptions({
+          headerTitle: () => <HeaderTitle list={list} isCreator={isCreator} />,
+          headerRight: () => (
+            <TouchableOpacity
+              style={styles.headerButton}
+              onPress={() =>
+                listActionSheet(
+                  list,
+                  () => {
+                    navigation.navigate('RenameList', { list })
+                  },
+                  deleteList,
+                )
+              }>
+              <Image
+                style={styles.icon}
+                source={require('../../assets/icons/MenuVerticalWhite.png')}
+              />
+            </TouchableOpacity>
+          ),
+        })
+      } else {
+        navigation.setOptions({
+          headerTitle: () => <HeaderTitle list={list} isCreator={isCreator} />,
+          headerRight: () => <></>,
+        })
+      }
     }, [navigation])
 
     if (loading) {

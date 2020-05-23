@@ -53,7 +53,6 @@ const AppComponent = () => {
           if (graphQLErrors[0].message === sessionExpiredErrorMsg) {
             return fromPromise(
               retrieveNewAccessToken().then((newToken) => {
-                console.log(newToken)
                 const headers = operation.getContext().headers
                 operation.setContext({
                   headers: {

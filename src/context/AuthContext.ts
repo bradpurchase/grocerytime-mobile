@@ -1,13 +1,14 @@
 import React from 'react'
+import { CurrentUser } from '../types'
 
 export type AuthContextProps = {
-  token: string
+  user: CurrentUser | null
   login: (data: any) => void
   logout: () => void
 }
 
 const AuthContext = React.createContext<AuthContextProps>({
-  token: '',
+  user: null,
   login: () => {},
   logout: () => {},
 })
