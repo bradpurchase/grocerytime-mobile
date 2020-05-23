@@ -39,6 +39,7 @@ export const listActionSheet = (
 ) => {
   return ActionSheetIOS.showActionSheetWithOptions(
     {
+      title: list.name,
       options: ['Rename list...', 'Share list...', 'Delete list...', 'Dismiss'],
       destructiveButtonIndex: 2,
       cancelButtonIndex: 3,
