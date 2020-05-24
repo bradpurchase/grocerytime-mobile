@@ -10,6 +10,9 @@ import { AppearanceProvider } from 'react-native-appearance'
 import { ApolloClient } from 'apollo-client'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { createHttpLink } from 'apollo-link-http'
+import { WebSocketLink } from 'apollo-link-ws'
+import { split } from 'apollo-link'
+import { getMainDefinition } from 'apollo-utilities'
 import { onError } from 'apollo-link-error'
 import { setContext } from 'apollo-link-context'
 import { fromPromise } from 'apollo-link'
@@ -47,6 +50,24 @@ const AppComponent = () => {
           },
         }
       })
+      const wsLink = new WebSocketLink({
+        uri: Config.WS_URL,
+        options: {
+          reconnect: true,
+        },
+      })
+      const splitLink = split(
+        ({ query }) => {
+          const def = getMainDefinition(query)
+          return (
+            def.kind === 'OperationDefinition' &&
+            def.operation === 'subscription'
+          )
+        },
+        wsLink,
+        httpLink,
+      )
+
       const authErrorLink = onError(({ graphQLErrors, operation, forward }) => {
         if (graphQLErrors) {
           const sessionExpiredErrorMsg =
@@ -75,7 +96,7 @@ const AppComponent = () => {
       })
       const authLink = headersLink.concat(authErrorLink)
       const client = new ApolloClient({
-        link: authLink.concat(httpLink),
+        link: authLink.concat(splitLink),
         cache,
         defaultOptions: {
           mutate: {

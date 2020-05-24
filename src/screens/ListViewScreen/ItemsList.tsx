@@ -3,8 +3,9 @@ import { View, RefreshControl, SectionList, StyleSheet } from 'react-native'
 
 import ListContext from '../../context/ListContext'
 
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation, useSubscription } from '@apollo/react-hooks'
 import { DELETE_ITEM_MUTATION } from '../../queries/deleteItem'
+import { NEW_ITEM_IN_LIST_SUBSCRIPTION } from '../../queries/newItemInList'
 import * as DeleteItemTypes from '../../queries/__generated__/DeleteItem'
 
 import EmptyState from '../../components/EmptyState'
@@ -20,6 +21,11 @@ const ItemsList: React.FC = React.memo(() => {
 
   if (!data) return null
   const { list, networkStatus } = data
+
+  const { loading: newItemLoading, data: newItemData } = useSubscription(
+    NEW_ITEM_IN_LIST_SUBSCRIPTION,
+  )
+  console.log(newItemData)
 
   const [deleteItem, { error }] = useMutation<
     DeleteItemTypes.DeleteItem,

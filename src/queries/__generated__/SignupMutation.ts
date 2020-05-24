@@ -9,6 +9,7 @@
 
 export interface SignupMutation_signup {
   __typename: "AuthToken";
+  userId: string;
   accessToken: string;
   refreshToken: string;
   expiresIn: any | null;

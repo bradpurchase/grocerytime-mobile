@@ -16,6 +16,7 @@ import { List } from '../../types/List'
 
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { LIST_QUERY } from '../../queries/list'
+import { NEW_ITEM_IN_LIST_SUBSCRIPTION } from '../../queries/newItemInList'
 import { DELETE_LIST_MUTATION } from '../../queries/deleteList'
 import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
 
@@ -39,7 +40,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
 
     const listParam: List = route.params.list
 
-    const { loading, data, refetch } = useQuery(LIST_QUERY, {
+    const { loading, data, refetch, subscribeToMore } = useQuery(LIST_QUERY, {
       variables: { id: listParam.id },
     })
 
@@ -58,6 +59,24 @@ const ListViewScreen: React.FC<Props> = React.memo(
     const isCreator: boolean = data
       ? currentUserIsCreator(currentUserId, list)
       : false
+
+    React.useEffect(() => {
+      subscribeToMore({
+        document: NEW_ITEM_IN_LIST_SUBSCRIPTION,
+        variables: { listId: listParam.id },
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) return prev
+          const newItem = subscriptionData.data.newItemInList
+
+          return Object.assign({}, prev, {
+            list: {
+              ...list,
+              items: [newItem, ...prev.list.items],
+            },
+          })
+        },
+      })
+    }, [])
 
     React.useEffect(() => {
       if (loading) return
