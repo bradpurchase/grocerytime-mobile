@@ -11,8 +11,17 @@ export interface NewItemInList_newItemInList {
   __typename: "Item";
   id: string;
   name: string;
+  quantity: number;
+  completed: boolean;
 }
 
 export interface NewItemInList {
+  /**
+   * Retrieve a new item in a list
+   */
   newItemInList: NewItemInList_newItemInList | null;
+}
+
+export interface NewItemInListVariables {
+  listId: string;
 }
