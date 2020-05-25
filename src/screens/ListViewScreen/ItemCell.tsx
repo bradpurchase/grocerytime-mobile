@@ -1,14 +1,14 @@
 import * as React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 
 import { Item } from './types'
 import Checkbox from '../../components/Checkbox'
 
+import ListContext from '../../context/ListContext'
+
 import { useMutation } from '@apollo/react-hooks'
 import { UPDATE_ITEM_MUTATION } from '../../queries/updateItem'
-
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 interface Props {
   item: Item
@@ -16,6 +16,9 @@ interface Props {
 
 const ItemCell: React.FC<Props> = React.memo(({ item }) => {
   const { colors } = useTheme()
+
+  const listContext = React.useContext(ListContext)
+  const { refetch } = listContext
 
   const { id, name, quantity, completed } = item
 
@@ -31,6 +34,9 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
         id: id,
         completed: !completed,
       },
+    },
+    onCompleted: () => {
+      refetch()
     },
   })
 
