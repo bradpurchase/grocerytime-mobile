@@ -8,7 +8,7 @@ import { useMutation } from '@apollo/react-hooks'
 import { DELETE_LIST_MUTATION } from '../../queries/deleteList'
 import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
 
-import { listActionSheet } from '../../helpers/ListActions'
+import AuthContext from '../../context/AuthContext'
 import { List } from '../../types/List'
 
 interface Props {
@@ -20,6 +20,9 @@ interface Props {
 const ListCell: React.FC<Props> = React.memo(
   ({ list, navigation, refetchList }: Props) => {
     const { colors } = useTheme()
+
+    const authContext = React.useContext(AuthContext)
+    const currentUserId = authContext.user?.id as string
 
     const { name, itemsCount } = list
 
@@ -49,16 +52,7 @@ const ListCell: React.FC<Props> = React.memo(
           padding: 20,
         }}
         activeOpacity={1}
-        onPress={() => navigation.navigate('ListView', { list })}
-        onLongPress={() =>
-          listActionSheet(
-            list,
-            () => {
-              navigation.navigate('RenameList', { list })
-            },
-            deleteList,
-          )
-        }>
+        onPress={() => navigation.navigate('ListView', { list })}>
         <Text
           style={{
             color: colors.text,

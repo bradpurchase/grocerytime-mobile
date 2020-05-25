@@ -5,7 +5,6 @@
 import React, { useState, useEffect } from 'react'
 import { AppRegistry, ActivityIndicator } from 'react-native'
 import Config from 'react-native-config'
-import { AppearanceProvider } from 'react-native-appearance'
 
 import { ApolloClient } from 'apollo-client'
 import { ApolloProvider } from '@apollo/react-hooks'
@@ -116,11 +115,9 @@ const AppComponent = () => {
   }, [])
 
   return appState.ready ? (
-    <AppearanceProvider>
-      <ApolloProvider client={appState.client}>
-        <App />
-      </ApolloProvider>
-    </AppearanceProvider>
+    <ApolloProvider client={appState.client}>
+      <App />
+    </ApolloProvider>
   ) : (
     <ActivityIndicator size="large" />
   )

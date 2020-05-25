@@ -11,7 +11,14 @@
 import 'react-native-gesture-handler'
 import React, { useState, useEffect } from 'react'
 
-import { StatusBar, ActivityIndicator, useColorScheme } from 'react-native'
+import {
+  StatusBar,
+  ActivityIndicator,
+  useColorScheme,
+  Linking,
+  Platform,
+} from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -20,6 +27,7 @@ enableScreens()
 
 import { useApolloClient } from '@apollo/react-hooks'
 
+import { AppearanceProvider } from 'react-native-appearance'
 import { LightTheme, DarkTheme } from './src/styles/themes'
 
 import LoginScreen from './src/screens/Auth/LoginScreen'
@@ -42,6 +50,8 @@ import { getCurrentUser, setCurrentUser } from './src/services/user'
 const MainStack = createStackNavigator<RootStackParamList>()
 const RootStack = createStackNavigator<RootStackParamList>()
 
+const PERSISTENCE_KEY = 'NAVIGATION_STATE'
+
 const App = () => {
   const client = useApolloClient()
 
@@ -49,10 +59,31 @@ const App = () => {
   const scheme = useColorScheme()
 
   const [loaded, setLoaded] = useState<boolean>(false)
+  const [navStateReady, setNavStateReady] = useState<boolean>(false)
+  const [initialState, setInitialState] = useState()
   const [user, setUser] = useState<CurrentUser>({
     id: '',
     token: '',
   })
+
+  React.useEffect(() => {
+    const restoreState = async () => {
+      try {
+        const initialUrl = await Linking.getInitialURL()
+        // Only restore state if there's no deep link and we're not on web
+        if (Platform.OS !== 'web' && initialUrl == null) {
+          const savedStateString = await AsyncStorage.getItem(PERSISTENCE_KEY)
+          const state = savedStateString
+            ? JSON.parse(savedStateString)
+            : undefined
+          if (state !== undefined) setInitialState(state)
+        }
+      } finally {
+        setNavStateReady(true)
+      }
+    }
+    if (!navStateReady) restoreState()
+  }, [navStateReady])
 
   const checkAuthentication = async () => {
     try {
@@ -104,7 +135,7 @@ const App = () => {
     headerTintColor: colors.WHITE,
   }
   const MainStackScreen = () => (
-    <MainStack.Navigator screenOptions={screenOptions}>
+    <MainStack.Navigator initialRouteName="Lists" screenOptions={screenOptions}>
       {user.token ? (
         <>
           <RootStack.Screen name="Lists" component={ListsScreen} />
@@ -138,9 +169,7 @@ const App = () => {
     </MainStack.Navigator>
   )
 
-  if (!loaded) {
-    return <ActivityIndicator size="large" />
-  }
+  if (!loaded || !navStateReady) return <ActivityIndicator />
 
   // https://groceryti.me/share/927e5d2e-7d79-4e9a-b12d-a8b372441bee
   const linking = {
@@ -153,34 +182,40 @@ const App = () => {
   }
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
-      <NavigationContainer
-        theme={scheme === 'dark' ? DarkTheme : LightTheme}
-        linking={linking}>
-        <RootStack.Navigator mode="modal" screenOptions={screenOptions}>
-          <RootStack.Screen
-            name="Main"
-            component={MainStackScreen}
-            options={{ headerShown: false }}
-          />
-          <RootStack.Screen
-            name="NewList"
-            component={NewListScreen}
-            options={{ title: 'New List' }}
-          />
-          <RootStack.Screen
-            name="RenameList"
-            component={RenameListScreen}
-            options={{ title: 'Rename List' }}
-          />
-          <RootStack.Screen
-            name="ShareList"
-            component={ShareListScreen}
-            options={{ title: 'Share List' }}
-          />
-        </RootStack.Navigator>
+      <AppearanceProvider>
+        <NavigationContainer
+          initialState={initialState}
+          onStateChange={(state) =>
+            AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
+          }
+          theme={scheme === 'dark' ? DarkTheme : LightTheme}
+          linking={linking}>
+          <RootStack.Navigator mode="modal" screenOptions={screenOptions}>
+            <RootStack.Screen
+              name="Main"
+              component={MainStackScreen}
+              options={{ headerShown: false }}
+            />
+            <RootStack.Screen
+              name="NewList"
+              component={NewListScreen}
+              options={{ title: 'New List' }}
+            />
+            <RootStack.Screen
+              name="RenameList"
+              component={RenameListScreen}
+              options={{ title: 'Rename List' }}
+            />
+            <RootStack.Screen
+              name="ShareList"
+              component={ShareListScreen}
+              options={{ title: 'Share List' }}
+            />
+          </RootStack.Navigator>
 
-        <StatusBar barStyle="light-content" />
-      </NavigationContainer>
+          <StatusBar barStyle="light-content" />
+        </NavigationContainer>
+      </AppearanceProvider>
     </AuthContext.Provider>
   )
 }

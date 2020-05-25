@@ -39,16 +39,15 @@ export const listActionSheet = (
 ) => {
   return ActionSheetIOS.showActionSheetWithOptions(
     {
-      title: list.name,
-      options: ['Rename list...', 'Share list...', 'Delete list...', 'Dismiss'],
+      options: ['Share list...', 'Rename list...', 'Delete list...', 'Dismiss'],
       destructiveButtonIndex: 2,
       cancelButtonIndex: 3,
     },
     (buttonIdx) => {
       if (buttonIdx === 0) {
-        renameList()
-      } else if (buttonIdx === 1) {
         shareActionSheet(list)
+      } else if (buttonIdx === 1) {
+        renameList()
       } else if (buttonIdx === 2) {
         deleteListConfirmationActionSheet(list, deleteList)
       }
