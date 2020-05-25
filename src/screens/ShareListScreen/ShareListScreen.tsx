@@ -35,7 +35,7 @@ const ShareListScreen: React.FC<Props> = React.memo(
               paddingVertical: 10,
               width: 70,
             }}
-            onPress={() => navigation.popToTop()}>
+            onPress={() => navigation.navigate('ListView', { list })}>
             <Text
               style={{
                 color: '#fff',

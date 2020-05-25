@@ -71,7 +71,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
     React.useEffect(() => {
       subscribeToMore({
         document: NEW_ITEM_IN_LIST_SUBSCRIPTION,
-        variables: { listId: listParam.id },
+        variables: { listId: data?.list.id },
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev
           const newItem = subscriptionData.data.newItemInList
