@@ -19,7 +19,7 @@ export const retrieveNewAccessToken = async (): Promise<string | null> => {
     },
     operationName: 'RefreshTokenMutation',
   })
-  let token = null
+  let token = ''
   await fetch(Config.API_BASE_URL, {
     headers: {
       'content-type': 'application/json',

@@ -15,6 +15,7 @@ export const UPDATE_ITEM_MUTATION = gql`
     ) {
       __typename
       id
+      quantity
       completed
     }
   }

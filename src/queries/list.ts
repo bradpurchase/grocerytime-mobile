@@ -9,6 +9,7 @@ export const LIST_QUERY = gql`
       items {
         __typename
         id
+        listId
         name
         quantity
         completed

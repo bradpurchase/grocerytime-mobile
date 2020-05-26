@@ -5,6 +5,7 @@ export const NEW_ITEM_IN_LIST_SUBSCRIPTION = gql`
     newItemInList(listId: $listId) {
       __typename
       id
+      listId
       name
       quantity
       completed

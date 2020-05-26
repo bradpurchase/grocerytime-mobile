@@ -10,6 +10,7 @@
 export interface List_list_items {
   __typename: "Item";
   id: string;
+  listId: string;
   name: string;
   quantity: number;
   completed: boolean;

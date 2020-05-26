@@ -12,7 +12,7 @@ import SectionCell from './SectionCell'
 import ItemCell from './ItemCell'
 import AddItemInput from './AddItemInput'
 
-import { Item } from './types'
+import { Item } from '../../types'
 
 const ItemsList: React.FC = React.memo(() => {
   const listContext = React.useContext(ListContext)
@@ -81,9 +81,6 @@ const ItemsList: React.FC = React.memo(() => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  backTextWhite: {
-    color: '#FFF',
   },
 })
 

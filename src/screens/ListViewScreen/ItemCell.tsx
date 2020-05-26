@@ -8,9 +8,9 @@ import {
 } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 
-import { Item } from './types'
+import { Item } from '../../types'
 import Checkbox from '../../components/Checkbox'
-import QuantityEditor from './QuantityEditor'
+import QuantityStepper from './QuantityStepper'
 
 import ListContext from '../../context/ListContext'
 import ItemContext from '../../context/ItemContext'
@@ -25,7 +25,7 @@ interface Props {
 const ItemCell: React.FC<Props> = React.memo(({ item }) => {
   const { colors } = useTheme()
 
-  const { id, name, quantity, completed } = item
+  const { id, listId, name, quantity, completed } = item
 
   const [editingMode, setEditingMode] = React.useState<boolean>(false)
   const [itemName, setItemName] = React.useState<string>(name)
@@ -39,8 +39,10 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
       updateItem: {
         __typename: 'Item',
         id: id,
+        listId: listId,
         completed: completed,
         name: itemName,
+        quantity: quantity,
       },
     },
     onCompleted: () => {
@@ -54,7 +56,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
   }, [editingMode])
 
   return (
-    <ItemContext.Provider value={{ item }}>
+    <ItemContext.Provider value={item}>
       <View
         style={{
           backgroundColor: colors.card,
@@ -148,7 +150,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
                 flexDirection: 'row',
                 flex: 1,
               }}>
-              <QuantityEditor />
+              <QuantityStepper />
             </View>
           )}
         </TouchableOpacity>

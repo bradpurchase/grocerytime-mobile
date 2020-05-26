@@ -10,6 +10,7 @@
 export interface UpdateItem_updateItem {
   __typename: "Item";
   id: string;
+  quantity: number;
   completed: boolean;
 }
 

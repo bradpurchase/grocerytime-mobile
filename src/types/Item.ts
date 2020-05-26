@@ -4,6 +4,7 @@ export interface Item {
   userId: string
   name: string
   quantity: number
+  completed: boolean
   createdAt: string
   updatedAt: string
 }
