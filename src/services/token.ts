@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage'
 import Config from 'react-native-config'
 
-import { CurrentUser } from '../types'
 import { setCurrentUser } from './user'
 import { REFRESH_TOKEN_MUTATION } from '../queries/refreshToken'
 

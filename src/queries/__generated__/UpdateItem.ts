@@ -22,5 +22,7 @@ export interface UpdateItem {
 
 export interface UpdateItemVariables {
   itemId: string;
+  name?: string | null;
+  quantity?: number | null;
   completed?: boolean | null;
 }

@@ -17,6 +17,7 @@ export interface List_list_items {
 
 export interface List_list_listUsers {
   __typename: "ListUser";
+  id: string;
   userId: string;
   creator: boolean;
 }

@@ -59,9 +59,6 @@ const ItemsList: React.FC = React.memo(() => {
 
       <SectionList
         sections={itemsData}
-        renderSectionHeader={({ section: { title } }) => (
-          <SectionCell title={title} />
-        )}
         renderItem={({ item }: any) => <ItemCell key={item.id} item={item} />}
         contentContainerStyle={{ flexGrow: 1 }}
         ListEmptyComponent={

@@ -135,7 +135,7 @@ const App = () => {
     headerTintColor: colors.WHITE,
   }
   const MainStackScreen = () => (
-    <MainStack.Navigator initialRouteName="Lists" screenOptions={screenOptions}>
+    <MainStack.Navigator screenOptions={screenOptions}>
       {user.token ? (
         <>
           <RootStack.Screen name="Lists" component={ListsScreen} />
