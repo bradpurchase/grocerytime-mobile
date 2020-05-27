@@ -95,7 +95,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
               onSubmitEditing={() => handleLoginButtonPress()}
             />
             <Button
-              label="Log in"
+              label={submitting ? 'Working on it...' : 'Log in'}
               onPress={handleLoginButtonPress}
               disabled={
                 email.length === 0 || password.length === 0 || submitting

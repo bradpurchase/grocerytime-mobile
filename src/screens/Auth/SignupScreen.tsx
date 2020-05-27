@@ -51,9 +51,21 @@ const SignupScreen: React.FC = () => {
     })
   }, [error])
 
+  const emailIsValid = () => {
+    const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return pattern.test(email.toLowerCase())
+  }
+
   const handleSignupButtonPress = () => {
-    setSubmitting(true)
-    signup()
+    if (emailIsValid()) {
+      setSubmitting(true)
+      signup()
+    } else {
+      Alert.alert(
+        'Oops!',
+        "That doesn't appear to be a valid email address. Please check it and try again.",
+      )
+    }
   }
 
   return (
@@ -86,7 +98,7 @@ const SignupScreen: React.FC = () => {
               editable={!submitting}
             />
             <Button
-              label="Sign up"
+              label={submitting ? 'Working on it...' : 'Sign up'}
               onPress={handleSignupButtonPress}
               disabled={
                 email.length === 0 || password.length === 0 || submitting

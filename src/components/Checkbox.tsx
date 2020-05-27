@@ -24,9 +24,9 @@ const Checkbox: React.FC<Props> = ({ checked, disabled = false, onPress }) => {
           borderColor: checked ? '#48BB78' : '#ccc',
           borderWidth: 2,
           borderRadius: 64,
-          height: 20,
+          height: 22,
           opacity: disabled ? 0.5 : 1,
-          width: 20,
+          width: 22,
         }}
       />
     </TouchableOpacity>

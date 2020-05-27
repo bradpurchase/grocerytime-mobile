@@ -69,12 +69,9 @@ const AppComponent = () => {
 
       const authErrorLink = onError(({ graphQLErrors, operation, forward }) => {
         if (graphQLErrors) {
-          const sessionExpiredErrorMsg =
-            'Token is invalid or session has expired'
-          if (graphQLErrors[0].message === sessionExpiredErrorMsg) {
+          if (graphQLErrors[0].message === 'token invalid/expired') {
             return fromPromise(
               retrieveNewAccessToken().then((newToken) => {
-                console.log(newToken)
                 const headers = operation.getContext().headers
                 operation.setContext({
                   headers: {
