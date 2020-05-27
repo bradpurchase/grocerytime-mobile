@@ -68,7 +68,7 @@ const AddItemInput: React.FC = React.memo(() => {
         source={
           colorScheme === 'dark'
             ? require('../../assets/icons/PlusWhite.png')
-            : require('../../assets/icons/Plus.png')
+            : require('../../assets/icons/PlusDark.png')
         }
       />
       <TextInput

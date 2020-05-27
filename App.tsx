@@ -125,20 +125,24 @@ const App = () => {
 
   const screenOptions = {
     headerStyle: {
-      backgroundColor: colors.RED,
+      backgroundColor: scheme === 'dark' ? colors.BG_DARK : colors.BG_LIGHT,
       shadowRadius: 0,
       shadowOffset: {
         height: 0,
         width: 0,
       },
     },
-    headerTintColor: colors.WHITE,
+    headerTintColor: colors.RED,
   }
   const MainStackScreen = () => (
     <MainStack.Navigator screenOptions={screenOptions}>
       {user.token ? (
         <>
-          <RootStack.Screen name="Lists" component={ListsScreen} />
+          <RootStack.Screen
+            name="Lists"
+            component={ListsScreen}
+            options={{ title: '' }}
+          />
           <RootStack.Screen
             name="ListView"
             component={ListViewScreen}
@@ -213,7 +217,9 @@ const App = () => {
             />
           </RootStack.Navigator>
 
-          <StatusBar barStyle="light-content" />
+          <StatusBar
+            barStyle={scheme === 'dark' ? 'light-content' : 'dark-content'}
+          />
         </NavigationContainer>
       </AppearanceProvider>
     </AuthContext.Provider>

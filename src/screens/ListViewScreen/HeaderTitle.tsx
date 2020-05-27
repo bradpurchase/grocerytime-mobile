@@ -20,7 +20,7 @@ const HeaderTitle: React.FC<Props> = React.memo(
         <Text
           numberOfLines={1}
           style={{
-            color: colors.WHITE,
+            color: colors.RED,
             fontSize: 16,
             fontWeight: '700',
             textAlign: 'center',
@@ -31,7 +31,7 @@ const HeaderTitle: React.FC<Props> = React.memo(
           <Text
             style={{
               textAlign: 'center',
-              color: '#FED7D7',
+              color: colors.RED,
               fontSize: 12,
               fontWeight: '400',
             }}>

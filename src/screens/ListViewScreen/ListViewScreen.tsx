@@ -105,7 +105,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
               }>
               <Image
                 style={styles.icon}
-                source={require('../../assets/icons/MenuVerticalWhite.png')}
+                source={require('../../assets/icons/MenuVertical.png')}
               />
             </TouchableOpacity>
           ),

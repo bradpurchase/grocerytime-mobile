@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     width: 70,
   },
   headerButtonLabel: {
-    color: colors.WHITE,
+    color: colors.RED,
     fontSize: 16,
   },
   inputCell: {

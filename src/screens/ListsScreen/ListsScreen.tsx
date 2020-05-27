@@ -8,6 +8,7 @@ import {
   Image,
   Alert,
   StyleSheet,
+  Text,
 } from 'react-native'
 
 import { useQuery } from '@apollo/react-hooks'
@@ -16,6 +17,7 @@ import { ME_QUERY } from '../../queries/me'
 import { ListCellNavigationProp } from '../../types/Navigation'
 import AuthContext from '../../context/AuthContext'
 
+import ScreenTitle from '../../components/ScreenTitle'
 import ListCell from './ListCell'
 
 interface Props {
@@ -65,7 +67,7 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
           onPress={() => navigation.push('NewList')}>
           <Image
             style={styles.icon}
-            source={require('../../assets/icons/PlusWhite.png')}
+            source={require('../../assets/icons/Plus.png')}
           />
         </TouchableOpacity>
       ),
@@ -77,24 +79,27 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
       {loading ? (
         <ActivityIndicator />
       ) : (
-        <FlatList
-          data={data.me.lists}
-          extraData={refetch()}
-          renderItem={({ item: list }) => (
-            <ListCell
-              key={list.id}
-              list={list}
-              navigation={navigation}
-              refetchList={() => refetch()}
-            />
-          )}
-          refreshControl={
-            <RefreshControl
-              refreshing={data.networkStatus === 4}
-              onRefresh={() => refetch()}
-            />
-          }
-        />
+        <>
+          <ScreenTitle title="Lists" />
+          <FlatList
+            data={data.me.lists}
+            extraData={refetch()}
+            renderItem={({ item: list }) => (
+              <ListCell
+                key={list.id}
+                list={list}
+                navigation={navigation}
+                refetchList={() => refetch()}
+              />
+            )}
+            refreshControl={
+              <RefreshControl
+                refreshing={data.networkStatus === 4}
+                onRefresh={() => refetch()}
+              />
+            }
+          />
+        </>
       )}
     </View>
   )
@@ -103,7 +108,7 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 40,
+    marginTop: 20,
     width: '100%',
   },
   headerButton: {
