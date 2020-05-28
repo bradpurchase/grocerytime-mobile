@@ -89,8 +89,6 @@ const QuantityStepper: React.FC = React.memo(() => {
   }
 
   const handleDeleteItem = () => {
-    //TODO implement this...
-    console.log('[handleDeleteItem] Delete item...')
     deleteItem({
       variables: {
         itemId: id,
@@ -117,7 +115,7 @@ const QuantityStepper: React.FC = React.memo(() => {
             height: 32,
           }}
           onPress={() => handleQuantityChange(itemQuantity - 1)}>
-          <Text style={{ fontSize: 20, color: colors.card }}>-</Text>
+          <Text style={{ fontSize: 20, color: '#fff' }}>-</Text>
         </TouchableOpacity>
         <View
           style={{
@@ -142,7 +140,7 @@ const QuantityStepper: React.FC = React.memo(() => {
             height: 32,
           }}
           onPress={() => handleQuantityChange(itemQuantity + 1)}>
-          <Text style={{ fontSize: 20, color: colors.card }}>+</Text>
+          <Text style={{ fontSize: 20, color: '#fff' }}>+</Text>
         </TouchableOpacity>
       </View>
     </View>

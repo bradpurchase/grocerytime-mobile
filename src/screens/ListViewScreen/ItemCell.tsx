@@ -5,10 +5,13 @@ import {
   TextInput,
   TouchableOpacity,
   LayoutAnimation,
+  Image,
+  Alert,
 } from 'react-native'
 import { useTheme } from '@react-navigation/native'
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
-import { Item } from '../../types'
+import { Item, List } from '../../types'
 import Checkbox from '../../components/Checkbox'
 import QuantityStepper from './QuantityStepper'
 
@@ -17,6 +20,9 @@ import ItemContext from '../../context/ItemContext'
 
 import { useMutation } from '@apollo/react-hooks'
 import { UPDATE_ITEM_MUTATION } from '../../queries/updateItem'
+import { DELETE_ITEM_MUTATION } from '../../queries/deleteItem'
+import * as DeleteItemTypes from '../../queries/__generated__/DeleteItem'
+import { LIST_QUERY } from '../../queries/list'
 
 interface Props {
   item: Item
@@ -51,9 +57,60 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
     },
   })
 
+  const [deleteItem, { error }] = useMutation<
+    DeleteItemTypes.DeleteItem,
+    DeleteItemTypes.DeleteItemVariables
+  >(DELETE_ITEM_MUTATION, {
+    update(cache, { data }) {
+      const listData: any = cache.readQuery({
+        query: LIST_QUERY,
+        variables: {
+          id: listId,
+        },
+      })
+      const list: List = listData.list
+      cache.writeQuery({
+        query: LIST_QUERY,
+        data: {
+          list: {
+            ...list,
+            items: list.items?.filter(
+              (item: Item) => item.id !== data?.deleteItem?.id,
+            ),
+          },
+        },
+      })
+    },
+  })
+  if (error) console.log(error)
+
   React.useEffect(() => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
   }, [editingMode])
+
+  const handleDeleteTapped = () => {
+    ReactNativeHapticFeedback.trigger('impactLight')
+    Alert.alert('Delete item?', 'Are you sure you want to delete this item?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel pressed...'),
+        style: 'cancel',
+      },
+      {
+        text: 'Delete Item',
+        onPress: () => handleDeleteItem(),
+        style: 'destructive',
+      },
+    ])
+  }
+
+  const handleDeleteItem = () => {
+    deleteItem({
+      variables: {
+        itemId: id,
+      },
+    })
+  }
 
   return (
     <ItemContext.Provider value={item}>
@@ -151,6 +208,46 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
                 flex: 1,
               }}>
               <QuantityStepper />
+              <View
+                style={{
+                  alignSelf: 'center',
+                  flex: 1,
+                  justifyContent: 'center',
+                  flexDirection: 'column',
+                }}>
+                <TouchableOpacity
+                  style={{
+                    justifyContent: 'center',
+                    position: 'absolute',
+                    right: 45,
+                  }}>
+                  <Image
+                    style={{
+                      width: 25,
+                      height: 25,
+                    }}
+                    resizeMode="contain"
+                    source={require('../../assets/icons/More.png')}
+                  />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={{
+                    justifyContent: 'center',
+                    position: 'absolute',
+                    right: 0,
+                  }}
+                  onPress={() => handleDeleteTapped()}>
+                  <Image
+                    style={{
+                      width: 25,
+                      height: 25,
+                    }}
+                    resizeMode="contain"
+                    source={require('../../assets/icons/Delete.png')}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
           )}
         </TouchableOpacity>
