@@ -55,6 +55,8 @@ target 'GroceryTime' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 
+  pod 'RNReactNativeHapticFeedback', :path => '../node_modules/react-native-haptic-feedback'
+
   target 'GroceryTimeTests' do
     inherit! :complete
     # Pods for testing

@@ -36,9 +36,14 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
       },
       {
         text: 'Log Out',
-        onPress: () => authContext.logout(),
+        onPress: () => handleLogout(),
       },
     ])
+
+  const handleLogout = () => {
+    authContext.logout()
+    navigation.pop()
+  }
 
   React.useLayoutEffect(() => {
     navigation.setOptions({

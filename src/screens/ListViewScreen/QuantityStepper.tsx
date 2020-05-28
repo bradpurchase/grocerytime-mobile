@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { View, TouchableOpacity, Text, Alert } from 'react-native'
 import { useTheme } from '@react-navigation/native'
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
 import { useMutation } from '@apollo/react-hooks'
 import { UPDATE_ITEM_MUTATION } from '../../queries/updateItem'
@@ -64,6 +65,7 @@ const QuantityStepper: React.FC = React.memo(() => {
 
   const handleQuantityChange = (newQuantity: number) => {
     if (newQuantity > 0) {
+      ReactNativeHapticFeedback.trigger('impactLight')
       setItemQuantity(newQuantity)
       updateItem({ variables: { itemId: id, quantity: newQuantity } })
     } else if (newQuantity === 0) {
@@ -107,23 +109,23 @@ const QuantityStepper: React.FC = React.memo(() => {
           style={{
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: 'transparent',
+            backgroundColor: colors.primary,
             borderColor: colors.primary,
             borderWidth: 1,
             borderRadius: 64,
             width: 40,
-            height: 40,
+            height: 32,
           }}
           onPress={() => handleQuantityChange(itemQuantity - 1)}>
-          <Text style={{ fontSize: 22, color: colors.text }}>-</Text>
+          <Text style={{ fontSize: 20, color: colors.card }}>-</Text>
         </TouchableOpacity>
         <View
           style={{
             alignItems: 'center',
             justifyContent: 'center',
-            width: 30,
+            width: 35,
           }}>
-          <Text style={{ fontSize: 14, color: colors.subtitle }}>
+          <Text style={{ fontSize: 18, fontWeight: '500', color: colors.text }}>
             {itemQuantity}
           </Text>
         </View>
@@ -132,15 +134,15 @@ const QuantityStepper: React.FC = React.memo(() => {
           style={{
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: 'transparent',
+            backgroundColor: colors.primary,
             borderColor: colors.primary,
             borderWidth: 1,
             borderRadius: 64,
-            width: 42,
-            height: 40,
+            width: 40,
+            height: 32,
           }}
           onPress={() => handleQuantityChange(itemQuantity + 1)}>
-          <Text style={{ fontSize: 22, color: colors.text }}>+</Text>
+          <Text style={{ fontSize: 20, color: colors.card }}>+</Text>
         </TouchableOpacity>
       </View>
     </View>

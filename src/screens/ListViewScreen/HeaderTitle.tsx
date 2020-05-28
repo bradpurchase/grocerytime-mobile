@@ -23,8 +23,8 @@ const HeaderTitle: React.FC<Props> = React.memo(
           numberOfLines={1}
           style={{
             color: colors.primary,
-            fontSize: 16,
-            fontWeight: '700',
+            fontSize: 17,
+            fontWeight: '500',
             textAlign: 'center',
           }}>
           {list.name}
