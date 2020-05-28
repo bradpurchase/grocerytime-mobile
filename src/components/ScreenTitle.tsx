@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text } from 'react-native'
+import { View, Text } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 
 interface Props {
@@ -9,16 +9,20 @@ interface Props {
 const ScreenTitle: React.FC<Props> = React.memo(({ title }) => {
   const { colors } = useTheme()
   return (
-    <Text
+    <View
       style={{
-        color: colors.text,
-        fontSize: 32,
-        fontWeight: '700',
         marginHorizontal: 20,
         marginBottom: 20,
       }}>
-      {title}
-    </Text>
+      <Text
+        style={{
+          color: colors.text,
+          fontSize: 32,
+          fontWeight: '700',
+        }}>
+        {title}
+      </Text>
+    </View>
   )
 })
 

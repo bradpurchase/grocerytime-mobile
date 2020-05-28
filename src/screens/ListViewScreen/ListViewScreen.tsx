@@ -1,11 +1,5 @@
 import * as React from 'react'
-import {
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  Image,
-  TouchableOpacity,
-} from 'react-native'
+import { View, ActivityIndicator, Image, TouchableOpacity } from 'react-native'
 import { RouteProp } from '@react-navigation/native'
 
 import {
@@ -93,7 +87,13 @@ const ListViewScreen: React.FC<Props> = React.memo(
           headerTitle: () => <HeaderTitle list={list} isCreator={isCreator} />,
           headerRight: () => (
             <TouchableOpacity
-              style={styles.headerButton}
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                paddingHorizontal: 10,
+                paddingVertical: 10,
+                width: 50,
+              }}
               onPress={() =>
                 listActionSheet(
                   list,
@@ -104,7 +104,10 @@ const ListViewScreen: React.FC<Props> = React.memo(
                 )
               }>
               <Image
-                style={styles.icon}
+                style={{
+                  justifyContent: 'center',
+                  resizeMode: 'contain',
+                }}
                 source={require('../../assets/icons/MenuVertical.png')}
               />
             </TouchableOpacity>
@@ -129,30 +132,16 @@ const ListViewScreen: React.FC<Props> = React.memo(
 
     return (
       <ListContext.Provider value={{ data, refetch }}>
-        <View style={styles.container}>
+        <View
+          style={{
+            flex: 1,
+            position: 'relative',
+          }}>
           <ItemsList />
         </View>
       </ListContext.Provider>
     )
   },
 )
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: 'relative',
-  },
-  headerButton: {
-    flex: 1,
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    width: 50,
-  },
-  icon: {
-    justifyContent: 'center',
-    resizeMode: 'contain',
-  },
-})
 
 export default ListViewScreen

@@ -6,16 +6,13 @@ import {
   RefreshControl,
   TouchableOpacity,
   Image,
-  Alert,
   StyleSheet,
-  Text,
 } from 'react-native'
 
 import { useQuery } from '@apollo/react-hooks'
 import { ME_QUERY } from '../../queries/me'
 
 import { ListCellNavigationProp } from '../../types/Navigation'
-import AuthContext from '../../context/AuthContext'
 
 import ScreenTitle from '../../components/ScreenTitle'
 import ListCell from './ListCell'
@@ -26,7 +23,6 @@ interface Props {
 
 const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
   const { loading, data, refetch } = useQuery(ME_QUERY)
-  const authContext = React.useContext(AuthContext)
 
   React.useEffect(() => {
     const refetchOnFocus = navigation.addListener('focus', () => {
@@ -36,25 +32,12 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
     return refetchOnFocus
   }, [navigation])
 
-  const settingsAlert = () =>
-    Alert.alert('Log out?', 'Are you sure you want to log out?', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel pressed'),
-        style: 'cancel',
-      },
-      {
-        text: 'Log Out',
-        onPress: () => authContext.logout(),
-      },
-    ])
-
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
         <TouchableOpacity
           style={styles.headerButton}
-          onPress={() => settingsAlert()}>
+          onPress={() => navigation.navigate('Settings')}>
           <Image
             style={styles.icon}
             source={require('../../assets/icons/Settings.png')}
@@ -64,7 +47,7 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
       headerRight: () => (
         <TouchableOpacity
           style={styles.headerButton}
-          onPress={() => navigation.push('NewList')}>
+          onPress={() => navigation.navigate('NewList')}>
           <Image
             style={styles.icon}
             source={require('../../assets/icons/Plus.png')}
@@ -75,7 +58,11 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
   }, [])
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        flex: 1,
+        marginTop: 20,
+      }}>
       {loading ? (
         <ActivityIndicator />
       ) : (
@@ -106,11 +93,6 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 20,
-    width: '100%',
-  },
   headerButton: {
     flex: 1,
     alignItems: 'center',
@@ -121,6 +103,7 @@ const styles = StyleSheet.create({
   icon: {
     justifyContent: 'center',
     resizeMode: 'contain',
+    width: 60,
   },
 })
 

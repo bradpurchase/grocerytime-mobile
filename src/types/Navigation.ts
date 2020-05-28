@@ -5,6 +5,7 @@ export type RootStackParamList = {
   Main: undefined
   Login: undefined
   Signup: undefined
+  Settings: undefined
   JoinList: { id: string }
   Lists: undefined
   NewList: undefined
@@ -18,6 +19,11 @@ export type LoginNavigationProp = StackNavigationProp<
   'Login'
 >
 
+export type SettingsNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'Settings'
+>
+
 export type JoinListNavigationProp = StackNavigationProp<
   RootStackParamList,
   'JoinList'
@@ -26,6 +32,11 @@ export type JoinListNavigationProp = StackNavigationProp<
 export type ListCellNavigationProp = StackNavigationProp<
   RootStackParamList,
   'Lists'
+>
+
+export type ListViewNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'ListView'
 >
 
 export type NewListNavigationProp = StackNavigationProp<
@@ -41,9 +52,4 @@ export type RenameListNavigationProp = StackNavigationProp<
 export type ShareListNavigationProp = StackNavigationProp<
   RootStackParamList,
   'ShareList'
->
-
-export type ListViewNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'ListView'
 >

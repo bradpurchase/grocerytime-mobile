@@ -38,6 +38,7 @@ import NewListScreen from './src/screens/NewListScreen/NewListScreen'
 import RenameListScreen from './src/screens/RenameListScreen/RenameListScreen'
 import ShareListScreen from './src/screens/ShareListScreen/ShareListScreen'
 import ListViewScreen from './src/screens/ListViewScreen/ListViewScreen'
+import SettingsScreen from './src/screens/SettingsScreen/SettingsScreen'
 
 import AuthContext from './src/context/AuthContext'
 import colors from './src/styles/colors'
@@ -214,6 +215,11 @@ const App = () => {
               name="ShareList"
               component={ShareListScreen}
               options={{ title: 'Share List' }}
+            />
+            <RootStack.Screen
+              name="Settings"
+              component={SettingsScreen}
+              options={{ title: '' }}
             />
           </RootStack.Navigator>
 

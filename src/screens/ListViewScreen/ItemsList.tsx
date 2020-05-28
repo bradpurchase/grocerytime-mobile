@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View, RefreshControl, SectionList, StyleSheet } from 'react-native'
+import { View, RefreshControl, FlatList } from 'react-native'
 
 import ListContext from '../../context/ListContext'
 
@@ -8,7 +8,6 @@ import { DELETE_ITEM_MUTATION } from '../../queries/deleteItem'
 import * as DeleteItemTypes from '../../queries/__generated__/DeleteItem'
 
 import EmptyState from '../../components/EmptyState'
-import SectionCell from './SectionCell'
 import ItemCell from './ItemCell'
 import AddItemInput from './AddItemInput'
 
@@ -32,18 +31,6 @@ const ItemsList: React.FC = React.memo(() => {
   })
   if (error) console.log(error)
 
-  // Need to represent it like this for the SectionList
-  //TODO: classify these items for each department in the grocery store
-  let itemsData: any[] = []
-  if (list.items.length > 0) {
-    itemsData = [
-      {
-        title: 'Other',
-        data: list.items,
-      },
-    ]
-  }
-
   const handleDeleteItem = (data: any) => {
     const item: Item = data.item
     deleteItem({
@@ -54,11 +41,15 @@ const ItemsList: React.FC = React.memo(() => {
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        flex: 1,
+      }}>
       <AddItemInput />
 
-      <SectionList
-        sections={itemsData}
+      <FlatList
+        data={list.items}
+        extraData={refetch()}
         renderItem={({ item }: any) => <ItemCell key={item.id} item={item} />}
         contentContainerStyle={{ flexGrow: 1 }}
         ListEmptyComponent={
@@ -77,11 +68,4 @@ const ItemsList: React.FC = React.memo(() => {
     </View>
   )
 })
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-})
-
 export default ItemsList

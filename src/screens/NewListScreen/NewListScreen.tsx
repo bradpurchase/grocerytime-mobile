@@ -7,8 +7,8 @@ import {
   TextInput,
   Keyboard,
   Alert,
-  StyleSheet,
 } from 'react-native'
+import { useTheme } from '@react-navigation/native'
 
 import { NewListNavigationProp } from '../../types/Navigation'
 
@@ -27,6 +27,8 @@ type FormData = {
 }
 
 const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
+  const { colors } = useTheme()
+
   const [formData, setFormData] = React.useState<FormData>({ name: '' })
   const nameEmpty = formData.name.length === 0
 
@@ -34,21 +36,40 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
     navigation.setOptions({
       headerLeft: () => (
         <TouchableOpacity
-          style={styles.headerButton}
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            paddingHorizontal: 10,
+            paddingVertical: 10,
+            width: 70,
+          }}
           onPress={() => navigation.goBack()}>
-          <Text style={styles.headerButtonLabel}>Cancel</Text>
+          <Text
+            style={{
+              color: colors.primary,
+              fontSize: 16,
+            }}>
+            Cancel
+          </Text>
         </TouchableOpacity>
       ),
       headerRight: () => (
         <TouchableOpacity
-          style={styles.headerButton}
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            paddingHorizontal: 10,
+            paddingVertical: 10,
+            width: 70,
+          }}
           activeOpacity={nameEmpty ? 1 : 0.7}
           onPress={() => (nameEmpty ? {} : createList())}>
           <Text
-            style={StyleSheet.flatten([
-              styles.headerButtonLabel,
-              { opacity: nameEmpty ? 0.7 : 1 },
-            ])}>
+            style={{
+              color: colors.primary,
+              fontSize: 16,
+              opacity: nameEmpty ? 0.7 : 1,
+            }}>
             Done
           </Text>
         </TouchableOpacity>
@@ -81,7 +102,11 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        flex: 1,
+        marginTop: 20,
+      }}>
       <SectionList
         sections={[
           {
@@ -90,73 +115,52 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
           },
         ]}
         renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles.label}>{title}</Text>
+          <Text
+            style={{
+              color: colors.text,
+              fontSize: 14,
+              fontWeight: '500',
+              padding: 10,
+              paddingHorizontal: 20,
+              textTransform: 'uppercase',
+            }}>
+            {title}
+          </Text>
         )}
         renderSectionFooter={() => (
-          <Text style={styles.sectionFooter}>
+          <Text
+            style={{
+              color: colors.subtitle,
+              fontSize: 15,
+              lineHeight: 24,
+              marginTop: 20,
+              paddingHorizontal: 20,
+              textAlign: 'center',
+            }}>
             After creating this list, you can share it with others and work on
             it together.
           </Text>
         )}
         renderItem={({ item }) => (
-          <View style={styles.inputCell}>
-            <TextInput
-              style={styles.input}
-              placeholderTextColor="#666"
-              placeholder={item}
-              clearButtonMode="while-editing"
-              autoCapitalize="words"
-              onChangeText={(text) => setFormData({ ...formData, name: text })}
-            />
-          </View>
+          <TextInput
+            style={{
+              backgroundColor: colors.card,
+              display: 'flex',
+              flexDirection: 'column',
+              fontSize: 16,
+              padding: 20,
+            }}
+            placeholderTextColor="#999"
+            placeholder={item}
+            clearButtonMode="while-editing"
+            autoCapitalize="words"
+            onChangeText={(text) => setFormData({ ...formData, name: text })}
+          />
         )}
         keyExtractor={(index) => index.toString()}
       />
     </View>
   )
-})
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 40,
-  },
-  headerButton: {
-    flex: 1,
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    width: 70,
-  },
-  headerButtonLabel: {
-    color: colors.RED,
-    fontSize: 16,
-  },
-  inputCell: {
-    backgroundColor: colors.WHITE,
-    display: 'flex',
-    padding: 20,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-    padding: 10,
-    paddingHorizontal: 20,
-    textTransform: 'uppercase',
-  },
-  input: {
-    flexDirection: 'column',
-    fontSize: 16,
-    paddingVertical: 5,
-  },
-  sectionFooter: {
-    color: colors.MEDIUM_GREY,
-    fontSize: 15,
-    lineHeight: 24,
-    marginTop: 25,
-    paddingHorizontal: 20,
-    textAlign: 'center',
-  },
 })
 
 export default NewListScreen

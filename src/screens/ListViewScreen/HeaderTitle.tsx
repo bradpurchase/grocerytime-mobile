@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Text, View } from 'react-native'
-import colors from '../../styles/colors'
+import { useTheme } from '@react-navigation/native'
 
 import { List } from '../../types'
 import { listIsShared } from '../../services/list'
@@ -12,6 +12,8 @@ interface Props {
 
 const HeaderTitle: React.FC<Props> = React.memo(
   ({ list, isCreator }: Props) => {
+    const { colors } = useTheme()
+
     const listUsers = list.listUsers
     const numShared = listUsers && listUsers.length - 1 // subtract one to exclude the current user
 
@@ -20,7 +22,7 @@ const HeaderTitle: React.FC<Props> = React.memo(
         <Text
           numberOfLines={1}
           style={{
-            color: colors.RED,
+            color: colors.primary,
             fontSize: 16,
             fontWeight: '700',
             textAlign: 'center',
@@ -31,7 +33,7 @@ const HeaderTitle: React.FC<Props> = React.memo(
           <Text
             style={{
               textAlign: 'center',
-              color: colors.RED,
+              color: colors.subtitle,
               fontSize: 12,
               fontWeight: '400',
             }}>

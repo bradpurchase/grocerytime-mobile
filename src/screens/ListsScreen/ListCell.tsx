@@ -56,7 +56,7 @@ const ListCell: React.FC<Props> = React.memo(
         <Text
           style={{
             color: colors.text,
-            fontSize: 16,
+            fontSize: 18,
             fontWeight: 'bold',
             marginBottom: 10,
           }}>
@@ -65,7 +65,7 @@ const ListCell: React.FC<Props> = React.memo(
         <Text
           style={{
             color: colors.subtitle,
-            fontSize: 15,
+            fontSize: 16,
           }}>
           {itemsCount} items
         </Text>
