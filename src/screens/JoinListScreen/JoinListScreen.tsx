@@ -6,6 +6,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from 'react-native'
 
 import { RouteProp, useTheme } from '@react-navigation/native'
@@ -88,7 +89,7 @@ const JoinListScreen: React.FC<Props> = React.memo(
             onPress={() => navigation.popToTop()}>
             <Text
               style={{
-                color: '#fff',
+                color: colors.primary,
                 fontSize: 16,
               }}>
               Dismiss
@@ -99,8 +100,21 @@ const JoinListScreen: React.FC<Props> = React.memo(
       })
     })
 
+    const emailIsValid = () => {
+      const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return pattern.test(formData.email.toLowerCase())
+    }
+
     const handleSignup = () => {
-      console.log('TODO handleSignup')
+      if (emailIsValid()) {
+        setFormData({ ...formData, submitting: true })
+        console.log('TODO handleSignup')
+      } else {
+        Alert.alert(
+          'Oops!',
+          "That doesn't appear to be a valid email address. Please check it and try again.",
+        )
+      }
     }
 
     if (loading) {
@@ -204,7 +218,9 @@ const JoinListScreen: React.FC<Props> = React.memo(
             editable={!formData.submitting}
           />
           <Button
-            label="Sign up and Join List"
+            label={
+              formData.submitting ? 'Submitting...' : 'Sign up and Join List'
+            }
             onPress={() => handleSignup()}
             disabled={
               formData.email.length === 0 ||

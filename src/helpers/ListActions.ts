@@ -2,10 +2,13 @@ import { ActionSheetIOS } from 'react-native'
 import { List } from '../types/List'
 
 export const shareActionSheet = (list: List) => {
-  const shareUrl = `https://groceryti.me/share/${list.id}`
+  const listName = list.name ?? ''
+  const shareUrl = `https://groceryti.me/share/${list.id}?name=${encodeURI(
+    listName,
+  )}`
   return ActionSheetIOS.showShareActionSheetWithOptions(
     {
-      message: `I'd like to work on my grocery list "${list.name}" with you on GroceryTime. Click here to join: ${shareUrl}`,
+      message: `I'd like to work on my grocery list "${listName}" with you on GroceryTime. Click here to join: ${shareUrl}`,
     },
     (error) => console.log(error),
     (success, method) => console.log(success, method),

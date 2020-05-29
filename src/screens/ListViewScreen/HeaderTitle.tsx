@@ -24,8 +24,9 @@ const HeaderTitle: React.FC<Props> = React.memo(
           style={{
             color: colors.primary,
             fontSize: 17,
-            fontWeight: '500',
+            fontWeight: '700',
             textAlign: 'center',
+            width: 250,
           }}>
           {list.name}
         </Text>

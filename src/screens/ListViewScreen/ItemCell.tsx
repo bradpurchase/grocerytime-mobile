@@ -7,6 +7,7 @@ import {
   LayoutAnimation,
   Image,
   Alert,
+  ActionSheetIOS,
 } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
@@ -88,7 +89,29 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
   }, [editingMode])
 
-  const handleDeleteTapped = () => {
+  const handleMenuButtonTapped = () => {
+    ReactNativeHapticFeedback.trigger('impactLight')
+    return ActionSheetIOS.showActionSheetWithOptions(
+      {
+        title: item.name,
+        options: [
+          'Move to next trip...',
+          'Include in each trip...',
+          'Delete item...',
+          'Dismiss',
+        ],
+        destructiveButtonIndex: 2,
+        cancelButtonIndex: 3,
+      },
+      (buttonIdx) => {
+        if (buttonIdx === 1) {
+          handleDeleteButtonTapped()
+        }
+      },
+    )
+  }
+
+  const handleDeleteButtonTapped = () => {
     ReactNativeHapticFeedback.trigger('impactLight')
     Alert.alert('Delete item?', 'Are you sure you want to delete this item?', [
       {
@@ -215,12 +238,13 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
                   justifyContent: 'center',
                   flexDirection: 'column',
                 }}>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   style={{
                     justifyContent: 'center',
                     position: 'absolute',
                     right: 45,
-                  }}>
+                  }}
+                  onPress={() => handleMenuButtonTapped()}>
                   <Image
                     style={{
                       width: 25,
@@ -229,7 +253,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
                     resizeMode="contain"
                     source={require('../../assets/icons/More.png')}
                   />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 <TouchableOpacity
                   style={{
@@ -237,7 +261,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
                     position: 'absolute',
                     right: 0,
                   }}
-                  onPress={() => handleDeleteTapped()}>
+                  onPress={() => handleDeleteButtonTapped()}>
                   <Image
                     style={{
                       width: 25,

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { TouchableOpacity, View } from 'react-native'
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
 interface Props {
   checked: boolean
@@ -10,6 +11,7 @@ interface Props {
 const Checkbox: React.FC<Props> = ({ checked, disabled = false, onPress }) => {
   const handleOnPress = () => {
     if (disabled) return false
+    ReactNativeHapticFeedback.trigger('impactLight')
     onPress()
   }
 

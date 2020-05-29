@@ -74,10 +74,11 @@ const AddItemInput: React.FC = React.memo(() => {
       <TextInput
         style={{
           flex: 1,
-          fontSize: 16,
+          fontSize: 17,
+          fontWeight: '500',
         }}
         placeholder="Add an item..."
-        placeholderTextColor={colorScheme === 'dark' ? '#999' : '#666'}
+        placeholderTextColor={colorScheme === 'dark' ? '#ddd' : '#333'}
         returnKeyType="done"
         ref={textInputRef}
         onChangeText={(text) => setItem(text)}
