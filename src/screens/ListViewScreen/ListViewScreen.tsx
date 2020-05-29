@@ -84,7 +84,6 @@ const ListViewScreen: React.FC<Props> = React.memo(
       if (loading) return
       if (isCreator) {
         navigation.setOptions({
-          headerTitle: () => <HeaderTitle list={list} isCreator={isCreator} />,
           headerRight: () => (
             <TouchableOpacity
               style={{
@@ -115,7 +114,6 @@ const ListViewScreen: React.FC<Props> = React.memo(
         })
       } else {
         navigation.setOptions({
-          headerTitle: () => <HeaderTitle list={list} isCreator={isCreator} />,
           headerRight: () => <></>,
         })
       }
