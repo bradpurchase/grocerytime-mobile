@@ -80,10 +80,11 @@ const ListViewScreen: React.FC<Props> = React.memo(
       })
     }, [])
 
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
       if (loading) return
       if (isCreator) {
         navigation.setOptions({
+          headerTitle: () => <HeaderTitle list={list} isCreator={true} />,
           headerRight: () => (
             <TouchableOpacity
               style={{
@@ -114,10 +115,11 @@ const ListViewScreen: React.FC<Props> = React.memo(
         })
       } else {
         navigation.setOptions({
+          headerTitle: () => <HeaderTitle list={list} isCreator={false} />,
           headerRight: () => <></>,
         })
       }
-    }, [loading, list])
+    }, [navigation, loading])
 
     if (loading) {
       return (

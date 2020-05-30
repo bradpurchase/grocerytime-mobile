@@ -147,10 +147,10 @@ const App = () => {
           <RootStack.Screen
             name="ListView"
             component={ListViewScreen}
-            options={({ route }) => ({
+            options={{
               headerBackTitle: 'Lists',
-              title: route.params.list.name,
-            })}
+              title: '',
+            }}
           />
         </>
       ) : (
