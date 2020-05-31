@@ -55,24 +55,6 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
           </Text>
         </TouchableOpacity>
       ),
-      headerRight: () => (
-        <TouchableOpacity
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            paddingVertical: 10,
-            width: 75,
-          }}
-          onPress={() => logoutAlert()}>
-          <Text
-            style={{
-              color: colors.primary,
-              fontSize: 16,
-            }}>
-            Log Out
-          </Text>
-        </TouchableOpacity>
-      ),
     })
   }, [])
 
@@ -89,7 +71,7 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
     //   ],
     // },
     {
-      title: 'When adding items',
+      title: 'Adding items',
       data: [
         {
           key: 'settings.autoCapitalize',
@@ -98,7 +80,7 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
         },
         {
           key: 'settings.autoCorrect',
-          name: 'Autocorrect',
+          name: 'Use autocorrect',
           type: 'switch',
         },
       ],
@@ -130,6 +112,34 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
           <SettingsCell key={item.key} setting={item} />
         )}
         contentContainerStyle={{ flexGrow: 1 }}
+        ListFooterComponent={() => (
+          <TouchableOpacity
+            activeOpacity={0.9}
+            style={{
+              backgroundColor: colors.card,
+              borderRadius: 8,
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              padding: 18,
+              paddingVertical: 20,
+              marginTop: 30,
+              marginHorizontal: 8,
+            }}
+            onPress={() => logoutAlert()}>
+            <Text
+              style={{
+                color: colors.primary,
+                fontSize: 16,
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+              }}>
+              Log Out
+            </Text>
+          </TouchableOpacity>
+        )}
       />
     </View>
   )
