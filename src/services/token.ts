@@ -45,11 +45,12 @@ export const retrieveNewAccessToken = async (): Promise<string | null> => {
   return token
 }
 
-export const clearTokens = async (): Promise<any> => {
-  //TODO we can no longer clear all keys here because we store navigation state
-  // and settings here... just remove userId, accessToken and refreshToken
-  const asyncStorageKeys = await AsyncStorage.getAllKeys()
-  if (asyncStorageKeys.length > 0) {
-    AsyncStorage.clear()
+export const clearTokens = async () => {
+  try {
+    await AsyncStorage.removeItem('@accessToken')
+    await AsyncStorage.removeItem('@refreshToken')
+    await AsyncStorage.removeItem('@userId')
+  } catch (e) {
+    console.error(e)
   }
 }

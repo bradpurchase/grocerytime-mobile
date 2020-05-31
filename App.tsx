@@ -47,6 +47,7 @@ import { CurrentUser } from './src/types'
 
 import { clearTokens } from './src/services/token'
 import { getCurrentUser, setCurrentUser } from './src/services/user'
+import { setDefaultSettings } from './src/services/settings'
 
 const MainStack = createStackNavigator<RootStackParamList>()
 const RootStack = createStackNavigator<RootStackParamList>()
@@ -66,6 +67,7 @@ const App = () => {
     id: '',
     token: '',
   })
+  const [firstRunOccurred, setFirstRunOccurred] = useState<boolean>(true)
 
   React.useEffect(() => {
     const restoreState = async () => {
@@ -123,6 +125,31 @@ const App = () => {
   useEffect(() => {
     checkAuthentication()
   }, [])
+
+  // After a user logs in, check to see if the first run experience has occurred
+  // If it hasn't, we need to set some default settings for the user
+  const checkFirstRun = async () => {
+    try {
+      const firstRun = await AsyncStorage.getItem('@firstRun')
+      if (firstRun !== null) {
+        setFirstRunOccurred(JSON.parse(firstRun))
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    if (user.token) {
+      checkFirstRun()
+    }
+  }, [user])
+
+  useEffect(() => {
+    if (!firstRunOccurred) {
+      setDefaultSettings()
+    }
+  }, [firstRunOccurred])
 
   const screenOptions = {
     headerStyle: {

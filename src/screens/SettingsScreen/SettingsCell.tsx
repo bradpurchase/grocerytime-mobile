@@ -65,17 +65,19 @@ const SettingsCell: React.FC<Props> = React.memo(({ setting }) => {
         }}>
         {setting.name}
       </Text>
-      <Switch
-        value={switchValue}
-        onValueChange={handleSwitchToggle}
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'flex-end',
-          position: 'absolute',
-          right: 20,
-        }}
-      />
+      {setting.type === 'switch' && (
+        <Switch
+          value={switchValue}
+          onValueChange={handleSwitchToggle}
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            position: 'absolute',
+            right: 20,
+          }}
+        />
+      )}
     </View>
   )
 })

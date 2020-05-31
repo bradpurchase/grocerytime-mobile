@@ -79,14 +79,22 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const settingsData = [
     // {
     //   title: 'Appearance',
-    //   data: [],
+    //   data: [
+    //     {
+    //       key: 'settings.appearance',
+    //       name: 'Theme',
+    //       type: 'screen',
+    //       screen: 'AppearanceSettings',
+    //     },
+    //   ],
     // },
     {
-      title: 'When adding items...',
+      title: 'When adding items',
       data: [
         {
           key: 'settings.autoCapitalize',
           name: 'Capitalize the first letter of each word',
+          type: 'switch',
         },
       ],
     },
