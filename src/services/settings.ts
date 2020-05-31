@@ -17,9 +17,15 @@ export const setDefaultSettings = async () => {
     ['firstRun', 'true'],
     ['settings.appearance', 'system'],
     ['settings.autoCapitalize', 'true'],
+    ['settings.autoCorrect', 'false'],
   ]
   try {
-    await AsyncStorage.multiSet(defaultSettings)
+    defaultSettings.map(async (setting) => {
+      const settingData = await AsyncStorage.getItem(setting[0])
+      if (settingData === null) {
+        await AsyncStorage.setItem(setting[0], setting[1])
+      }
+    })
   } catch (e) {
     console.log(e)
   }

@@ -122,34 +122,27 @@ const App = () => {
     }
   }
 
-  useEffect(() => {
-    checkAuthentication()
-  }, [])
-
   // After a user logs in, check to see if the first run experience has occurred
   // If it hasn't, we need to set some default settings for the user
   const checkFirstRun = async () => {
     try {
-      const firstRun = await AsyncStorage.getItem('@firstRun')
+      const firstRun = await AsyncStorage.getItem('firstRun')
+      console.log('firstRun', firstRun)
       if (firstRun !== null) {
         setFirstRunOccurred(JSON.parse(firstRun))
+        return
       }
+      setFirstRunOccurred(false)
     } catch (e) {
       console.log(e)
     }
   }
 
   useEffect(() => {
-    if (user.token) {
-      checkFirstRun()
-    }
-  }, [user])
-
-  useEffect(() => {
-    if (!firstRunOccurred) {
-      setDefaultSettings()
-    }
-  }, [firstRunOccurred])
+    checkAuthentication()
+    checkFirstRun()
+    setDefaultSettings()
+  }, [])
 
   const screenOptions = {
     headerStyle: {

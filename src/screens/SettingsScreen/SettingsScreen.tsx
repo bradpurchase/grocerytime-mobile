@@ -93,7 +93,12 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
       data: [
         {
           key: 'settings.autoCapitalize',
-          name: 'Capitalize the first letter of each word',
+          name: 'Capitalize first letter of each word',
+          type: 'switch',
+        },
+        {
+          key: 'settings.autoCorrect',
+          name: 'Autocorrect',
           type: 'switch',
         },
       ],
@@ -115,7 +120,7 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
               fontSize: 13,
               fontWeight: '500',
               padding: 10,
-              paddingHorizontal: 30,
+              paddingHorizontal: 18,
               textTransform: 'uppercase',
             }}>
             {title}

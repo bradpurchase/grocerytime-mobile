@@ -54,3 +54,10 @@ export const clearTokens = async () => {
     console.error(e)
   }
 }
+
+// export const clearTokens = async (): Promise<any> => {
+//   const asyncStorageKeys = await AsyncStorage.getAllKeys()
+//   if (asyncStorageKeys.length > 0) {
+//     AsyncStorage.clear()
+//   }
+// }

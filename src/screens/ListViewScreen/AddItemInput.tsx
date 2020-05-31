@@ -99,7 +99,7 @@ const AddItemInput: React.FC = React.memo(() => {
         onChangeText={(text) => setItem(text)}
         onSubmitEditing={() => handleAddItem()}
         autoCorrect={false}
-        autoCapitalize={autoCapitalize ? 'words' : 'none'}
+        autoCapitalize={autoCapitalize ? 'words' : 'sentences'}
       />
     </View>
   )

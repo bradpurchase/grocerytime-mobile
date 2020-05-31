@@ -45,15 +45,12 @@ const SettingsCell: React.FC<Props> = React.memo(({ setting }) => {
     <View
       style={{
         backgroundColor: colors.card,
-        borderRadius: 8,
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: 18,
         paddingVertical: 20,
-        marginHorizontal: 8,
-        marginBottom: 8,
       }}>
       <Text
         style={{
