@@ -214,11 +214,7 @@ const App = () => {
               component={ShareListScreen}
               options={{ title: 'Share List' }}
             />
-            <RootStack.Screen
-              name="Settings"
-              component={SettingsScreen}
-              options={{ title: '' }}
-            />
+            <RootStack.Screen name="Settings" component={SettingsScreen} />
           </RootStack.Navigator>
 
           <StatusBar

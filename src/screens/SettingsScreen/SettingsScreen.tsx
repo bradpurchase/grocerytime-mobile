@@ -1,22 +1,12 @@
 import * as React from 'react'
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  SectionList,
-  TextInput,
-  Alert,
-} from 'react-native'
-import { RouteProp, useTheme } from '@react-navigation/native'
+import { View, Text, TouchableOpacity, SectionList, Alert } from 'react-native'
+import { useTheme } from '@react-navigation/native'
 
-import {
-  RootStackParamList,
-  SettingsNavigationProp,
-} from '../../types/Navigation'
+import { SettingsNavigationProp } from '../../types/Navigation'
 
 import AuthContext from '../../context/AuthContext'
 
-import ScreenTitle from '../../components/ScreenTitle'
+import SettingsCell from './SettingsCell'
 
 interface Props {
   navigation: SettingsNavigationProp
@@ -86,13 +76,44 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
     })
   }, [])
 
+  const settingsData = [
+    {
+      title: 'When adding items...',
+      data: [
+        {
+          key: 'settings.autoCapitalize',
+          name: 'Capitalize each word',
+        },
+      ],
+    },
+  ]
+
   return (
     <View
       style={{
         flex: 1,
         marginTop: 20,
       }}>
-      <ScreenTitle title="Settings" />
+      <SectionList
+        sections={settingsData}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text
+            style={{
+              color: colors.subtitle,
+              fontSize: 13,
+              fontWeight: '500',
+              padding: 10,
+              paddingHorizontal: 30,
+              textTransform: 'uppercase',
+            }}>
+            {title}
+          </Text>
+        )}
+        renderItem={({ item }: any) => (
+          <SettingsCell key={item.key} setting={item} />
+        )}
+        contentContainerStyle={{ flexGrow: 1 }}
+      />
     </View>
   )
 })
