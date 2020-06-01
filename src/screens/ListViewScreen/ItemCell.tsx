@@ -5,10 +5,10 @@ import {
   TextInput,
   TouchableOpacity,
   LayoutAnimation,
-  Image,
   Alert,
   ActionSheetIOS,
 } from 'react-native'
+import FastImage from 'react-native-fast-image'
 import { useTheme } from '@react-navigation/native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
@@ -262,7 +262,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
                     right: 0,
                   }}
                   onPress={() => handleDeleteButtonTapped()}>
-                  <Image
+                  <FastImage
                     style={{
                       width: 25,
                       height: 25,

@@ -4,7 +4,7 @@ import { List } from './List'
 export type RootStackParamList = {
   Main: undefined
   Login: undefined
-  Signup: undefined
+  Signup: { list?: List }
   Settings: undefined
   JoinList: { id: string }
   Lists: undefined
@@ -15,6 +15,11 @@ export type RootStackParamList = {
 }
 
 export type LoginNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'Login'
+>
+
+export type SignupNavigationProp = StackNavigationProp<
   RootStackParamList,
   'Login'
 >

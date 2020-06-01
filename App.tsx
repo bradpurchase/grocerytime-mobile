@@ -49,14 +49,11 @@ import { clearTokens } from './src/services/token'
 import { getCurrentUser, setCurrentUser } from './src/services/user'
 import { setDefaultSettings } from './src/services/settings'
 
-const MainStack = createStackNavigator<RootStackParamList>()
 const RootStack = createStackNavigator<RootStackParamList>()
 
 const PERSISTENCE_KEY = 'NAVIGATION_STATE'
 
 const App = () => {
-  const client = useApolloClient()
-
   // Subscribe to system color scheme changes (light/dark)
   const scheme = useColorScheme()
 
@@ -98,7 +95,6 @@ const App = () => {
       //TODO better error handling
       console.error(e)
     }
-
     setLoaded(true)
   }
 
@@ -116,7 +112,6 @@ const App = () => {
     try {
       await clearTokens()
       setUser({ id: '', token: '' })
-      await client.clearStore() // clear ApolloClient store
     } catch (e) {
       console.error(e)
     }
@@ -231,7 +226,7 @@ const App = () => {
             <RootStack.Screen
               name="JoinList"
               component={JoinListScreen}
-              options={{ title: 'Join List' }}
+              options={{ title: '', headerShown: false }}
             />
           </RootStack.Navigator>
 
