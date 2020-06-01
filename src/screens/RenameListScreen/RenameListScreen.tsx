@@ -39,25 +39,6 @@ const RenameListScreen: React.FC<Props> = React.memo(
 
     React.useLayoutEffect(() => {
       navigation.setOptions({
-        headerLeft: () => (
-          <TouchableOpacity
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              paddingHorizontal: 10,
-              paddingVertical: 10,
-              width: 70,
-            }}
-            onPress={() => navigation.goBack()}>
-            <Text
-              style={{
-                color: colors.primary,
-                fontSize: 16,
-              }}>
-              Cancel
-            </Text>
-          </TouchableOpacity>
-        ),
         headerRight: () => (
           <TouchableOpacity
             style={{

@@ -35,29 +35,6 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
     navigation.pop()
   }
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <TouchableOpacity
-          style={{
-            flex: 1,
-            alignItems: 'center',
-            paddingVertical: 10,
-            width: 70,
-          }}
-          onPress={() => navigation.goBack()}>
-          <Text
-            style={{
-              color: colors.primary,
-              fontSize: 16,
-            }}>
-            Cancel
-          </Text>
-        </TouchableOpacity>
-      ),
-    })
-  }, [])
-
   const settingsData = [
     // {
     //   title: 'Appearance',

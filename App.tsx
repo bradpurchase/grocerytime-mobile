@@ -155,45 +155,6 @@ const App = () => {
     },
     headerTintColor: colors.RED,
   }
-  const MainStackScreen = () => (
-    <MainStack.Navigator screenOptions={screenOptions}>
-      {user.token ? (
-        <>
-          <RootStack.Screen
-            name="Lists"
-            component={ListsScreen}
-            options={{ title: '' }}
-          />
-          <RootStack.Screen
-            name="ListView"
-            component={ListViewScreen}
-            options={{
-              headerBackTitle: 'Lists',
-              title: '',
-            }}
-          />
-        </>
-      ) : (
-        <>
-          <RootStack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{ headerShown: false }}
-          />
-          <RootStack.Screen
-            name="Signup"
-            component={SignupScreen}
-            options={{ headerShown: false }}
-          />
-        </>
-      )}
-      <RootStack.Screen
-        name="JoinList"
-        component={JoinListScreen}
-        options={{ title: 'Join List' }}
-      />
-    </MainStack.Navigator>
-  )
 
   if (!loaded || !navStateReady) return <ActivityIndicator />
 
@@ -216,28 +177,62 @@ const App = () => {
           }
           theme={scheme === 'dark' ? DarkTheme : LightTheme}
           linking={linking}>
-          <RootStack.Navigator mode="modal" screenOptions={screenOptions}>
+          <RootStack.Navigator screenOptions={screenOptions}>
+            {user.token ? (
+              <>
+                <RootStack.Screen
+                  name="Lists"
+                  component={ListsScreen}
+                  options={{ title: '' }}
+                />
+                <RootStack.Screen
+                  name="ListView"
+                  component={ListViewScreen}
+                  options={{
+                    headerBackTitle: ' ',
+                    title: '',
+                  }}
+                />
+                <RootStack.Screen
+                  name="NewList"
+                  component={NewListScreen}
+                  options={{ title: 'New List', headerBackTitle: ' ' }}
+                />
+                <RootStack.Screen
+                  name="RenameList"
+                  component={RenameListScreen}
+                  options={{ title: 'Rename List', headerBackTitle: ' ' }}
+                />
+                <RootStack.Screen
+                  name="ShareList"
+                  component={ShareListScreen}
+                  options={{ title: 'Share List' }}
+                />
+                <RootStack.Screen
+                  name="Settings"
+                  component={SettingsScreen}
+                  options={{ headerBackTitle: ' ' }}
+                />
+              </>
+            ) : (
+              <>
+                <RootStack.Screen
+                  name="Login"
+                  component={LoginScreen}
+                  options={{ headerShown: false }}
+                />
+                <RootStack.Screen
+                  name="Signup"
+                  component={SignupScreen}
+                  options={{ headerShown: false }}
+                />
+              </>
+            )}
             <RootStack.Screen
-              name="Main"
-              component={MainStackScreen}
-              options={{ headerShown: false }}
+              name="JoinList"
+              component={JoinListScreen}
+              options={{ title: 'Join List' }}
             />
-            <RootStack.Screen
-              name="NewList"
-              component={NewListScreen}
-              options={{ title: 'New List' }}
-            />
-            <RootStack.Screen
-              name="RenameList"
-              component={RenameListScreen}
-              options={{ title: 'Rename List' }}
-            />
-            <RootStack.Screen
-              name="ShareList"
-              component={ShareListScreen}
-              options={{ title: 'Share List' }}
-            />
-            <RootStack.Screen name="Settings" component={SettingsScreen} />
           </RootStack.Navigator>
 
           <StatusBar
