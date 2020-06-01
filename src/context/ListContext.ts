@@ -14,12 +14,15 @@ type ListQueryData = {
 }
 
 type ListContextProps = {
-  data: ListQueryData | null
+  data: ListQueryData
   refetch: () => void
 }
 
 const ListContext = React.createContext<ListContextProps>({
-  data: null,
+  data: {
+    list: { id: '', name: '', items: [], listUsers: [] },
+    networkStatus: 0,
+  },
   refetch: () => {},
 })
 export default ListContext

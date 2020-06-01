@@ -7,7 +7,7 @@ interface Props {
   body?: string
 }
 
-const EmptyState: React.FC<Props> = (props) => {
+const EmptyState: React.FC<Props> = React.memo((props) => {
   const { colors } = useTheme()
   const { title, body } = props
 
@@ -27,9 +27,11 @@ const EmptyState: React.FC<Props> = (props) => {
         }}>
         {title}
       </Text>
-      {body && <Text style={{ color: colors.subtitle, fontSize: 18 }}>{body}</Text>}
+      {body && (
+        <Text style={{ color: colors.subtitle, fontSize: 18 }}>{body}</Text>
+      )}
     </View>
   )
-}
+})
 
 export default EmptyState

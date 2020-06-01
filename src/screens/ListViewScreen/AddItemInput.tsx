@@ -11,11 +11,19 @@ import * as AddItemToListTypes from '../../queries/__generated__/AddItemToList'
 
 import { getSettingValue } from '../../services/settings'
 
+interface AddItemInputSettings {
+  autoCapitalize: boolean
+  autoCorrect: boolean
+}
+
 const AddItemInput: React.FC = React.memo(() => {
   const { colors } = useTheme()
   const colorScheme = useColorScheme()
 
-  const [autoCapitalize, setAutoCapitalize] = React.useState<boolean>(false)
+  const [settings, setSettings] = React.useState<AddItemInputSettings>({
+    autoCapitalize: true,
+    autoCorrect: false,
+  })
 
   const listContext = React.useContext(ListContext)
   const { data, refetch } = listContext
@@ -51,15 +59,16 @@ const AddItemInput: React.FC = React.memo(() => {
     addItemToList()
   }
 
-  const autoCapitalizeSetting = async () => {
+  const getSettings = async () => {
     const autoCapitalize = await getSettingValue('settings.autoCapitalize')
-    if (autoCapitalize !== null) {
-      setAutoCapitalize(autoCapitalize)
+    const autoCorrect = await getSettingValue('settings.autoCorrect')
+    if (autoCapitalize !== null && autoCorrect !== null) {
+      setSettings({ autoCapitalize, autoCorrect })
     }
   }
 
   React.useEffect(() => {
-    autoCapitalizeSetting()
+    getSettings()
   }, [])
 
   return (
@@ -98,8 +107,8 @@ const AddItemInput: React.FC = React.memo(() => {
         ref={textInputRef}
         onChangeText={(text) => setItem(text)}
         onSubmitEditing={() => handleAddItem()}
-        autoCorrect={false}
-        autoCapitalize={autoCapitalize ? 'words' : 'sentences'}
+        autoCorrect={settings.autoCorrect ?? false}
+        autoCapitalize={settings.autoCapitalize ? 'words' : 'sentences'}
       />
     </View>
   )

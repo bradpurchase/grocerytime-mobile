@@ -121,24 +121,11 @@ const ListViewScreen: React.FC<Props> = React.memo(
       }
     }, [navigation, loading])
 
-    if (loading) {
-      return (
-        <View
-          style={{ alignItems: 'center', flex: 1, justifyContent: 'center' }}>
-          <ActivityIndicator size="large" />
-        </View>
-      )
-    }
+    if (loading) return <ActivityIndicator size="large" />
 
     return (
       <ListContext.Provider value={{ data, refetch }}>
-        <View
-          style={{
-            flex: 1,
-            position: 'relative',
-          }}>
-          <ItemsList />
-        </View>
+        <ItemsList />
       </ListContext.Provider>
     )
   },
