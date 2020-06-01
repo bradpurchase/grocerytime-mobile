@@ -113,32 +113,43 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
         )}
         contentContainerStyle={{ flexGrow: 1 }}
         ListFooterComponent={() => (
-          <TouchableOpacity
-            activeOpacity={0.9}
-            style={{
-              backgroundColor: colors.card,
-              borderRadius: 8,
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: 18,
-              paddingVertical: 20,
-              marginTop: 30,
-              marginHorizontal: 8,
-            }}
-            onPress={() => logoutAlert()}>
-            <Text
+          <>
+            <TouchableOpacity
+              activeOpacity={0.9}
               style={{
-                color: colors.primary,
-                fontSize: 16,
+                backgroundColor: colors.card,
+                borderRadius: 8,
                 flex: 1,
                 flexDirection: 'row',
-                justifyContent: 'flex-start',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: 18,
+                paddingVertical: 20,
+                marginTop: 30,
+                marginHorizontal: 8,
+              }}
+              onPress={() => logoutAlert()}>
+              <Text
+                style={{
+                  color: colors.primary,
+                  fontSize: 16,
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                }}>
+                Log Out
+              </Text>
+            </TouchableOpacity>
+            <Text
+              style={{
+                color: colors.subtitle,
+                fontSize: 14,
+                marginTop: 30,
+                textAlign: 'center',
               }}>
-              Log Out
+              GroceryTime 1.0.0 beta 1
             </Text>
-          </TouchableOpacity>
+          </>
         )}
       />
     </View>
