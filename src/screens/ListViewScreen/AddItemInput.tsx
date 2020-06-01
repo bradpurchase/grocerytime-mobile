@@ -9,9 +9,13 @@ import { useMutation } from '@apollo/react-hooks'
 import { ADD_ITEM_TO_LIST_MUTATION } from '../../queries/addItemToList'
 import * as AddItemToListTypes from '../../queries/__generated__/AddItemToList'
 
+import { getSettingValue } from '../../services/settings'
+
 const AddItemInput: React.FC = React.memo(() => {
   const { colors } = useTheme()
   const colorScheme = useColorScheme()
+
+  const [autoCapitalize, setAutoCapitalize] = React.useState<boolean>(false)
 
   const listContext = React.useContext(ListContext)
   const { data, refetch } = listContext
@@ -46,6 +50,17 @@ const AddItemInput: React.FC = React.memo(() => {
     if (item.length === 0) return
     addItemToList()
   }
+
+  const autoCapitalizeSetting = async () => {
+    const autoCapitalize = await getSettingValue('settings.autoCapitalize')
+    if (autoCapitalize !== null) {
+      setAutoCapitalize(autoCapitalize)
+    }
+  }
+
+  React.useEffect(() => {
+    autoCapitalizeSetting()
+  }, [])
 
   return (
     <View
@@ -84,7 +99,7 @@ const AddItemInput: React.FC = React.memo(() => {
         onChangeText={(text) => setItem(text)}
         onSubmitEditing={() => handleAddItem()}
         autoCorrect={false}
-        autoCapitalize="words"
+        autoCapitalize={autoCapitalize ? 'words' : 'sentences'}
       />
     </View>
   )

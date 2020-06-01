@@ -16,8 +16,6 @@ import { useMutation } from '@apollo/react-hooks'
 import { CREATE_LIST_MUTATION } from '../../queries/createList'
 import * as CreateListTypes from '../../queries/__generated__/CreateList'
 
-import colors from '../../styles/colors'
-
 interface Props {
   navigation: NewListNavigationProp
 }

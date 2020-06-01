@@ -3,9 +3,7 @@ import { List } from '../types/List'
 
 export const shareActionSheet = (list: List) => {
   const listName = list.name ?? ''
-  const shareUrl = `https://groceryti.me/share/${list.id}?name=${encodeURI(
-    listName,
-  )}`
+  const shareUrl = `https://groceryti.me/share/${list.id}`
   return ActionSheetIOS.showShareActionSheetWithOptions(
     {
       message: `I'd like to work on my grocery list "${listName}" with you on GroceryTime. Click here to join: ${shareUrl}`,
