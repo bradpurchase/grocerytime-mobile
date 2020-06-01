@@ -7,8 +7,8 @@ const colors = {
   MEDIUM_GREY: '#717171',
   DARK_GREY: '#666',
   BG_LIGHT: 'rgba(242, 242, 247, 1)',
-  BG_DARK: 'rgba(28, 28, 30, 1)',
+  BG_DARK: '#000',
   CARD_LIGHT: '#fff',
-  CARD_DARK: 'rgba(72, 72, 74, 1)',
+  CARD_DARK: 'rgba(28, 28, 30, 1)',
 }
 export default colors
