@@ -26,7 +26,6 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
 
   React.useEffect(() => {
     const refetchOnFocus = navigation.addListener('focus', () => {
-      console.log('[refetchOnFocus] refetching lists...')
       refetch()
     })
     return refetchOnFocus

@@ -44,26 +44,30 @@ const SignupScreen: React.FC<Props> = React.memo(
     // Note: This component's route accepts an optional list param for list sharing.
     // If someone follows a share link and they are not logged in, we redirect
     // them here via JoinListScreen which serves as a conduit
-    const listParam: List | undefined = route.params.list
+    const listParam: List | undefined = route.params?.list
 
     React.useLayoutEffect(() => {
       // When there is a listParam present, show the headerTitle
-      navigation.setOptions({
-        headerShown: true,
-        headerLeft: () => (
-          <TouchableOpacity
-            style={{
-              flex: 1,
-              alignItems: 'center',
-              paddingHorizontal: 10,
-              paddingVertical: 10,
-              width: 90,
-            }}
-            onPress={() => navigation.navigate('Login')}>
-            <Text style={{ color: colors.primary, fontSize: 16 }}>Dismiss</Text>
-          </TouchableOpacity>
-        ),
-      })
+      if (listParam) {
+        navigation.setOptions({
+          headerShown: true,
+          headerLeft: () => (
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                paddingHorizontal: 10,
+                paddingVertical: 10,
+                width: 90,
+              }}
+              onPress={() => navigation.navigate('Login')}>
+              <Text style={{ color: colors.primary, fontSize: 16 }}>
+                Dismiss
+              </Text>
+            </TouchableOpacity>
+          ),
+        })
+      }
     }, [])
 
     const [formData, setFormData] = React.useState({

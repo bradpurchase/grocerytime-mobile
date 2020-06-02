@@ -195,6 +195,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
             ) : (
               <>
                 <Text
+                  numberOfLines={2}
                   style={{
                     color: colors.text,
                     fontSize: 16,
@@ -203,6 +204,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
                     marginLeft: 15,
                     lineHeight: 20,
                     textDecorationLine: completed ? 'line-through' : 'none',
+                    maxWidth: '80%',
                   }}>
                   {itemName}
                 </Text>

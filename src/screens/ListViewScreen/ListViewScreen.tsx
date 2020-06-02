@@ -40,7 +40,6 @@ const ListViewScreen: React.FC<Props> = React.memo(
 
     React.useEffect(() => {
       const refetchOnFocus = navigation.addListener('focus', () => {
-        console.log(`[refetchOnFocus] refetching list...`)
         refetch()
       })
       return refetchOnFocus
