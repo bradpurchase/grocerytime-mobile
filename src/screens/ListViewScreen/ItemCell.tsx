@@ -86,31 +86,10 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
   })
   if (error) console.log(error)
 
-  React.useEffect(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-  }, [editingMode])
-
-  const handleMenuButtonTapped = () => {
-    ReactNativeHapticFeedback.trigger('impactLight')
-    return ActionSheetIOS.showActionSheetWithOptions(
-      {
-        title: item.name,
-        options: [
-          'Move to next trip...',
-          'Include in each trip...',
-          'Delete item...',
-          'Dismiss',
-        ],
-        destructiveButtonIndex: 2,
-        cancelButtonIndex: 3,
-      },
-      (buttonIdx) => {
-        if (buttonIdx === 1) {
-          handleDeleteButtonTapped()
-        }
-      },
-    )
-  }
+  //TODO find a way to bring this back - it messes up reordering because it rerenders
+  // React.useEffect(() => {
+  //   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+  // }, [editingMode])
 
   const handleDeleteButtonTapped = () => {
     ReactNativeHapticFeedback.trigger('impactLight')
@@ -257,7 +236,6 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
                     source={require('../../assets/icons/More.png')}
                   />
                 </TouchableOpacity> */}
-
               <TouchableOpacity
                 style={{
                   justifyContent: 'center',

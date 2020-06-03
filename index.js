@@ -25,6 +25,8 @@ import App from './App'
 
 import { retrieveNewAccessToken } from './src/services/token'
 
+//GLOBAL.XMLHttpRequest = GLOBAL.originalXMLHttpRequest || GLOBAL.XMLHttpRequest
+
 const AppComponent = () => {
   const [appState, setAppState] = useState({
     ready: false,

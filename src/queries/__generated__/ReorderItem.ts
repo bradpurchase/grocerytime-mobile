@@ -7,17 +7,28 @@
 // GraphQL mutation operation: ReorderItem
 // ====================================================
 
-export interface ReorderItem_updateItem {
+export interface ReorderItem_reorderItem_items {
   __typename: "Item";
   id: string;
+  listId: string;
+  name: string;
+  quantity: number;
+  completed: boolean;
   position: number;
+}
+
+export interface ReorderItem_reorderItem {
+  __typename: "List";
+  id: string;
+  name: string;
+  items: (ReorderItem_reorderItem_items | null)[] | null;
 }
 
 export interface ReorderItem {
   /**
-   * Updates the properties of an item in a list
+   * Updates the order of an item in a list
    */
-  updateItem: ReorderItem_updateItem | null;
+  reorderItem: ReorderItem_reorderItem | null;
 }
 
 export interface ReorderItemVariables {

@@ -16,7 +16,7 @@ import { Item, List } from '../../types'
 const QuantityStepper: React.FC = React.memo(() => {
   const { colors } = useTheme()
 
-  const itemContext = React.useContext(ItemContext)
+  const itemContext: Item = React.useContext(ItemContext)
   const { id, listId, quantity, completed } = itemContext
 
   const [itemQuantity, setItemQuantity] = React.useState<number>(quantity)

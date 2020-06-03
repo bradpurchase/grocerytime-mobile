@@ -9,6 +9,7 @@ export const NEW_ITEM_IN_LIST_SUBSCRIPTION = gql`
       name
       quantity
       completed
+      position
     }
   }
 `
