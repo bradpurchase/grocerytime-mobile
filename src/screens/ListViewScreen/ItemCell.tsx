@@ -25,6 +25,13 @@ import { DELETE_ITEM_MUTATION } from '../../queries/deleteItem'
 import * as DeleteItemTypes from '../../queries/__generated__/DeleteItem'
 import { LIST_QUERY } from '../../queries/list'
 
+import { getSettingValue } from '../../services/settings'
+
+interface EditItemInputSettings {
+  autoCapitalize: boolean
+  autoCorrect: boolean
+}
+
 interface Props {
   item: Item
   drag: any
@@ -37,6 +44,11 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
 
   const [editingMode, setEditingMode] = React.useState<boolean>(false)
   const [itemName, setItemName] = React.useState<string>(name)
+
+  const [settings, setSettings] = React.useState<EditItemInputSettings>({
+    autoCapitalize: true,
+    autoCorrect: false,
+  })
 
   const listContext = React.useContext(ListContext)
   const { refetch } = listContext
@@ -115,6 +127,18 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
     })
   }
 
+  const getSettings = async () => {
+    const autoCapitalize = await getSettingValue('settings.autoCapitalize')
+    const autoCorrect = await getSettingValue('settings.autoCorrect')
+    if (autoCapitalize !== null && autoCorrect !== null) {
+      setSettings({ autoCapitalize, autoCorrect })
+    }
+  }
+
+  React.useEffect(() => {
+    getSettings()
+  }, [])
+
   return (
     <ItemContext.Provider value={item}>
       <TouchableOpacity
@@ -169,8 +193,8 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
                   },
                 })
               }
-              autoCorrect={false}
-              autoCapitalize="words"
+              autoCorrect={settings.autoCorrect ?? false}
+              autoCapitalize={settings.autoCapitalize ? 'words' : 'sentences'}
             />
           ) : (
             <>

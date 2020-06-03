@@ -19,6 +19,13 @@ import { useMutation } from '@apollo/react-hooks'
 import { UPDATE_LIST_MUTATION } from '../../queries/updateList'
 import * as UpdateListTypes from '../../queries/__generated__/UpdateList'
 
+import { getSettingValue } from '../../services/settings'
+
+interface RenameListInputSettings {
+  autoCapitalize: boolean
+  autoCorrect: boolean
+}
+
 interface Props {
   route: RouteProp<RootStackParamList, 'RenameList'>
   navigation: RenameListNavigationProp
@@ -31,6 +38,11 @@ type FormData = {
 const RenameListScreen: React.FC<Props> = React.memo(
   ({ route, navigation }: Props) => {
     const { colors } = useTheme()
+
+    const [settings, setSettings] = React.useState<RenameListInputSettings>({
+      autoCapitalize: true,
+      autoCorrect: false,
+    })
 
     const [formData, setFormData] = React.useState<FormData>({
       name: route.params.list.name,
@@ -82,6 +94,18 @@ const RenameListScreen: React.FC<Props> = React.memo(
       Alert.alert('Oops!', error.graphQLErrors[0].message)
     }
 
+    const getSettings = async () => {
+      const autoCapitalize = await getSettingValue('settings.autoCapitalize')
+      const autoCorrect = await getSettingValue('settings.autoCorrect')
+      if (autoCapitalize !== null && autoCorrect !== null) {
+        setSettings({ autoCapitalize, autoCorrect })
+      }
+    }
+
+    React.useEffect(() => {
+      getSettings()
+    }, [])
+
     return (
       <View
         style={{
@@ -120,7 +144,8 @@ const RenameListScreen: React.FC<Props> = React.memo(
               placeholderTextColor="#666"
               placeholder={item}
               clearButtonMode="while-editing"
-              autoCapitalize="words"
+              autoCorrect={settings.autoCorrect ?? false}
+              autoCapitalize={settings.autoCapitalize ? 'words' : 'sentences'}
               defaultValue={route.params.list.name}
               onChangeText={(text) => setFormData({ ...formData, name: text })}
             />

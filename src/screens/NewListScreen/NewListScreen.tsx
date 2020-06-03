@@ -16,6 +16,13 @@ import { useMutation } from '@apollo/react-hooks'
 import { CREATE_LIST_MUTATION } from '../../queries/createList'
 import * as CreateListTypes from '../../queries/__generated__/CreateList'
 
+import { getSettingValue } from '../../services/settings'
+
+interface NewListInputSettings {
+  autoCapitalize: boolean
+  autoCorrect: boolean
+}
+
 interface Props {
   navigation: NewListNavigationProp
 }
@@ -26,6 +33,11 @@ type FormData = {
 
 const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
   const { colors } = useTheme()
+
+  const [settings, setSettings] = React.useState<NewListInputSettings>({
+    autoCapitalize: true,
+    autoCorrect: false,
+  })
 
   const [formData, setFormData] = React.useState<FormData>({ name: '' })
   const nameEmpty = formData.name.length === 0
@@ -80,6 +92,18 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
     Alert.alert('Oops!', error.graphQLErrors[0].message)
   }
 
+  const getSettings = async () => {
+    const autoCapitalize = await getSettingValue('settings.autoCapitalize')
+    const autoCorrect = await getSettingValue('settings.autoCorrect')
+    if (autoCapitalize !== null && autoCorrect !== null) {
+      setSettings({ autoCapitalize, autoCorrect })
+    }
+  }
+
+  React.useEffect(() => {
+    getSettings()
+  }, [])
+
   return (
     <View
       style={{
@@ -132,7 +156,8 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
             placeholderTextColor="#999"
             placeholder={item}
             clearButtonMode="while-editing"
-            autoCapitalize="words"
+            autoCorrect={settings.autoCorrect ?? false}
+            autoCapitalize={settings.autoCapitalize ? 'words' : 'sentences'}
             onChangeText={(text) => setFormData({ ...formData, name: text })}
           />
         )}

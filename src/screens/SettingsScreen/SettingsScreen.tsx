@@ -48,7 +48,7 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
     //   ],
     // },
     {
-      title: 'Item editing',
+      title: 'Editing',
       data: [
         {
           key: 'settings.autoCapitalize',
@@ -124,7 +124,7 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
                 marginTop: 30,
                 textAlign: 'center',
               }}>
-              GroceryTime 1.0.0 beta 2
+              GroceryTime 1.0.0 beta 3
             </Text>
           </>
         )}
