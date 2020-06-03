@@ -48,7 +48,7 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
     //   ],
     // },
     {
-      title: 'Adding items',
+      title: 'Item editing',
       data: [
         {
           key: 'settings.autoCapitalize',

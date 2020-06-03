@@ -10,6 +10,7 @@
 export interface NewItemInList_newItemInList {
   __typename: "Item";
   id: string;
+  listId: string;
   name: string;
   quantity: number;
   completed: boolean;

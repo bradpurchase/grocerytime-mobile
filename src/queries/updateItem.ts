@@ -20,3 +20,13 @@ export const UPDATE_ITEM_MUTATION = gql`
     }
   }
 `
+
+export const REORDER_ITEM_MUTATION = gql`
+  mutation ReorderItem($itemId: ID!, $position: Int!) {
+    updateItem(itemId: $itemId, position: $position) {
+      __typename
+      id
+      position
+    }
+  }
+`

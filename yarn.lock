@@ -5149,6 +5149,10 @@ react-native-config@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.0.0.tgz#fada8f79996db1eadcee9e221afd713c91f677e5"
 
+react-native-draggable-flatlist@^2.3.3:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/react-native-draggable-flatlist/-/react-native-draggable-flatlist-2.3.3.tgz#2fde54253095aefa0db18c2ac05e99cf35cb1c96"
+
 react-native-fast-image@^8.1.5:
   version "8.1.5"
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.1.5.tgz#0a6404c988dad68c98d26f91155d0a5293ba2ea5"

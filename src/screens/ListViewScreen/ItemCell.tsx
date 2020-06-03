@@ -27,9 +27,10 @@ import { LIST_QUERY } from '../../queries/list'
 
 interface Props {
   item: Item
+  drag: any
 }
 
-const ItemCell: React.FC<Props> = React.memo(({ item }) => {
+const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
   const { colors } = useTheme()
 
   const { id, listId, name, quantity, completed } = item
@@ -137,7 +138,8 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
 
   return (
     <ItemContext.Provider value={item}>
-      <View
+      <TouchableOpacity
+        activeOpacity={1}
         style={{
           backgroundColor: colors.card,
           borderRadius: 8,
@@ -147,100 +149,99 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
           paddingVertical: 20,
           marginHorizontal: 8,
           marginBottom: 8,
-        }}>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={completed ? () => {} : () => setEditingMode(!editingMode)}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-            }}>
-            <Checkbox
-              checked={completed}
-              disabled={editingMode}
-              onPress={() =>
+        }}
+        onPress={completed ? () => {} : () => setEditingMode(!editingMode)}
+        onLongPress={drag}>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+          }}>
+          <Checkbox
+            checked={completed}
+            disabled={editingMode}
+            onPress={() =>
+              updateItem({
+                variables: {
+                  itemId: id,
+                  completed: !completed,
+                },
+              })
+            }
+          />
+          {editingMode ? (
+            <TextInput
+              style={{
+                backgroundColor: 'transparent',
+                flexDirection: 'column',
+                fontSize: 16,
+                fontWeight: '500',
+                marginLeft: 15,
+                width: 200,
+              }}
+              defaultValue={name}
+              returnKeyType="done"
+              onChangeText={(text) => setItemName(text)}
+              onSubmitEditing={() =>
                 updateItem({
                   variables: {
                     itemId: id,
-                    completed: !completed,
+                    name: itemName,
                   },
                 })
               }
+              autoCorrect={false}
+              autoCapitalize="words"
             />
-            {editingMode ? (
-              <TextInput
+          ) : (
+            <>
+              <Text
+                numberOfLines={2}
                 style={{
-                  backgroundColor: 'transparent',
-                  flexDirection: 'column',
+                  color: colors.text,
                   fontSize: 16,
                   fontWeight: '500',
+                  flexDirection: 'column',
                   marginLeft: 15,
-                  width: 200,
-                }}
-                defaultValue={name}
-                returnKeyType="done"
-                onChangeText={(text) => setItemName(text)}
-                onSubmitEditing={() =>
-                  updateItem({
-                    variables: {
-                      itemId: id,
-                      name: itemName,
-                    },
-                  })
-                }
-                autoCorrect={false}
-                autoCapitalize="words"
-              />
-            ) : (
-              <>
+                  lineHeight: 20,
+                  textDecorationLine: completed ? 'line-through' : 'none',
+                  maxWidth: '80%',
+                }}>
+                {itemName}
+              </Text>
+              {quantity > 1 && (
                 <Text
-                  numberOfLines={2}
                   style={{
-                    color: colors.text,
-                    fontSize: 16,
+                    color: colors.subtitle,
+                    fontSize: 14,
                     fontWeight: '500',
                     flexDirection: 'column',
-                    marginLeft: 15,
+                    marginLeft: 5,
                     lineHeight: 20,
-                    textDecorationLine: completed ? 'line-through' : 'none',
-                    maxWidth: '80%',
                   }}>
-                  {itemName}
+                  ({quantity})
                 </Text>
-                {quantity > 1 && (
-                  <Text
-                    style={{
-                      color: colors.subtitle,
-                      fontSize: 14,
-                      fontWeight: '500',
-                      flexDirection: 'column',
-                      marginLeft: 5,
-                      lineHeight: 20,
-                    }}>
-                    ({quantity})
-                  </Text>
-                )}
-              </>
-            )}
-          </View>
+              )}
+            </>
+          )}
+        </View>
 
-          {editingMode && !completed && (
+        {editingMode && !completed && (
+          <View
+            style={{
+              marginTop: 20,
+              flexDirection: 'row',
+              flex: 1,
+            }}>
+            <QuantityStepper />
             <View
               style={{
-                marginTop: 20,
-                flexDirection: 'row',
+                alignSelf: 'center',
                 flex: 1,
+                justifyContent: 'center',
+                flexDirection: 'column',
               }}>
-              <QuantityStepper />
-              <View
-                style={{
-                  alignSelf: 'center',
-                  flex: 1,
-                  justifyContent: 'center',
-                  flexDirection: 'column',
-                }}>
-                {/* <TouchableOpacity
+              {/* <TouchableOpacity
                   style={{
                     justifyContent: 'center',
                     position: 'absolute',
@@ -257,27 +258,26 @@ const ItemCell: React.FC<Props> = React.memo(({ item }) => {
                   />
                 </TouchableOpacity> */}
 
-                <TouchableOpacity
+              <TouchableOpacity
+                style={{
+                  justifyContent: 'center',
+                  position: 'absolute',
+                  right: 0,
+                }}
+                onPress={() => handleDeleteButtonTapped()}>
+                <FastImage
                   style={{
-                    justifyContent: 'center',
-                    position: 'absolute',
-                    right: 0,
+                    width: 25,
+                    height: 25,
                   }}
-                  onPress={() => handleDeleteButtonTapped()}>
-                  <FastImage
-                    style={{
-                      width: 25,
-                      height: 25,
-                    }}
-                    resizeMode="contain"
-                    source={require('../../assets/icons/Delete.png')}
-                  />
-                </TouchableOpacity>
-              </View>
+                  resizeMode="contain"
+                  source={require('../../assets/icons/Delete.png')}
+                />
+              </TouchableOpacity>
             </View>
-          )}
-        </TouchableOpacity>
-      </View>
+          </View>
+        )}
+      </TouchableOpacity>
     </ItemContext.Provider>
   )
 })

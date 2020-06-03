@@ -5,6 +5,7 @@ export interface Item {
   name: string
   quantity: number
   completed: boolean
+  position: number
   createdAt: string
   updatedAt: string
 }

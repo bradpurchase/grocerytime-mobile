@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { View, ActivityIndicator, Image, TouchableOpacity } from 'react-native'
-import { RouteProp } from '@react-navigation/native'
+import { ActivityIndicator, Image, TouchableOpacity, Text } from 'react-native'
+import { RouteProp, useTheme } from '@react-navigation/native'
 
 import {
   RootStackParamList,
@@ -29,10 +29,13 @@ interface Props {
 
 const ListViewScreen: React.FC<Props> = React.memo(
   ({ route, navigation }: Props) => {
+    const { colors } = useTheme()
+
     const authContext = React.useContext(AuthContext)
     const currentUserId = authContext.user?.id as string
 
     const listParam: List = route.params.list
+    const shouldDismiss: boolean | undefined = route.params.dismiss
 
     const { loading, data, refetch, subscribeToMore } = useQuery(LIST_QUERY, {
       variables: { id: listParam.id },
@@ -77,6 +80,31 @@ const ListViewScreen: React.FC<Props> = React.memo(
           })
         },
       })
+    }, [])
+
+    React.useLayoutEffect(() => {
+      if (shouldDismiss) {
+        navigation.setOptions({
+          headerLeft: () => (
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                paddingVertical: 10,
+                width: 85,
+              }}
+              onPress={() => navigation.popToTop()}>
+              <Text
+                style={{
+                  color: colors.primary,
+                  fontSize: 16,
+                }}>
+                Dismiss
+              </Text>
+            </TouchableOpacity>
+          ),
+        })
+      }
     }, [])
 
     React.useLayoutEffect(() => {

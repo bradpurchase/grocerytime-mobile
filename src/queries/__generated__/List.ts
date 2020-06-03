@@ -14,6 +14,7 @@ export interface List_list_items {
   name: string;
   quantity: number;
   completed: boolean;
+  position: number;
 }
 
 export interface List_list_listUsers {

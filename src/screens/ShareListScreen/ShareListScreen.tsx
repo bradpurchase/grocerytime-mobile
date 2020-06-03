@@ -35,10 +35,12 @@ const ShareListScreen: React.FC<Props> = React.memo(
               paddingVertical: 10,
               width: 70,
             }}
-            onPress={() => navigation.navigate('ListView', { list })}>
+            onPress={() =>
+              navigation.navigate('ListView', { list, dismiss: true })
+            }>
             <Text
               style={{
-                color: '#fff',
+                color: colors.primary,
                 fontSize: 16,
               }}>
               Done

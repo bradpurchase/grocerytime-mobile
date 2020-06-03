@@ -11,7 +11,7 @@ export type RootStackParamList = {
   NewList: undefined
   RenameList: { list: List }
   ShareList: { list: List }
-  ListView: { list: List }
+  ListView: { list: List; dismiss?: boolean }
 }
 
 export type LoginNavigationProp = StackNavigationProp<

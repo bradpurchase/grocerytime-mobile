@@ -13,6 +13,7 @@ export const LIST_QUERY = gql`
         name
         quantity
         completed
+        position
       }
       listUsers {
         __typename
