@@ -1,9 +1,9 @@
-import { Item, ListUser } from './index'
+import { Trip, ListUser } from './index'
 
 export interface List {
   id: string
   name?: string
   itemsCount?: number
-  items?: Item[]
+  trip?: Trip
   listUsers?: ListUser[]
 }

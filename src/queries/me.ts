@@ -7,7 +7,10 @@ export const ME_QUERY = gql`
       lists {
         id
         name
-        itemsCount
+        trip {
+          id
+          itemsCount
+        }
       }
     }
   }

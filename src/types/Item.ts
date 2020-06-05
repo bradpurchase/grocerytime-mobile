@@ -1,6 +1,6 @@
 export interface Item {
   id: string
-  listId: string
+  groceryTripId: string
   userId: string
   name: string
   quantity: number

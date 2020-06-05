@@ -24,7 +24,7 @@ const ListCell: React.FC<Props> = React.memo(
     const authContext = React.useContext(AuthContext)
     const currentUserId = authContext.user?.id as string
 
-    const { name, itemsCount } = list
+    const { name, trip } = list
 
     //TODO figure out how to avoid needing to share this useMutation
     // everywhere and just do it in listActionSheet()
@@ -67,7 +67,7 @@ const ListCell: React.FC<Props> = React.memo(
             color: colors.subtitle,
             fontSize: 16,
           }}>
-          {itemsCount} items
+          {trip.itemsCount} items
         </Text>
       </TouchableOpacity>
     )

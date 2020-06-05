@@ -10,7 +10,7 @@ import { List } from '../../types/List'
 
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { LIST_QUERY } from '../../queries/list'
-import { NEW_ITEM_IN_LIST_SUBSCRIPTION } from '../../queries/newItemInList'
+import { NEW_ITEM_IN_TRIP_SUBSCRIPTION } from '../../queries/newItemInTrip'
 import { DELETE_LIST_MUTATION } from '../../queries/deleteList'
 import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
 
@@ -19,7 +19,7 @@ import ListContext from '../../context/ListContext'
 import { listActionSheet } from '../../helpers/ListActions'
 import { currentUserIsCreator } from '../../services/list'
 
-import ItemsList from './ItemsList'
+import TripView from './TripView'
 import HeaderTitle from './HeaderTitle'
 
 interface Props {
@@ -66,7 +66,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
 
     React.useEffect(() => {
       subscribeToMore({
-        document: NEW_ITEM_IN_LIST_SUBSCRIPTION,
+        document: NEW_ITEM_IN_TRIP_SUBSCRIPTION,
         variables: { listId: data?.list.id },
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev
@@ -75,7 +75,10 @@ const ListViewScreen: React.FC<Props> = React.memo(
           return Object.assign({}, prev, {
             list: {
               ...list,
-              items: [newItem, ...prev.list.items],
+              trip: {
+                ...list.trip,
+                items: [newItem, ...prev.list.trip.items],
+              },
             },
           })
         },
@@ -152,7 +155,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
 
     return (
       <ListContext.Provider value={{ data, refetch }}>
-        <ItemsList />
+        <TripView />
       </ListContext.Provider>
     )
   },

@@ -7,14 +7,22 @@
 // GraphQL query operation: List
 // ====================================================
 
-export interface List_list_items {
+export interface List_list_trip_items {
   __typename: "Item";
   id: string;
-  listId: string;
   name: string;
   quantity: number;
-  completed: boolean;
   position: number;
+  completed: boolean;
+}
+
+export interface List_list_trip {
+  __typename: "GroceryTrip";
+  id: string;
+  name: string;
+  completed: boolean;
+  itemsCount: number | null;
+  items: (List_list_trip_items | null)[] | null;
 }
 
 export interface List_list_listUsers {
@@ -28,7 +36,7 @@ export interface List_list {
   __typename: "List";
   id: string;
   name: string;
-  items: (List_list_items | null)[] | null;
+  trip: List_list_trip | null;
   listUsers: (List_list_listUsers | null)[] | null;
 }
 

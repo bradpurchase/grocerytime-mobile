@@ -6,11 +6,12 @@ import { useMutation } from '@apollo/react-hooks'
 import { REORDER_ITEM_MUTATION } from '../../queries/reorderItem'
 
 import ListContext from '../../context/ListContext'
-import { Item } from '../../types'
+import { Trip, Item } from '../../types'
 
 import EmptyState from '../../components/EmptyState'
-import ItemCell from './ItemCell'
+import TripDetails from './TripDetails'
 import AddItemInput from './AddItemInput'
+import ItemCell from './ItemCell'
 
 interface DragData {
   data: any
@@ -18,17 +19,18 @@ interface DragData {
   to: number
 }
 
-const ItemsList: React.FC = React.memo(() => {
+const TripView: React.FC = React.memo(() => {
   const listContext = React.useContext(ListContext)
   const { data, refetch } = listContext
   const { list, networkStatus } = data
+  const trip: Trip = list.trip
 
-  const [listItems, setListItems] = React.useState(list.items)
+  const [listItems, setListItems] = React.useState(trip.items)
 
   // Effect for when we receive new items (i.e. item added)
   React.useEffect(() => {
-    setListItems(list.items)
-  }, [list.items])
+    setListItems(trip.items)
+  }, [trip.items])
 
   const [reorderItem] = useMutation(REORDER_ITEM_MUTATION)
 
@@ -44,13 +46,15 @@ const ItemsList: React.FC = React.memo(() => {
     reorderItem({
       variables: {
         itemId: item.id,
-        position: list.items[to].position,
+        position: trip.items[to].position,
       },
     })
   }
 
   return (
     <View style={{ flex: 1 }}>
+      <TripDetails />
+      
       <AddItemInput />
 
       <DraggableFlatList
@@ -78,4 +82,4 @@ const ItemsList: React.FC = React.memo(() => {
     </View>
   )
 })
-export default ItemsList
+export default TripView

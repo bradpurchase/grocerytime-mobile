@@ -7,11 +7,16 @@
 // GraphQL query operation: Me
 // ====================================================
 
+export interface Me_me_lists_trip {
+  __typename: "GroceryTrip";
+  itemsCount: number | null;
+}
+
 export interface Me_me_lists {
   __typename: "List";
   id: string;
   name: string;
-  itemsCount: number | null;
+  trip: Me_me_lists_trip | null;
 }
 
 export interface Me_me {

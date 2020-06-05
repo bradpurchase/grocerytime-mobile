@@ -4,25 +4,26 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL subscription operation: NewItemInList
+// GraphQL subscription operation: NewItemInTrip
 // ====================================================
 
-export interface NewItemInList_newItemInList {
+export interface NewItemInTrip_newItemInTrip {
   __typename: "Item";
   id: string;
-  listId: string;
+  groceryTripId: string;
   name: string;
   quantity: number;
   completed: boolean;
+  position: number;
 }
 
-export interface NewItemInList {
+export interface NewItemInTrip {
   /**
-   * Retrieve a new item in a list
+   * Retrieve a new item in a trip
    */
-  newItemInList: NewItemInList_newItemInList | null;
+  newItemInTrip: NewItemInTrip_newItemInTrip | null;
 }
 
-export interface NewItemInListVariables {
+export interface NewItemInTripVariables {
   listId: string;
 }

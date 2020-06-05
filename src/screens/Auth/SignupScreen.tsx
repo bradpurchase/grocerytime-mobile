@@ -84,21 +84,17 @@ const SignupScreen: React.FC<Props> = React.memo(
         email: formData.email,
         password: formData.password,
       },
-      onError: (error: ApolloError) => {
-        console.log(error)
-      },
       onCompleted: (data) => {
         //TODO if listParam is not undefined, join and redirect to list after signup
         authContext.login(data.signup)
         setFormData({ ...formData, submitting: false })
       },
     })
-
-    React.useEffect(() => {
-      error?.graphQLErrors.map(({ message }, i) => {
+    if (error) {
+      error.graphQLErrors?.map(({ message }, i) => {
         return Alert.alert('Signup Failed', message)
       })
-    }, [error])
+    }
 
     const emailIsValid = () => {
       const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -250,7 +246,7 @@ const SignupScreen: React.FC<Props> = React.memo(
                 style={styles.textInput}
                 secureTextEntry
                 onChangeText={(text) =>
-                  setFormData({ ...formData, email: text })
+                  setFormData({ ...formData, password: text })
                 }
                 editable={!formData.submitting}
               />

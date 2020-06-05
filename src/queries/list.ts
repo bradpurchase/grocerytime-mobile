@@ -6,14 +6,20 @@ export const LIST_QUERY = gql`
       __typename
       id
       name
-      items {
+      trip {
         __typename
         id
-        listId
         name
-        quantity
         completed
-        position
+        itemsCount
+        items {
+          __typename
+          id
+          name
+          quantity
+          position
+          completed
+        }
       }
       listUsers {
         __typename

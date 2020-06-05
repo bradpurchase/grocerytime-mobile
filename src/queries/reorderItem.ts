@@ -6,14 +6,16 @@ export const REORDER_ITEM_MUTATION = gql`
       __typename
       id
       name
-      items {
-        __typename
-        id
-        listId
-        name
-        quantity
-        completed
-        position
+      trip {
+        items {
+          __typename
+          id
+          groceryTripId
+          name
+          quantity
+          completed
+          position
+        }
       }
     }
   }

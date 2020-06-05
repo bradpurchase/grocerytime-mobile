@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { Item, ListUser } from '../types'
+import { Trip, ListUser } from '../types'
 
 type List = {
   id: string
   name: string
-  items: Item[]
+  trip: Trip
   listUsers: ListUser[]
 }
 
@@ -20,7 +20,12 @@ type ListContextProps = {
 
 const ListContext = React.createContext<ListContextProps>({
   data: {
-    list: { id: '', name: '', items: [], listUsers: [] },
+    list: {
+      id: '',
+      name: '',
+      trip: { id: '', name: '', completed: false, items: [] },
+      listUsers: [],
+    },
     networkStatus: 0,
   },
   refetch: () => {},

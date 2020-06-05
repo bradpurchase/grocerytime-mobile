@@ -6,8 +6,8 @@ import { useColorScheme } from 'react-native-appearance'
 import ListContext from '../../context/ListContext'
 
 import { useMutation } from '@apollo/react-hooks'
-import { ADD_ITEM_TO_LIST_MUTATION } from '../../queries/addItemToList'
-import * as AddItemToListTypes from '../../queries/__generated__/AddItemToList'
+import { ADD_ITEM_TO_TRIP_MUTATION } from '../../queries/addItemToTrip'
+import * as AddItemToTripTypes from '../../queries/__generated__/AddItemToTrip'
 
 import { getSettingValue } from '../../services/settings'
 
@@ -32,12 +32,12 @@ const AddItemInput: React.FC = React.memo(() => {
   const [item, setItem] = React.useState<string>('')
   const textInputRef = React.useRef<TextInput>(null)
 
-  const [addItemToList, { error }] = useMutation<
-    AddItemToListTypes.AddItemToList,
-    AddItemToListTypes.AddItemToListVariables
-  >(ADD_ITEM_TO_LIST_MUTATION, {
+  const [addItemToTrip, { error }] = useMutation<
+    AddItemToTripTypes.AddItemToTrip,
+    AddItemToTripTypes.AddItemToTripVariables
+  >(ADD_ITEM_TO_TRIP_MUTATION, {
     variables: {
-      listId: data.list.id,
+      tripId: data.list.trip.id,
       name: item,
       quantity: 1,
     },
@@ -45,10 +45,8 @@ const AddItemInput: React.FC = React.memo(() => {
       refetch()
       resetInput()
     },
-    onError: (error) => {
-      console.log(error)
-    },
   })
+  if (error) console.log(error)
 
   const resetInput = () => {
     textInputRef.current?.clear()
@@ -56,7 +54,7 @@ const AddItemInput: React.FC = React.memo(() => {
 
   const handleAddItem = () => {
     if (item.length === 0) return
-    addItemToList()
+    addItemToTrip()
   }
 
   const getSettings = async () => {

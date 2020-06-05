@@ -40,7 +40,7 @@ interface Props {
 const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
   const { colors } = useTheme()
 
-  const { id, listId, name, quantity, completed } = item
+  const { id, groceryTripId, name, quantity, completed } = item
 
   const [editingMode, setEditingMode] = React.useState<boolean>(false)
   const [itemName, setItemName] = React.useState<string>(name)
@@ -51,7 +51,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
   })
 
   const listContext = React.useContext(ListContext)
-  const { refetch } = listContext
+  const { data, refetch } = listContext
 
   const [updateItem] = useMutation(UPDATE_ITEM_MUTATION, {
     optimisticResponse: {
@@ -59,7 +59,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
       updateItem: {
         __typename: 'Item',
         id: id,
-        listId: listId,
+        groceryTripId: groceryTripId,
         completed: completed,
         name: itemName,
         quantity: quantity,
@@ -75,11 +75,11 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
     DeleteItemTypes.DeleteItem,
     DeleteItemTypes.DeleteItemVariables
   >(DELETE_ITEM_MUTATION, {
-    update(cache, { data }) {
+    update(cache, { data: deleteItemdata }) {
       const listData: any = cache.readQuery({
         query: LIST_QUERY,
         variables: {
-          id: listId,
+          id: data.list.id,
         },
       })
       const list: List = listData.list
@@ -88,9 +88,12 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
         data: {
           list: {
             ...list,
-            items: list.items?.filter(
-              (item: Item) => item.id !== data?.deleteItem?.id,
-            ),
+            trip: {
+              ...list.trip,
+              items: list.trip.items?.filter(
+                (item: Item) => item.id !== deleteItemdata?.deleteItem?.id,
+              ),
+            },
           },
         },
       })
