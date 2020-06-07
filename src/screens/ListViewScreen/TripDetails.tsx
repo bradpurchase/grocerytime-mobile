@@ -11,6 +11,12 @@ import * as UpdateTripTypes from '../../queries/__generated__/UpdateTrip'
 import ListContext from '../../context/ListContext'
 import { Trip } from '../../types'
 import { numCompletedItems, allItemsCompleted } from '../../services/trip'
+import { getSettingValue } from '../../services/settings'
+
+interface EditItemInputSettings {
+  autoCapitalize: boolean
+  autoCorrect: boolean
+}
 
 const TripDetails: React.FC = React.memo(() => {
   const { colors } = useTheme()
@@ -22,6 +28,23 @@ const TripDetails: React.FC = React.memo(() => {
   const [editingMode, setEditingMode] = React.useState<boolean>(false)
   const [tripName, setTripName] = React.useState<string>(trip.name)
   const tripNameInputRef = React.useRef<TextInput>(null)
+
+  const [settings, setSettings] = React.useState<EditItemInputSettings>({
+    autoCapitalize: true,
+    autoCorrect: false,
+  })
+
+  const getSettings = async () => {
+    const autoCapitalize = await getSettingValue('settings.autoCapitalize')
+    const autoCorrect = await getSettingValue('settings.autoCorrect')
+    if (autoCapitalize !== null && autoCorrect !== null) {
+      setSettings({ autoCapitalize, autoCorrect })
+    }
+  }
+
+  React.useEffect(() => {
+    getSettings()
+  }, [])
 
   React.useEffect(() => {
     // Focus the trip name TextInput when editing mode is enabled
@@ -130,6 +153,8 @@ const TripDetails: React.FC = React.memo(() => {
           placeholder={tripName}
           onChangeText={(text) => setTripName(text)}
           onSubmitEditing={() => handleUpdateTripName()}
+          autoCorrect={settings.autoCorrect ?? false}
+          autoCapitalize={settings.autoCapitalize ? 'words' : 'sentences'}
         />
       ) : (
         <TouchableOpacity
