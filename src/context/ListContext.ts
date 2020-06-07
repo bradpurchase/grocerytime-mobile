@@ -23,7 +23,7 @@ const ListContext = React.createContext<ListContextProps>({
     list: {
       id: '',
       name: '',
-      trip: { id: '', name: '', completed: false, items: [] },
+      trip: { id: '', name: '', completed: false, itemsCount: 0, items: [] },
       listUsers: [],
     },
     networkStatus: 0,

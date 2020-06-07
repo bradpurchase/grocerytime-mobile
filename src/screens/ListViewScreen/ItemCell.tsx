@@ -1,15 +1,7 @@
 import * as React from 'react'
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  LayoutAnimation,
-  Alert,
-  ActionSheetIOS,
-} from 'react-native'
-import FastImage from 'react-native-fast-image'
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { useTheme } from '@react-navigation/native'
+import FastImage from 'react-native-fast-image'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
 import { Item, List } from '../../types'
@@ -90,7 +82,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
             ...list,
             trip: {
               ...list.trip,
-              items: list.trip.items?.filter(
+              items: list.trip?.items?.filter(
                 (item: Item) => item.id !== deleteItemdata?.deleteItem?.id,
               ),
             },
@@ -101,10 +93,22 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
   })
   if (error) console.log(error)
 
-  //TODO find a way to bring this back - it messes up reordering because it rerenders
-  // React.useEffect(() => {
-  //   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-  // }, [editingMode])
+  // const handleMenuButtonTapped = () => {
+  //   ReactNativeHapticFeedback.trigger('impactLight')
+  //   return ActionSheetIOS.showActionSheetWithOptions(
+  //     {
+  //       title: item.name,
+  //       options: ['Include in all trips...', 'Delete item...', 'Dismiss'],
+  //       destructiveButtonIndex: 1,
+  //       cancelButtonIndex: 2,
+  //     },
+  //     (buttonIdx) => {
+  //       if (buttonIdx === 1) {
+  //         handleDeleteButtonTapped()
+  //       }
+  //     },
+  //   )
+  // }
 
   const handleDeleteButtonTapped = () => {
     ReactNativeHapticFeedback.trigger('impactLight')
@@ -248,21 +252,21 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
                 flexDirection: 'column',
               }}>
               {/* <TouchableOpacity
+                style={{
+                  justifyContent: 'center',
+                  position: 'absolute',
+                  right: 45,
+                }}
+                onPress={() => handleMenuButtonTapped()}>
+                <FastImage
                   style={{
-                    justifyContent: 'center',
-                    position: 'absolute',
-                    right: 45,
+                    width: 25,
+                    height: 25,
                   }}
-                  onPress={() => handleMenuButtonTapped()}>
-                  <Image
-                    style={{
-                      width: 25,
-                      height: 25,
-                    }}
-                    resizeMode="contain"
-                    source={require('../../assets/icons/More.png')}
-                  />
-                </TouchableOpacity> */}
+                  resizeMode="contain"
+                  source={require('../../assets/icons/More.png')}
+                />
+              </TouchableOpacity> */}
               <TouchableOpacity
                 style={{
                   justifyContent: 'center',

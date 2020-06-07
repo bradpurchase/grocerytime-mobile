@@ -9,6 +9,7 @@
 
 export interface Me_me_lists_trip {
   __typename: "GroceryTrip";
+  id: string;
   itemsCount: number | null;
 }
 

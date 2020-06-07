@@ -89,7 +89,6 @@ const RenameListScreen: React.FC<Props> = React.memo(
         }
       },
     })
-
     if (error && error.graphQLErrors) {
       Alert.alert('Oops!', error.graphQLErrors[0].message)
     }
