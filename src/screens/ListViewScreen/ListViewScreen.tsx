@@ -10,7 +10,7 @@ import { List } from '../../types/List'
 
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { LIST_QUERY } from '../../queries/list'
-import { NEW_ITEM_IN_TRIP_SUBSCRIPTION } from '../../queries/newItemInTrip'
+import { NEW_ITEM_SUBSCRIPTION } from '../../queries/newItem'
 import { DELETE_LIST_MUTATION } from '../../queries/deleteList'
 import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
 
@@ -66,11 +66,12 @@ const ListViewScreen: React.FC<Props> = React.memo(
 
     React.useEffect(() => {
       subscribeToMore({
-        document: NEW_ITEM_IN_TRIP_SUBSCRIPTION,
-        variables: { listId: data?.list.id },
+        document: NEW_ITEM_SUBSCRIPTION,
+        variables: { tripId: data?.list.trip.id },
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev
-          const newItem = subscriptionData.data.newItemInList
+          console.log(subscriptionData)
+          const newItem = subscriptionData.data.newItem
 
           return Object.assign({}, prev, {
             list: {

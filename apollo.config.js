@@ -2,7 +2,7 @@ module.exports = {
   client: {
     service: {
       name: 'grocerytime',
-      url: 'https://grocerytime-trips-4m6r8lzkhiq8.herokuapp.com/graphql',
+      url: 'https://api.grocerytime.app/graphql',
       // optional disable SSL validation check
       skipSSLValidation: true,
     },
