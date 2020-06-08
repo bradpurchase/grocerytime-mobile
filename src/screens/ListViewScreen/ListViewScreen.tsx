@@ -11,6 +11,7 @@ import { List } from '../../types/List'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { LIST_QUERY } from '../../queries/list'
 import { NEW_ITEM_SUBSCRIPTION } from '../../queries/newItem'
+import { UPDATED_ITEM_SUBSCRIPTION } from '../../queries/updatedItem'
 import { DELETE_LIST_MUTATION } from '../../queries/deleteList'
 import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
 
@@ -18,6 +19,7 @@ import AuthContext from '../../context/AuthContext'
 import ListContext from '../../context/ListContext'
 import { listActionSheet } from '../../helpers/ListActions'
 import { currentUserIsCreator } from '../../services/list'
+import { Item } from '../../types'
 
 import TripView from './TripView'
 import HeaderTitle from './HeaderTitle'
@@ -64,13 +66,12 @@ const ListViewScreen: React.FC<Props> = React.memo(
       ? currentUserIsCreator(currentUserId, list)
       : false
 
-    React.useEffect(() => {
+    const subscribeToNewItems = () => {
       subscribeToMore({
         document: NEW_ITEM_SUBSCRIPTION,
         variables: { tripId: data?.list.trip.id },
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev
-          console.log(subscriptionData)
           const newItem = subscriptionData.data.newItem
 
           return Object.assign({}, prev, {
@@ -84,6 +85,31 @@ const ListViewScreen: React.FC<Props> = React.memo(
           })
         },
       })
+    }
+
+    const subscribeToUpdatedItems = () => {
+      subscribeToMore({
+        document: UPDATED_ITEM_SUBSCRIPTION,
+        variables: { tripId: data?.list.trip.id },
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) return prev
+
+          return Object.assign({}, prev, {
+            list: {
+              ...list,
+              trip: {
+                ...list.trip,
+                items: prev.list.trip.items,
+              },
+            },
+          })
+        },
+      })
+    }
+
+    React.useEffect(() => {
+      subscribeToNewItems()
+      subscribeToUpdatedItems()
     }, [])
 
     React.useLayoutEffect(() => {

@@ -122,7 +122,6 @@ const App = () => {
   const checkFirstRun = async () => {
     try {
       const firstRun = await AsyncStorage.getItem('firstRun')
-      console.log('firstRun', firstRun)
       if (firstRun !== null) {
         setFirstRunOccurred(JSON.parse(firstRun))
         return

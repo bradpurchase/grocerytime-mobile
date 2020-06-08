@@ -45,6 +45,10 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
   const listContext = React.useContext(ListContext)
   const { data, refetch } = listContext
 
+  React.useEffect(() => {
+    setItemName(item.name)
+  }, [item])
+
   const [updateItem] = useMutation(UPDATE_ITEM_MUTATION, {
     optimisticResponse: {
       __typename: 'Mutation',

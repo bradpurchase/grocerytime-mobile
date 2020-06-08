@@ -27,7 +27,7 @@ const TripView: React.FC = React.memo(() => {
 
   const [listItems, setListItems] = React.useState(trip.items)
 
-  // Effect for when we receive new items (i.e. item added)
+  // Effect for when we receive item updates (i.e. item added/updated)
   React.useEffect(() => {
     setListItems(trip.items)
   }, [trip.items])
@@ -54,7 +54,7 @@ const TripView: React.FC = React.memo(() => {
   return (
     <View style={{ flex: 1 }}>
       <TripDetails />
-      
+
       <AddItemInput />
 
       <DraggableFlatList
