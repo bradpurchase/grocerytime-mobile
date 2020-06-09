@@ -2,14 +2,17 @@ import * as React from 'react'
 import { View, TextInput, Image } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 import { useColorScheme } from 'react-native-appearance'
-
-import ListContext from '../../context/ListContext'
+import 'react-native-get-random-values'
+import { v4 as uuidv4 } from 'uuid'
 
 import { useMutation } from '@apollo/react-hooks'
+import { LIST_QUERY } from '../../queries/list'
 import { ADD_ITEM_TO_TRIP_MUTATION } from '../../queries/addItemToTrip'
 import * as AddItemToTripTypes from '../../queries/__generated__/AddItemToTrip'
+import { List, Item } from '../../types'
 
 import { getSettingValue } from '../../services/settings'
+import ListContext from '../../context/ListContext'
 
 interface AddItemInputSettings {
   autoCapitalize: boolean
@@ -32,18 +35,47 @@ const AddItemInput: React.FC = React.memo(() => {
   const [item, setItem] = React.useState<string>('')
   const textInputRef = React.useRef<TextInput>(null)
 
-  const [addItemToTrip, { error }] = useMutation<
-    AddItemToTripTypes.AddItemToTrip,
-    AddItemToTripTypes.AddItemToTripVariables
-  >(ADD_ITEM_TO_TRIP_MUTATION, {
+  const [addItemToTrip, { error }] = useMutation(ADD_ITEM_TO_TRIP_MUTATION, {
     variables: {
       tripId: data.list.trip.id,
       name: item,
       quantity: 1,
     },
-    onCompleted: (data) => {
-      refetch()
+    onCompleted: () => {
       resetInput()
+    },
+    optimisticResponse: {
+      __typename: 'Mutation',
+      addItemToTrip: {
+        __typename: 'Item',
+        id: uuidv4(),
+        groceryTripId: data.list.trip?.id,
+        name: item,
+        position: 1,
+        quantity: 1,
+        completed: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    },
+    update(cache, { data: mutationData }) {
+      const listData: any = cache.readQuery({
+        query: LIST_QUERY,
+        variables: data.list.id,
+      })
+      const list: List = listData.list
+      cache.writeQuery({
+        query: LIST_QUERY,
+        data: {
+          list: {
+            ...list,
+            trip: {
+              ...list.trip,
+              items: [mutationData?.addItemToTrip, ...list.trip?.items],
+            },
+          },
+        },
+      })
     },
   })
   if (error) console.log(error)
@@ -77,6 +109,7 @@ const AddItemInput: React.FC = React.memo(() => {
         flexDirection: 'row',
         zIndex: 9999,
         padding: 18,
+        paddingHorizontal: 16,
         alignSelf: 'center',
         margin: 10,
         marginVertical: 20,
