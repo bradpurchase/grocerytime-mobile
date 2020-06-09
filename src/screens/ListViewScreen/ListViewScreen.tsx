@@ -109,7 +109,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
 
     React.useEffect(() => {
       subscribeToNewItems()
-      subscribeToUpdatedItems()
+      //subscribeToUpdatedItems()
     }, [])
 
     React.useLayoutEffect(() => {

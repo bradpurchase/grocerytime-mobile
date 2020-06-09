@@ -42,41 +42,42 @@ const AddItemInput: React.FC = React.memo(() => {
       quantity: 1,
     },
     onCompleted: () => {
+      refetch()
       resetInput()
     },
-    optimisticResponse: {
-      __typename: 'Mutation',
-      addItemToTrip: {
-        __typename: 'Item',
-        id: uuidv4(),
-        groceryTripId: data.list.trip?.id,
-        name: item,
-        position: 1,
-        quantity: 1,
-        completed: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    },
-    update(cache, { data: mutationData }) {
-      const listData: any = cache.readQuery({
-        query: LIST_QUERY,
-        variables: data.list.id,
-      })
-      const list: List = listData.list
-      cache.writeQuery({
-        query: LIST_QUERY,
-        data: {
-          list: {
-            ...list,
-            trip: {
-              ...list.trip,
-              items: [mutationData?.addItemToTrip, ...list.trip?.items],
-            },
-          },
-        },
-      })
-    },
+    // optimisticResponse: {
+    //   __typename: 'Mutation',
+    //   addItemToTrip: {
+    //     __typename: 'Item',
+    //     id: uuidv4(),
+    //     groceryTripId: data.list.trip?.id,
+    //     name: item,
+    //     position: 1,
+    //     quantity: 1,
+    //     completed: false,
+    //     createdAt: new Date(),
+    //     updatedAt: new Date(),
+    //   },
+    // },
+    // update(cache, { data: mutationData }) {
+    //   const listData: any = cache.readQuery({
+    //     query: LIST_QUERY,
+    //     variables: data.list.id,
+    //   })
+    //   const list: List = listData.list
+    //   cache.writeQuery({
+    //     query: LIST_QUERY,
+    //     data: {
+    //       list: {
+    //         ...list,
+    //         trip: {
+    //           ...list.trip,
+    //           items: [mutationData?.addItemToTrip, ...list.trip?.items],
+    //         },
+    //       },
+    //     },
+    //   })
+    // },
   })
   if (error) console.log(error)
 
