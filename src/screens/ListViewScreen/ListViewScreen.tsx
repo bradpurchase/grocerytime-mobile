@@ -19,7 +19,6 @@ import AuthContext from '../../context/AuthContext'
 import ListContext from '../../context/ListContext'
 import { listActionSheet } from '../../helpers/ListActions'
 import { currentUserIsCreator } from '../../services/list'
-import { Item } from '../../types'
 
 import TripView from './TripView'
 import HeaderTitle from './HeaderTitle'
@@ -66,10 +65,51 @@ const ListViewScreen: React.FC<Props> = React.memo(
       ? currentUserIsCreator(currentUserId, list)
       : false
 
-    const subscribeToNewItems = () => {
+    // const subscribeToNewItems = () => {
+    //   subscribeToMore({
+    //     document: NEW_ITEM_SUBSCRIPTION,
+    //     variables: { tripId: list?.trip?.id },
+    //     updateQuery: (prev, { subscriptionData }) => {
+    //       if (!subscriptionData.data) return prev
+    //       const newItem = subscriptionData.data.newItem
+
+    //       return Object.assign({}, prev, {
+    //         list: {
+    //           ...list,
+    //           trip: {
+    //             ...list.trip,
+    //             items: [newItem, ...prev.list.trip.items],
+    //           },
+    //         },
+    //       })
+    //     },
+    //   })
+    // }
+
+    // const subscribeToUpdatedItems = () => {
+    //   subscribeToMore({
+    //     document: UPDATED_ITEM_SUBSCRIPTION,
+    //     variables: { tripId: data?.list.trip.id },
+    //     updateQuery: (prev, { subscriptionData }) => {
+    //       if (!subscriptionData.data) return prev
+
+    //       return Object.assign({}, prev, {
+    //         list: {
+    //           ...list,
+    //           trip: {
+    //             ...list.trip,
+    //             items: prev.list.trip.items,
+    //           },
+    //         },
+    //       })
+    //     },
+    //   })
+    // }
+
+    React.useEffect(() => {
       subscribeToMore({
         document: NEW_ITEM_SUBSCRIPTION,
-        variables: { tripId: data?.list.trip.id },
+        variables: { tripId: list?.trip?.id },
         updateQuery: (prev, { subscriptionData }) => {
           if (!subscriptionData.data) return prev
           const newItem = subscriptionData.data.newItem
@@ -85,31 +125,6 @@ const ListViewScreen: React.FC<Props> = React.memo(
           })
         },
       })
-    }
-
-    const subscribeToUpdatedItems = () => {
-      subscribeToMore({
-        document: UPDATED_ITEM_SUBSCRIPTION,
-        variables: { tripId: data?.list.trip.id },
-        updateQuery: (prev, { subscriptionData }) => {
-          if (!subscriptionData.data) return prev
-
-          return Object.assign({}, prev, {
-            list: {
-              ...list,
-              trip: {
-                ...list.trip,
-                items: prev.list.trip.items,
-              },
-            },
-          })
-        },
-      })
-    }
-
-    React.useEffect(() => {
-      subscribeToNewItems()
-      //subscribeToUpdatedItems()
     }, [])
 
     React.useLayoutEffect(() => {
