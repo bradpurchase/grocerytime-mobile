@@ -79,10 +79,7 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
       if (data.createList?.id) {
         Keyboard.dismiss()
         navigation.navigate('ShareList', {
-          list: {
-            id: data.createList.id,
-            name: formData.name,
-          },
+          list: data.createList,
         })
       }
     },

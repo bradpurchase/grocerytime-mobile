@@ -14,6 +14,7 @@ import { ME_QUERY } from '../../queries/me'
 
 import { ListCellNavigationProp } from '../../types/Navigation'
 
+import EmptyState from '../../components/EmptyState'
 import ScreenTitle from '../../components/ScreenTitle'
 import ListCell from './ListCell'
 
@@ -78,6 +79,13 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
                 refetchList={() => refetch()}
               />
             )}
+            contentContainerStyle={{ flexGrow: 1 }}
+            ListEmptyComponent={
+              <EmptyState
+                title="No lists"
+                body="Create your first list by tapping the + button above."
+              />
+            }
             refreshControl={
               <RefreshControl
                 refreshing={data.networkStatus === 4}

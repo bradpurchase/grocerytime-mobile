@@ -8,16 +8,18 @@ import {
   Alert,
 } from 'react-native'
 
-import { RouteProp } from '@react-navigation/native'
-import {
-  RootStackParamList,
-  RenameListNavigationProp,
-} from '../../types/Navigation'
-import { useTheme } from '@react-navigation/native'
+import { RouteProp, useTheme } from '@react-navigation/native'
 
 import { useMutation } from '@apollo/react-hooks'
 import { UPDATE_LIST_MUTATION } from '../../queries/updateList'
 import * as UpdateListTypes from '../../queries/__generated__/UpdateList'
+import { LIST_QUERY } from '../../queries/list'
+
+import {
+  RootStackParamList,
+  RenameListNavigationProp,
+} from '../../types/Navigation'
+import { List } from '../../types'
 
 import { getSettingValue } from '../../services/settings'
 
@@ -38,6 +40,8 @@ type FormData = {
 const RenameListScreen: React.FC<Props> = React.memo(
   ({ route, navigation }: Props) => {
     const { colors } = useTheme()
+
+    const listId = route.params.list.id
 
     const [settings, setSettings] = React.useState<RenameListInputSettings>({
       autoCapitalize: true,
@@ -80,7 +84,7 @@ const RenameListScreen: React.FC<Props> = React.memo(
       UpdateListTypes.UpdateListVariables
     >(UPDATE_LIST_MUTATION, {
       variables: {
-        listId: route.params.list.id,
+        listId,
         name: formData.name,
       },
       onCompleted: (data) => {

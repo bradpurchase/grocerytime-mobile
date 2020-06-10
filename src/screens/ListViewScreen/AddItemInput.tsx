@@ -29,15 +29,15 @@ const AddItemInput: React.FC = React.memo(() => {
   })
 
   const listContext = React.useContext(ListContext)
-  const { data, refetch } = listContext
-  if (!data) return null
+  const { data: listData, refetch } = listContext
+  if (!listData) return null
 
   const [item, setItem] = React.useState<string>('')
   const textInputRef = React.useRef<TextInput>(null)
 
   const [addItemToTrip, { error }] = useMutation(ADD_ITEM_TO_TRIP_MUTATION, {
     variables: {
-      tripId: data.list.trip.id,
+      tripId: listData.list.trip.id,
       name: item,
       quantity: 1,
     },
@@ -49,7 +49,7 @@ const AddItemInput: React.FC = React.memo(() => {
       addItemToTrip: {
         __typename: 'Item',
         id: uuidv4(),
-        groceryTripId: data.list.trip?.id,
+        groceryTripId: listData.list.trip?.id,
         name: item,
         position: 1,
         quantity: 1,
@@ -58,25 +58,26 @@ const AddItemInput: React.FC = React.memo(() => {
         updatedAt: new Date(),
       },
     },
-    update(cache, { data: mutationData }) {
-      const listData: any = cache.readQuery({
-        query: LIST_QUERY,
-        variables: data.list.id,
-      })
-      const list: List = listData.list
-      cache.writeQuery({
-        query: LIST_QUERY,
-        data: {
-          list: {
-            ...list,
-            trip: {
-              ...list.trip,
-              items: [mutationData?.addItemToTrip, ...list.trip?.items],
-            },
-          },
-        },
-      })
-    },
+    // update(cache, { data: mutationData }) {
+    //   const listQueryData: any = cache.readQuery({
+    //     query: LIST_QUERY,
+    //     variables: listData.list.id,
+    //   })
+    //   const list: List = listQueryData.list
+    //   const listItems: Item[] = list?.trip?.items
+    //   cache.writeQuery({
+    //     query: LIST_QUERY,
+    //     data: {
+    //       list: {
+    //         ...list,
+    //         trip: {
+    //           ...list.trip,
+    //           items: [mutationData?.addItemToTrip, ...listItems],
+    //         },
+    //       },
+    //     },
+    //   })
+    // },
   })
   if (error) console.log(error)
 

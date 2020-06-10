@@ -10,8 +10,6 @@ import { List } from '../../types/List'
 
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { LIST_QUERY } from '../../queries/list'
-import { NEW_ITEM_SUBSCRIPTION } from '../../queries/newItem'
-import { UPDATED_ITEM_SUBSCRIPTION } from '../../queries/updatedItem'
 import { DELETE_LIST_MUTATION } from '../../queries/deleteList'
 import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
 
@@ -42,12 +40,12 @@ const ListViewScreen: React.FC<Props> = React.memo(
       variables: { id: listParam.id },
     })
 
-    React.useEffect(() => {
-      const refetchOnFocus = navigation.addListener('focus', () => {
-        refetch()
-      })
-      return refetchOnFocus
-    }, [navigation])
+    // React.useEffect(() => {
+    //   const refetchOnFocus = navigation.addListener('focus', () => {
+    //     refetch()
+    //   })
+    //   return refetchOnFocus
+    // }, [navigation])
 
     const [deleteList] = useMutation<
       DeleteListTypes.DeleteList,
@@ -60,143 +58,83 @@ const ListViewScreen: React.FC<Props> = React.memo(
       },
     })
 
-    const list: List = data && data.list
-    const isCreator: boolean = data
-      ? currentUserIsCreator(currentUserId, list)
-      : false
-
-    // const subscribeToNewItems = () => {
-    //   subscribeToMore({
-    //     document: NEW_ITEM_SUBSCRIPTION,
-    //     variables: { tripId: list?.trip?.id },
-    //     updateQuery: (prev, { subscriptionData }) => {
-    //       if (!subscriptionData.data) return prev
-    //       const newItem = subscriptionData.data.newItem
-
-    //       return Object.assign({}, prev, {
-    //         list: {
-    //           ...list,
-    //           trip: {
-    //             ...list.trip,
-    //             items: [newItem, ...prev.list.trip.items],
-    //           },
-    //         },
-    //       })
-    //     },
-    //   })
-    // }
-
-    // const subscribeToUpdatedItems = () => {
-    //   subscribeToMore({
-    //     document: UPDATED_ITEM_SUBSCRIPTION,
-    //     variables: { tripId: data?.list.trip.id },
-    //     updateQuery: (prev, { subscriptionData }) => {
-    //       if (!subscriptionData.data) return prev
-
-    //       return Object.assign({}, prev, {
-    //         list: {
-    //           ...list,
-    //           trip: {
-    //             ...list.trip,
-    //             items: prev.list.trip.items,
-    //           },
-    //         },
-    //       })
-    //     },
-    //   })
-    // }
-
-    React.useEffect(() => {
-      subscribeToMore({
-        document: NEW_ITEM_SUBSCRIPTION,
-        variables: { tripId: list?.trip?.id },
-        updateQuery: (prev, { subscriptionData }) => {
-          if (!subscriptionData.data) return prev
-          const newItem = subscriptionData.data.newItem
-
-          return Object.assign({}, prev, {
-            list: {
-              ...list,
-              trip: {
-                ...list.trip,
-                items: [newItem, ...prev.list.trip.items],
-              },
-            },
-          })
-        },
-      })
-    }, [])
-
     React.useLayoutEffect(() => {
-      if (shouldDismiss) {
-        navigation.setOptions({
-          headerLeft: () => (
-            <TouchableOpacity
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                paddingVertical: 10,
-                width: 85,
-              }}
-              onPress={() => navigation.popToTop()}>
-              <Text
+      if (data) {
+        if (shouldDismiss) {
+          navigation.setOptions({
+            headerLeft: () => (
+              <TouchableOpacity
                 style={{
-                  color: colors.primary,
-                  fontSize: 16,
-                }}>
-                Dismiss
-              </Text>
-            </TouchableOpacity>
-          ),
-        })
-      }
-    }, [])
-
-    React.useLayoutEffect(() => {
-      if (loading) return
-      if (isCreator) {
-        navigation.setOptions({
-          headerTitle: () => <HeaderTitle list={list} isCreator={true} />,
-          headerRight: () => (
-            <TouchableOpacity
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                paddingHorizontal: 10,
-                paddingVertical: 10,
-                width: 50,
-              }}
-              onPress={() =>
-                listActionSheet(
-                  list,
-                  () => {
-                    navigation.navigate('RenameList', { list })
-                  },
-                  deleteList,
-                )
-              }>
-              <Image
-                style={{
-                  justifyContent: 'center',
-                  resizeMode: 'contain',
+                  flex: 1,
+                  alignItems: 'center',
+                  paddingVertical: 10,
+                  width: 85,
                 }}
-                source={require('../../assets/icons/MenuVertical.png')}
-              />
-            </TouchableOpacity>
-          ),
-        })
-      } else {
-        navigation.setOptions({
-          headerTitle: () => <HeaderTitle list={list} isCreator={false} />,
-          headerRight: () => <></>,
-        })
+                onPress={() => navigation.popToTop()}>
+                <Text
+                  style={{
+                    color: colors.primary,
+                    fontSize: 16,
+                  }}>
+                  Dismiss
+                </Text>
+              </TouchableOpacity>
+            ),
+          })
+        }
+
+        const isCreator: boolean = currentUserIsCreator(
+          currentUserId,
+          data.list,
+        )
+        if (isCreator) {
+          navigation.setOptions({
+            headerTitle: () => (
+              <HeaderTitle list={data.list} isCreator={true} />
+            ),
+            headerRight: () => (
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  paddingHorizontal: 10,
+                  paddingVertical: 10,
+                  width: 50,
+                }}
+                onPress={() =>
+                  listActionSheet(
+                    data.list,
+                    () => {
+                      navigation.navigate('RenameList', { list: data.list })
+                    },
+                    deleteList,
+                  )
+                }>
+                <Image
+                  style={{
+                    justifyContent: 'center',
+                    resizeMode: 'contain',
+                  }}
+                  source={require('../../assets/icons/MenuVertical.png')}
+                />
+              </TouchableOpacity>
+            ),
+          })
+        } else {
+          navigation.setOptions({
+            headerTitle: () => (
+              <HeaderTitle list={data.list} isCreator={false} />
+            ),
+            headerRight: () => <></>,
+          })
+        }
       }
-    }, [navigation, loading])
+    }, [navigation, data])
 
     if (loading) return <ActivityIndicator size="large" />
 
     return (
-      <ListContext.Provider value={{ data, refetch }}>
+      <ListContext.Provider value={{ data, refetch, subscribeToMore }}>
         <TripView />
       </ListContext.Provider>
     )
