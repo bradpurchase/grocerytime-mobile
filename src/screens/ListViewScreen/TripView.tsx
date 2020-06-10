@@ -35,42 +35,44 @@ const TripView: React.FC = React.memo(() => {
   }, [trip.items])
 
   React.useEffect(() => {
-    subscribeToMore({
-      document: NEW_ITEM_SUBSCRIPTION,
-      variables: { tripId: trip.id },
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev
-        const newItem = subscriptionData.data.newItem
+    if (trip) {
+      subscribeToMore({
+        document: NEW_ITEM_SUBSCRIPTION,
+        variables: { tripId: trip.id },
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) return prev
+          const newItem = subscriptionData.data.newItem
 
-        return Object.assign({}, prev, {
-          list: {
-            ...list,
-            trip: {
-              ...list.trip,
-              items: [newItem, ...listItems],
+          return Object.assign({}, prev, {
+            list: {
+              ...list,
+              trip: {
+                ...list.trip,
+                items: [newItem, ...listItems],
+              },
             },
-          },
-        })
-      },
-    })
+          })
+        },
+      })
+    }
 
-    //   subscribeToMore({
-    //     document: UPDATED_ITEM_SUBSCRIPTION,
-    //     variables: { tripId: data?.list.trip.id },
-    //     updateQuery: (prev, { subscriptionData }) => {
-    //       if (!subscriptionData.data) return prev
+    // subscribeToMore({
+    //   document: UPDATED_ITEM_SUBSCRIPTION,
+    //   variables: { tripId: data?.list.trip.id },
+    //   updateQuery: (prev, { subscriptionData }) => {
+    //     if (!subscriptionData.data) return prev
 
-    //       return Object.assign({}, prev, {
-    //         list: {
-    //           ...list,
-    //           trip: {
-    //             ...list.trip,
-    //             items: prev.list.trip.items,
-    //           },
+    //     return Object.assign({}, prev, {
+    //       list: {
+    //         ...list,
+    //         trip: {
+    //           ...list.trip,
+    //           items: prev.list.trip.items,
     //         },
-    //       })
-    //     },
-    //   })
+    //       },
+    //     })
+    //   },
+    // })
   }, [])
 
   const [reorderItem] = useMutation(REORDER_ITEM_MUTATION)

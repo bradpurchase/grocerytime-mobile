@@ -40,12 +40,12 @@ const ListViewScreen: React.FC<Props> = React.memo(
       variables: { id: listParam.id },
     })
 
-    // React.useEffect(() => {
-    //   const refetchOnFocus = navigation.addListener('focus', () => {
-    //     refetch()
-    //   })
-    //   return refetchOnFocus
-    // }, [navigation])
+    React.useEffect(() => {
+      const refetchOnFocus = navigation.addListener('focus', () => {
+        refetch()
+      })
+      return refetchOnFocus
+    }, [navigation])
 
     const [deleteList] = useMutation<
       DeleteListTypes.DeleteList,

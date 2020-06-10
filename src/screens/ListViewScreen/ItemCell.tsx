@@ -159,8 +159,6 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
           borderRadius: 8,
           flex: 1,
           flexDirection: 'column',
-          padding: 18,
-          paddingVertical: 20,
           marginHorizontal: 8,
           marginBottom: 8,
         }}
@@ -190,7 +188,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
                 flexDirection: 'column',
                 fontSize: 16,
                 fontWeight: '500',
-                marginLeft: 15,
+                marginLeft: 5,
                 width: 200,
               }}
               defaultValue={name}
@@ -208,7 +206,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
               autoCapitalize={settings.autoCapitalize ? 'words' : 'sentences'}
             />
           ) : (
-            <>
+            <View style={{ paddingTop: 20, flexDirection: 'row' }}>
               <Text
                 numberOfLines={2}
                 style={{
@@ -216,10 +214,9 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
                   fontSize: 16,
                   fontWeight: '500',
                   flexDirection: 'column',
-                  marginLeft: 15,
+                  marginLeft: 5,
                   lineHeight: 20,
                   textDecorationLine: completed ? 'line-through' : 'none',
-                  maxWidth: '80%',
                 }}>
                 {itemName}
               </Text>
@@ -236,16 +233,17 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
                   ({quantity})
                 </Text>
               )}
-            </>
+            </View>
           )}
         </View>
 
         {editingMode && !completed && (
           <View
             style={{
-              marginTop: 20,
               flexDirection: 'row',
               flex: 1,
+              padding: 20,
+              paddingTop: 10,
             }}>
             <QuantityStepper />
             <View

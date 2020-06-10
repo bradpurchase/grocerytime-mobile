@@ -59,11 +59,8 @@ const AppComponent = () => {
       })
       const splitLink = split(
         ({ query }) => {
-          const def = getMainDefinition(query)
-          return (
-            def.kind === 'OperationDefinition' &&
-            def.operation === 'subscription'
-          )
+          const { kind, operation } = getMainDefinition(query)
+          return kind === 'OperationDefinition' && operation === 'subscription'
         },
         wsLink,
         httpLink,

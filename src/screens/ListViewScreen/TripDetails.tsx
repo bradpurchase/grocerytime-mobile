@@ -150,7 +150,7 @@ const TripDetails: React.FC = React.memo(() => {
           defaultValue={tripName}
           returnKeyType="done"
           clearTextOnFocus
-          placeholder={tripName}
+          placeholder={'Enter trip name'}
           onChangeText={(text) => setTripName(text)}
           onSubmitEditing={() => handleUpdateTripName()}
           autoCorrect={settings.autoCorrect ?? false}

@@ -38,18 +38,33 @@ export const listActionSheet = (
   renameList: Function,
   deleteList: Function,
 ) => {
+  let options = ['Share list...', 'Rename list...', 'Delete list...', 'Dismiss']
+  let renameButtonIndex = 1
+  let destructiveButtonIndex = 2
+  let cancelButtonIndex = 3
+  // Limit sharing to up to 5 for now so we can keep tabs on how subscriptions
+  // are working server side
+  const atShareLimit = list.listUsers && list.listUsers.length >= 5
+  if (atShareLimit) {
+    options.shift()
+    renameButtonIndex = renameButtonIndex - 1
+    destructiveButtonIndex = destructiveButtonIndex - 1
+    cancelButtonIndex = cancelButtonIndex - 1
+  }
   return ActionSheetIOS.showActionSheetWithOptions(
     {
-      options: ['Share list...', 'Rename list...', 'Delete list...', 'Dismiss'],
-      destructiveButtonIndex: 2,
-      cancelButtonIndex: 3,
+      options,
+      destructiveButtonIndex,
+      cancelButtonIndex,
     },
     (buttonIdx) => {
-      if (buttonIdx === 0) {
+      if (!atShareLimit && buttonIdx === 0) {
         shareActionSheet(list)
-      } else if (buttonIdx === 1) {
+      }
+      if (buttonIdx === renameButtonIndex) {
         renameList()
-      } else if (buttonIdx === 2) {
+      }
+      if (buttonIdx === destructiveButtonIndex) {
         deleteListConfirmationActionSheet(list, deleteList)
       }
     },

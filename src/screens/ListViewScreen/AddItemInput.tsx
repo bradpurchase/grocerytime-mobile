@@ -42,29 +42,31 @@ const AddItemInput: React.FC = React.memo(() => {
       quantity: 1,
     },
     onCompleted: () => {
+      refetch()
       resetInput()
     },
-    optimisticResponse: {
-      __typename: 'Mutation',
-      addItemToTrip: {
-        __typename: 'Item',
-        id: uuidv4(),
-        groceryTripId: listData.list.trip?.id,
-        name: item,
-        position: 1,
-        quantity: 1,
-        completed: false,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    },
+    // optimisticResponse: {
+    //   __typename: 'Mutation',
+    //   addItemToTrip: {
+    //     __typename: 'Item',
+    //     id: uuidv4(),
+    //     groceryTripId: listData.list.trip?.id,
+    //     name: item,
+    //     position: 1,
+    //     quantity: 1,
+    //     completed: false,
+    //     createdAt: new Date(),
+    //     updatedAt: new Date(),
+    //   },
+    // },
     // update(cache, { data: mutationData }) {
     //   const listQueryData: any = cache.readQuery({
     //     query: LIST_QUERY,
-    //     variables: listData.list.id,
+    //     variables: {
+    //       id: listData.list.id,
+    //     },
     //   })
     //   const list: List = listQueryData.list
-    //   const listItems: Item[] = list?.trip?.items
     //   cache.writeQuery({
     //     query: LIST_QUERY,
     //     data: {
@@ -72,7 +74,8 @@ const AddItemInput: React.FC = React.memo(() => {
     //         ...list,
     //         trip: {
     //           ...list.trip,
-    //           items: [mutationData?.addItemToTrip, ...listItems],
+    //           itemsCount: list.trip.itemsCount + 1,
+    //           items: [mutationData?.addItemToTrip, ...list.trip.items],
     //         },
     //       },
     //     },
