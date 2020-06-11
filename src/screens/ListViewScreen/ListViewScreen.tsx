@@ -59,30 +59,32 @@ const ListViewScreen: React.FC<Props> = React.memo(
     })
 
     React.useLayoutEffect(() => {
-      if (data) {
-        if (shouldDismiss) {
-          navigation.setOptions({
-            headerLeft: () => (
-              <TouchableOpacity
+      if (shouldDismiss) {
+        navigation.setOptions({
+          headerLeft: () => (
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                paddingVertical: 10,
+                width: 85,
+              }}
+              onPress={() => navigation.navigate('Lists')}>
+              <Text
                 style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  paddingVertical: 10,
-                  width: 85,
-                }}
-                onPress={() => navigation.popToTop()}>
-                <Text
-                  style={{
-                    color: colors.primary,
-                    fontSize: 16,
-                  }}>
-                  Dismiss
-                </Text>
-              </TouchableOpacity>
-            ),
-          })
-        }
+                  color: colors.primary,
+                  fontSize: 16,
+                }}>
+                Dismiss
+              </Text>
+            </TouchableOpacity>
+          ),
+        })
+      }
+    }, [shouldDismiss])
 
+    React.useLayoutEffect(() => {
+      if (data) {
         const isCreator: boolean = currentUserIsCreator(
           currentUserId,
           data.list,

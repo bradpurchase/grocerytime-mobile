@@ -52,7 +52,9 @@ const ListCell: React.FC<Props> = React.memo(
           padding: 20,
         }}
         activeOpacity={1}
-        onPress={() => navigation.navigate('ListView', { list })}>
+        onPress={() =>
+          navigation.navigate('ListView', { list, dismiss: false })
+        }>
         <Text
           style={{
             color: colors.text,

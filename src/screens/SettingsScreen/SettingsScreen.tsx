@@ -32,7 +32,6 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
 
   const handleLogout = () => {
     authContext.logout()
-    //navigation.navigate('Login')
   }
 
   const settingsData = [

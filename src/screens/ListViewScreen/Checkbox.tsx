@@ -19,7 +19,7 @@ const Checkbox: React.FC<Props> = React.memo(
     return (
       <TouchableOpacity
         activeOpacity={disabled ? 1 : 0.9}
-        style={{ flexDirection: 'column', padding: 20 }}
+        style={{ flexDirection: 'column', padding: 20, paddingRight: 10 }}
         onPress={handleOnPress}>
         <View
           style={{

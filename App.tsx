@@ -25,8 +25,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { enableScreens } from 'react-native-screens'
 enableScreens()
 
-import { useApolloClient } from '@apollo/react-hooks'
-
 import { AppearanceProvider } from 'react-native-appearance'
 import { LightTheme, DarkTheme } from './src/styles/themes'
 
@@ -152,7 +150,6 @@ const App = () => {
 
   if (!loaded || !navStateReady) return <ActivityIndicator />
 
-  // https://groceryti.me/share/927e5d2e-7d79-4e9a-b12d-a8b372441bee
   const linking = {
     prefixes: ['grocerytime://'],
     config: {

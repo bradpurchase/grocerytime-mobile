@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
 import { Item, List } from '../../types'
-import Checkbox from '../../components/Checkbox'
+import Checkbox from './Checkbox'
 import QuantityStepper from './QuantityStepper'
 
 import ListContext from '../../context/ListContext'
