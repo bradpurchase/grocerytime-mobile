@@ -42,9 +42,9 @@ export const listActionSheet = (
   let renameButtonIndex = 1
   let destructiveButtonIndex = 2
   let cancelButtonIndex = 3
-  // Limit sharing to up to 5 for now so we can keep tabs on how subscriptions
-  // are working server side
-  const atShareLimit = list.listUsers && list.listUsers.length >= 5
+  // Limit sharing to up to 5 for now so we can keep tabs on subscriptions load
+  // Note: condition is greater than 5 because we don't count the list creator against the limit
+  const atShareLimit = list.listUsers && list.listUsers.length > 5
   if (atShareLimit) {
     options.shift()
     renameButtonIndex = renameButtonIndex - 1

@@ -1,8 +1,8 @@
 import { gql } from 'apollo-boost'
 
-export const LIST_QUERY = gql`
-  query List($id: ID!) {
-    list(id: $id) {
+export const LISTS_QUERY = gql`
+  query Lists {
+    lists {
       __typename
       id
       name
@@ -12,6 +12,7 @@ export const LIST_QUERY = gql`
         name
         completed
         itemsCount
+        updatedAt
         items {
           __typename
           id
@@ -19,11 +20,10 @@ export const LIST_QUERY = gql`
           quantity
           position
           completed
+          updatedAt
         }
       }
       listUsers {
-        __typename
-        id
         userId
         creator
         user {
@@ -32,14 +32,6 @@ export const LIST_QUERY = gql`
           email
         }
       }
-    }
-  }
-`
-
-export const SHAREABLE_LIST_QUERY = gql`
-  query SharableList($id: ID!) {
-    sharableList(id: $id) {
-      name
     }
   }
 `

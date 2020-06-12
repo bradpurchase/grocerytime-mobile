@@ -14,6 +14,7 @@ export interface AddItemToTrip_addItemToTrip {
   name: string;
   quantity: number;
   position: number;
+  completed: boolean;
   createdAt: any | null;
   updatedAt: any | null;
 }

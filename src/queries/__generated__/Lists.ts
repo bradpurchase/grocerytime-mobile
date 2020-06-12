@@ -4,56 +4,53 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: List
+// GraphQL query operation: Lists
 // ====================================================
 
-export interface List_list_trip_items {
+export interface Lists_lists_trip_items {
   __typename: "Item";
   id: string;
   name: string;
   quantity: number;
   position: number;
   completed: boolean;
+  updatedAt: any | null;
 }
 
-export interface List_list_trip {
+export interface Lists_lists_trip {
   __typename: "GroceryTrip";
   id: string;
   name: string;
   completed: boolean;
   itemsCount: number | null;
-  items: (List_list_trip_items | null)[] | null;
+  updatedAt: any | null;
+  items: (Lists_lists_trip_items | null)[] | null;
 }
 
-export interface List_list_listUsers_user {
+export interface Lists_lists_listUsers_user {
   __typename: "User";
   id: string;
   email: string;
 }
 
-export interface List_list_listUsers {
+export interface Lists_lists_listUsers {
   __typename: "ListUser";
-  id: string;
   userId: string;
   creator: boolean;
-  user: List_list_listUsers_user | null;
+  user: Lists_lists_listUsers_user | null;
 }
 
-export interface List_list {
+export interface Lists_lists {
   __typename: "List";
   id: string;
   name: string;
-  trip: List_list_trip | null;
-  listUsers: (List_list_listUsers | null)[] | null;
+  trip: Lists_lists_trip | null;
+  listUsers: (Lists_lists_listUsers | null)[] | null;
 }
 
-export interface List {
+export interface Lists {
   /**
-   * Retrieve a specific list
+   * Retrieve lists for the current user
    */
-  list: List_list | null;
-}
-
-export interface ListVariables {
-  id: string;
+  lists: (Lists_lists | null)[] | null;
 }

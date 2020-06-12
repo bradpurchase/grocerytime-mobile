@@ -18,3 +18,5 @@ export const listIsShared = (list: List): boolean => {
     (listUser: ListUser) => !listUser.creator,
   ) as boolean
 }
+
+export const listUsersCount = (list: List): number => list.listUsers?.length - 1

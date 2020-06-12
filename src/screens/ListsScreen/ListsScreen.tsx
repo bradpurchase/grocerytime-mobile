@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 
 import { useQuery } from '@apollo/react-hooks'
-import { ME_QUERY } from '../../queries/me'
+import { LISTS_QUERY } from '../../queries/lists'
 
 import { ListCellNavigationProp } from '../../types/Navigation'
 
@@ -23,7 +23,7 @@ interface Props {
 }
 
 const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
-  const { loading, data, refetch } = useQuery(ME_QUERY)
+  const { loading, data, refetch } = useQuery(LISTS_QUERY)
 
   React.useEffect(() => {
     const refetchOnFocus = navigation.addListener('focus', () => {
@@ -69,7 +69,7 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
         <>
           <ScreenTitle title="Lists" />
           <FlatList
-            data={data.me.lists}
+            data={data.lists}
             extraData={refetch()}
             renderItem={({ item: list }) => (
               <ListCell

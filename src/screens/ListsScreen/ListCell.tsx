@@ -8,7 +8,6 @@ import { useMutation } from '@apollo/react-hooks'
 import { DELETE_LIST_MUTATION } from '../../queries/deleteList'
 import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
 
-import AuthContext from '../../context/AuthContext'
 import { List } from '../../types/List'
 
 interface Props {
@@ -21,25 +20,7 @@ const ListCell: React.FC<Props> = React.memo(
   ({ list, navigation, refetchList }: Props) => {
     const { colors } = useTheme()
 
-    const authContext = React.useContext(AuthContext)
-    const currentUserId = authContext.user?.id as string
-
     const { name, trip } = list
-
-    //TODO figure out how to avoid needing to share this useMutation
-    // everywhere and just do it in listActionSheet()
-    const [deleteList] = useMutation<
-      DeleteListTypes.DeleteList,
-      DeleteListTypes.DeleteListVariables
-    >(DELETE_LIST_MUTATION, {
-      onCompleted: (data) => {
-        console.log(data)
-        if (data.deleteList?.id) {
-          console.log('calling refetchList()')
-          refetchList()
-        }
-      },
-    })
 
     return (
       <TouchableOpacity
