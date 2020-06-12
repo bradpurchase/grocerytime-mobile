@@ -72,12 +72,7 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
             data={data.lists}
             extraData={refetch()}
             renderItem={({ item: list }) => (
-              <ListCell
-                key={list.id}
-                list={list}
-                navigation={navigation}
-                refetchList={() => refetch()}
-              />
+              <ListCell key={list.id} list={list} navigation={navigation} />
             )}
             contentContainerStyle={{ flexGrow: 1 }}
             ListEmptyComponent={

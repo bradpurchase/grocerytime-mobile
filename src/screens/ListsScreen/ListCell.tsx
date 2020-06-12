@@ -1,59 +1,86 @@
 import * as React from 'react'
-import { TouchableOpacity, Text } from 'react-native'
+import { TouchableOpacity, View, Text } from 'react-native'
 import { useTheme } from '@react-navigation/native'
+import FastImage from 'react-native-fast-image'
 
 import { ListCellNavigationProp } from '../../types/Navigation'
-
-import { useMutation } from '@apollo/react-hooks'
-import { DELETE_LIST_MUTATION } from '../../queries/deleteList'
-import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
-
 import { List } from '../../types/List'
+import { listIsShared } from '../../services/list'
+import { numCompletedItems } from '../../services/trip'
 
 interface Props {
   list: List
   navigation: ListCellNavigationProp
-  refetchList: () => void
 }
 
-const ListCell: React.FC<Props> = React.memo(
-  ({ list, navigation, refetchList }: Props) => {
-    const { colors } = useTheme()
+const ListCell: React.FC<Props> = React.memo(({ list, navigation }: Props) => {
+  const { colors } = useTheme()
 
-    const { name, trip } = list
+  const { name, trip } = list
 
-    return (
-      <TouchableOpacity
-        style={{
-          backgroundColor: colors.card,
-          borderRadius: 8,
-          flex: 1,
-          marginHorizontal: 10,
-          marginBottom: 10,
-          padding: 20,
-        }}
-        activeOpacity={1}
-        onPress={() =>
-          navigation.navigate('ListView', { list, dismiss: false })
-        }>
+  const isShared: boolean = listIsShared(list)
+  const completedItems: number = numCompletedItems(trip)
+
+  return (
+    <TouchableOpacity
+      style={{
+        backgroundColor: colors.card,
+        borderRadius: 8,
+        flex: 1,
+        marginHorizontal: 10,
+        marginBottom: 10,
+        padding: 20,
+        height: 90,
+      }}
+      activeOpacity={1}
+      onPress={() => navigation.navigate('ListView', { list, dismiss: false })}>
+      <View style={{ flexDirection: 'row' }}>
         <Text
           style={{
             color: colors.text,
             fontSize: 18,
-            fontWeight: 'bold',
-            marginBottom: 10,
+            fontWeight: '700',
+            flexDirection: 'column',
           }}>
-          {name}
+          {name}{' '}
         </Text>
+        {isShared && (
+          <FastImage
+            style={{
+              width: 20,
+              height: 20,
+              flexDirection: 'column',
+              marginLeft: 5,
+            }}
+            resizeMode="contain"
+            source={require('../../assets/icons/Shared.png')}
+          />
+        )}
+        <FastImage
+          style={{
+            width: 14,
+            height: 14,
+            position: 'absolute',
+            right: 0,
+            top: 14,
+          }}
+          resizeMode="contain"
+          source={require('../../assets/icons/DisclosureIndicator.png')}
+        />
+      </View>
+      <View style={{ flexDirection: 'row' }}>
         <Text
           style={{
             color: colors.subtitle,
             fontSize: 16,
+            fontWeight: '500',
+            flexDirection: 'column',
+            marginTop: 8,
           }}>
-          {trip.itemsCount} items
+          {completedItems}/{list.trip.items.length} items
         </Text>
-      </TouchableOpacity>
-    )
-  },
-)
+      </View>
+    </TouchableOpacity>
+  )
+})
 export default ListCell

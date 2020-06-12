@@ -38,7 +38,7 @@ export const listActionSheet = (
   renameList: Function,
   deleteList: Function,
 ) => {
-  let options = ['Share list...', 'Rename list...', 'Delete list...', 'Dismiss']
+  let options = ['Share list', 'Rename list', 'Delete list', 'Dismiss']
   let renameButtonIndex = 1
   let destructiveButtonIndex = 2
   let cancelButtonIndex = 3

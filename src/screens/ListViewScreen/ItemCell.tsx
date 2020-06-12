@@ -86,7 +86,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
             ...list,
             trip: {
               ...list.trip,
-              items: list.trip?.items?.filter(
+              items: list.trip.items?.filter(
                 (item: Item) => item.id !== deleteItemdata?.deleteItem?.id,
               ),
             },
@@ -96,23 +96,6 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
     },
   })
   if (error) console.log(error)
-
-  // const handleMenuButtonTapped = () => {
-  //   ReactNativeHapticFeedback.trigger('impactLight')
-  //   return ActionSheetIOS.showActionSheetWithOptions(
-  //     {
-  //       title: item.name,
-  //       options: ['Include in all trips...', 'Delete item...', 'Dismiss'],
-  //       destructiveButtonIndex: 1,
-  //       cancelButtonIndex: 2,
-  //     },
-  //     (buttonIdx) => {
-  //       if (buttonIdx === 1) {
-  //         handleDeleteButtonTapped()
-  //       }
-  //     },
-  //   )
-  // }
 
   const handleDeleteButtonTapped = () => {
     ReactNativeHapticFeedback.trigger('impactLight')
@@ -253,22 +236,6 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
                 justifyContent: 'center',
                 flexDirection: 'column',
               }}>
-              {/* <TouchableOpacity
-                style={{
-                  justifyContent: 'center',
-                  position: 'absolute',
-                  right: 45,
-                }}
-                onPress={() => handleMenuButtonTapped()}>
-                <FastImage
-                  style={{
-                    width: 25,
-                    height: 25,
-                  }}
-                  resizeMode="contain"
-                  source={require('../../assets/icons/More.png')}
-                />
-              </TouchableOpacity> */}
               <TouchableOpacity
                 style={{
                   justifyContent: 'center',

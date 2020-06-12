@@ -24,6 +24,8 @@ export const LISTS_QUERY = gql`
         }
       }
       listUsers {
+        __typename
+        id
         userId
         creator
         user {
