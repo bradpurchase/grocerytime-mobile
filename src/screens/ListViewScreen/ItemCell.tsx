@@ -114,11 +114,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
   }
 
   const handleDeleteItem = () => {
-    deleteItem({
-      variables: {
-        itemId: id,
-      },
-    })
+    deleteItem({ variables: { itemId: id } })
   }
 
   const getSettings = async () => {

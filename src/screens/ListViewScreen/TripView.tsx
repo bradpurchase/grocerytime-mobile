@@ -75,7 +75,12 @@ const TripView: React.FC = React.memo(() => {
     // })
   }, [])
 
-  const [reorderItem] = useMutation(REORDER_ITEM_MUTATION)
+  const [reorderItem, { error }] = useMutation(REORDER_ITEM_MUTATION, {
+    onCompleted: (data) => {
+      console.log(data)
+    },
+  })
+  if (error) console.log(error)
 
   const onDragEnd = (dragData: DragData) => {
     const { data, from, to } = dragData
