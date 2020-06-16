@@ -33,6 +33,7 @@ import SignupScreen from './src/screens/Auth/SignupScreen'
 import JoinListScreen from './src/screens/JoinListScreen/JoinListScreen'
 import ListsScreen from './src/screens/ListsScreen/ListsScreen'
 import NewListScreen from './src/screens/NewListScreen/NewListScreen'
+import ShareNewListScreen from './src/screens/NewListScreen/ShareNewListScreen'
 import RenameListScreen from './src/screens/RenameListScreen/RenameListScreen'
 import ShareListScreen from './src/screens/ShareListScreen/ShareListScreen'
 import ListViewScreen from './src/screens/ListViewScreen/ListViewScreen'
@@ -188,6 +189,11 @@ const App = () => {
                   name="NewList"
                   component={NewListScreen}
                   options={{ title: 'New List', headerBackTitle: ' ' }}
+                />
+                <RootStack.Screen
+                  name="ShareNewList"
+                  component={ShareNewListScreen}
+                  options={{ title: 'Your list was created!' }}
                 />
                 <RootStack.Screen
                   name="RenameList"

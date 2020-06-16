@@ -107,6 +107,9 @@ const ListViewScreen: React.FC<Props> = React.memo(
                   listActionSheet(
                     data.list,
                     () => {
+                      navigation.navigate('ShareList', { list: data.list })
+                    },
+                    () => {
                       navigation.navigate('RenameList', { list: data.list })
                     },
                     deleteList,

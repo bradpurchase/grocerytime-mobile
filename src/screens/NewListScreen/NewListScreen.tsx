@@ -78,7 +78,7 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
     onCompleted: (data) => {
       if (data.createList?.id) {
         Keyboard.dismiss()
-        navigation.navigate('ShareList', {
+        navigation.navigate('ShareNewList', {
           list: data.createList,
         })
       }
@@ -105,7 +105,7 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
     <View
       style={{
         flex: 1,
-        marginTop: 20,
+        marginTop: 30,
       }}>
       <SectionList
         sections={[
