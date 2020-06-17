@@ -133,7 +133,7 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
               color: colors.subtitle,
               fontSize: 15,
               lineHeight: 24,
-              marginTop: 20,
+              marginTop: 10,
               paddingHorizontal: 20,
               textAlign: 'center',
             }}>
