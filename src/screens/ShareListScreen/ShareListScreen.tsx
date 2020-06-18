@@ -9,12 +9,15 @@ import {
 } from 'react-native'
 import { RouteProp, useTheme } from '@react-navigation/native'
 
+import { useMutation } from '@apollo/react-hooks'
+import { INVITE_TO_LIST_MUTATION } from '../../queries/inviteToList'
+import * as InviteToListTypes from '../../queries/__generated__/InviteToList'
+
 import {
   RootStackParamList,
   ShareListNavigationProp,
 } from '../../types/Navigation'
 import { List, ListUser } from '../../types'
-import { listIsShared } from '../../services/list'
 
 interface Props {
   route: RouteProp<RootStackParamList, 'ShareList'>
@@ -34,10 +37,24 @@ const ShareListScreen: React.FC<Props> = React.memo(
   ({ route, navigation }: Props) => {
     const { colors } = useTheme()
 
-    const [formData, setFormData] = React.useState<FormData>({})
+    const [formData, setFormData] = React.useState<FormData>({ email: '' })
+    const textInputRef = React.useRef<TextInput>(null)
 
     const list: List = route.params.list
     const listUsers: ListUser[] = list.listUsers
+
+    const [inviteToList, { error }] = useMutation<
+      InviteToListTypes.InviteToList,
+      InviteToListTypes.InviteToListVariables
+    >(INVITE_TO_LIST_MUTATION, {
+      variables: {
+        listId: list.id,
+        email: formData.email,
+      },
+      onCompleted: () => {
+        textInputRef.current?.clear()
+      },
+    })
 
     React.useLayoutEffect(() => {
       navigation.setOptions({
@@ -113,7 +130,7 @@ const ShareListScreen: React.FC<Props> = React.memo(
             if (title === 'Share by invitation') {
               return (
                 <TextInput
-                  autoCompleteType="email"
+                  ref={textInputRef}
                   style={{
                     backgroundColor: colors.card,
                     display: 'flex',
@@ -121,11 +138,17 @@ const ShareListScreen: React.FC<Props> = React.memo(
                     fontSize: 16,
                     padding: 20,
                   }}
+                  autoCompleteType="email"
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                  textContentType="emailAddress"
+                  returnKeyType="send"
                   placeholderTextColor="#666"
                   placeholder="Enter an email address"
                   onChangeText={(text) =>
                     setFormData({ ...formData, email: text })
                   }
+                  onSubmitEditing={() => inviteToList()}
                 />
               )
             }

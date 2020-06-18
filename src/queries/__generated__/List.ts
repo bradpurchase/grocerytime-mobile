@@ -34,7 +34,7 @@ export interface List_list_listUsers_user {
 export interface List_list_listUsers {
   __typename: "ListUser";
   id: string;
-  userId: string;
+  userId: string | null;
   creator: boolean;
   user: List_list_listUsers_user | null;
 }
