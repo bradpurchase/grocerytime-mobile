@@ -35,7 +35,6 @@ import ListsScreen from './src/screens/ListsScreen/ListsScreen'
 import NewListScreen from './src/screens/NewListScreen/NewListScreen'
 import ShareNewListScreen from './src/screens/NewListScreen/ShareNewListScreen'
 import RenameListScreen from './src/screens/RenameListScreen/RenameListScreen'
-import ShareListScreen from './src/screens/ShareListScreen/ShareListScreen'
 import ListViewScreen from './src/screens/ListViewScreen/ListViewScreen'
 import SettingsScreen from './src/screens/SettingsScreen/SettingsScreen'
 
@@ -199,11 +198,6 @@ const App = () => {
                   name="RenameList"
                   component={RenameListScreen}
                   options={{ title: 'Rename List', headerBackTitle: ' ' }}
-                />
-                <RootStack.Screen
-                  name="ShareList"
-                  component={ShareListScreen}
-                  options={{ title: 'Share List' }}
                 />
                 <RootStack.Screen
                   name="Settings"

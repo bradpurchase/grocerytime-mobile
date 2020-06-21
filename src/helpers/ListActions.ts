@@ -1,6 +1,5 @@
 import { ActionSheetIOS } from 'react-native'
 import { List } from '../types/List'
-import { NavigationContainer } from '@react-navigation/native'
 
 export const shareActionSheet = (list: List) => {
   const listName = list.name ?? ''
@@ -61,7 +60,7 @@ export const listActionSheet = (
     },
     (buttonIdx) => {
       if (!atShareLimit && buttonIdx === 0) {
-        shareList(list)
+        shareList()
       }
       if (buttonIdx === renameButtonIndex) {
         renameList()

@@ -42,6 +42,7 @@ const ListUsersActionSheet: React.FC<Props> = React.memo(({ list }) => {
               backgroundColor: colors.card,
               flexDirection: 'row',
               padding: 20,
+              opacity: listUser.email.length > 0 ? 0.5 : 1,
             }}>
             <Text
               style={{
@@ -50,7 +51,7 @@ const ListUsersActionSheet: React.FC<Props> = React.memo(({ list }) => {
                 fontWeight: '500',
                 flexDirection: 'column',
               }}>
-              {listUser.user?.email}
+              {listUser.user?.email || listUser.email}
             </Text>
             {listUser.creator && (
               <Text
@@ -63,6 +64,19 @@ const ListUsersActionSheet: React.FC<Props> = React.memo(({ list }) => {
                   lineHeight: 20,
                 }}>
                 (creator)
+              </Text>
+            )}
+            {listUser.email.length > 0 && (
+              <Text
+                style={{
+                  color: colors.subtitle,
+                  fontSize: 14,
+                  fontWeight: '500',
+                  flexDirection: 'column',
+                  marginLeft: 5,
+                  lineHeight: 20,
+                }}>
+                (invite sent)
               </Text>
             )}
           </View>
