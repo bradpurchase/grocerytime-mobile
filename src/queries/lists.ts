@@ -27,6 +27,7 @@ export const LISTS_QUERY = gql`
         __typename
         id
         userId
+        email
         creator
         user {
           __typename
@@ -34,6 +35,10 @@ export const LISTS_QUERY = gql`
           email
         }
       }
+    }
+    me {
+      id
+      email
     }
   }
 `

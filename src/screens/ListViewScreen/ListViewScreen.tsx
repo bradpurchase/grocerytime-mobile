@@ -24,7 +24,6 @@ import * as InviteToListTypes from '../../queries/__generated__/InviteToList'
 
 import AuthContext from '../../context/AuthContext'
 import ListContext from '../../context/ListContext'
-import { listActionSheet } from '../../helpers/ListActions'
 import { currentUserIsCreator } from '../../services/list'
 
 import TripView from './TripView'

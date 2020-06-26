@@ -13,6 +13,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { LISTS_QUERY } from '../../queries/lists'
 
 import { ListCellNavigationProp } from '../../types/Navigation'
+import { pendingForCurrentUser } from '../../services/list'
 
 import EmptyState from '../../components/EmptyState'
 import ScreenTitle from '../../components/ScreenTitle'
@@ -71,9 +72,18 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
           <FlatList
             data={data.lists}
             extraData={refetch()}
-            renderItem={({ item: list }) => (
-              <ListCell key={list.id} list={list} navigation={navigation} />
-            )}
+            renderItem={({ item: list }) => {
+              const currentUserEmail: string = data.me.email
+              const pending = pendingForCurrentUser(list, currentUserEmail)
+              return (
+                <ListCell
+                  key={list.id}
+                  list={list}
+                  pending={pending}
+                  navigation={navigation}
+                />
+              )
+            }}
             contentContainerStyle={{ flexGrow: 1 }}
             ListEmptyComponent={
               <EmptyState

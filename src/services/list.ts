@@ -12,11 +12,14 @@ export const currentUserIsCreator = (
   return currentUserId === creatorUser?.userId
 }
 
+export const pendingForCurrentUser = (list: List, email: string): boolean => {
+  if (!list.listUsers) return false
+  return list.listUsers?.some((listUser: ListUser) => listUser.email === email)
+}
+
 export const listIsShared = (list: List): boolean => {
   if (!list.listUsers) return false
-  return list.listUsers?.some(
-    (listUser: ListUser) => !listUser.creator,
-  ) as boolean
+  return list.listUsers?.some((listUser: ListUser) => !listUser.creator)
 }
 
 export const listUsersCount = (list: List): number => list.listUsers?.length - 1

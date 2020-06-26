@@ -10,6 +10,9 @@ export const LightTheme = {
     card: colors.CARD_LIGHT,
     text: colors.BLACK,
     subtitle: colors.DARK_GREY,
+    success: colors.GREEN,
+    successLight: colors.LIGHT_GREEN,
+    successText: colors.WHITE,
   },
 }
 
@@ -23,5 +26,8 @@ export const DarkTheme = {
     card: colors.CARD_DARK,
     text: colors.WHITE,
     subtitle: colors.LIGHT_GREY,
+    success: colors.GREEN_DARK,
+    successLight: colors.LIGHT_GREEN_DARK,
+    successText: colors.WHITE,
   },
 }
