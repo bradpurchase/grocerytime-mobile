@@ -66,24 +66,30 @@ const ListViewScreen: React.FC<Props> = React.memo(
       },
     })
 
-    const [inviteToList, { error }] = useMutation<
+    const [inviteToList, { error: inviteToListError }] = useMutation<
       InviteToListTypes.InviteToList,
       InviteToListTypes.InviteToListVariables
     >(INVITE_TO_LIST_MUTATION, {
-      onCompleted: () => {
-        Alert.alert(
-          'Invite sent!',
-          'An email was just sent to the email address provided with a link to join this list!',
-          [
-            {
-              text: 'OK',
-              onPress: () => refetch(),
-            },
-          ],
-        )
+      onCompleted: (data) => {
+        if (data.inviteToList?.email?.length > 0) {
+          Alert.alert(
+            'Invite sent!',
+            'An email was just sent to the email address provided with a link to join this list!',
+            [
+              {
+                text: 'OK',
+                onPress: () => refetch(),
+              },
+            ],
+          )
+        }
       },
     })
-    if (error) console.log(error)
+    if (inviteToListError) {
+      inviteToListError?.graphQLErrors.map(({ message }, i) => {
+        return Alert.alert('Share failed', message)
+      })
+    }
 
     React.useLayoutEffect(() => {
       if (shouldDismiss) {
