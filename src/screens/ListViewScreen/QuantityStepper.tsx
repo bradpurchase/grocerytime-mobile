@@ -53,9 +53,12 @@ const QuantityStepper: React.FC = React.memo(() => {
         data: {
           list: {
             ...list,
-            items: list.items?.filter(
-              (item: Item) => item.id !== data?.deleteItem?.id,
-            ),
+            trip: {
+              ...list.trip,
+              items: list.trip?.items?.filter(
+                (item: Item) => item.id !== data?.deleteItem?.id,
+              ),
+            },
           },
         },
       })

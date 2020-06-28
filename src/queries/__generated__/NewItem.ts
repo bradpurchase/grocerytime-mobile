@@ -4,30 +4,26 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: AddItemToTrip
+// GraphQL subscription operation: NewItem
 // ====================================================
 
-export interface AddItemToTrip_addItemToTrip {
+export interface NewItem_newItem {
   __typename: "Item";
   id: string;
   groceryTripId: string;
   name: string;
   quantity: number;
-  position: number;
   completed: boolean;
-  createdAt: any | null;
-  updatedAt: any | null;
+  position: number;
 }
 
-export interface AddItemToTrip {
+export interface NewItem {
   /**
-   * Add an item to a grocery trip
+   * Retrieve a new item in a trip
    */
-  addItemToTrip: AddItemToTrip_addItemToTrip | null;
+  newItem: NewItem_newItem | null;
 }
 
-export interface AddItemToTripVariables {
+export interface NewItemVariables {
   tripId: string;
-  name: string;
-  quantity?: number | null;
 }

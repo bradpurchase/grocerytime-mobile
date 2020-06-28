@@ -10,10 +10,12 @@ import {
 } from 'react-native'
 
 import { useQuery } from '@apollo/react-hooks'
-import { ME_QUERY } from '../../queries/me'
+import { LISTS_QUERY } from '../../queries/lists'
 
 import { ListCellNavigationProp } from '../../types/Navigation'
+import { pendingForCurrentUser } from '../../services/list'
 
+import EmptyState from '../../components/EmptyState'
 import ScreenTitle from '../../components/ScreenTitle'
 import ListCell from './ListCell'
 
@@ -22,7 +24,7 @@ interface Props {
 }
 
 const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
-  const { loading, data, refetch } = useQuery(ME_QUERY)
+  const { loading, data, refetch } = useQuery(LISTS_QUERY)
 
   React.useEffect(() => {
     const refetchOnFocus = navigation.addListener('focus', () => {
@@ -68,16 +70,28 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
         <>
           <ScreenTitle title="Lists" />
           <FlatList
-            data={data.me.lists}
+            data={data.lists}
             extraData={refetch()}
-            renderItem={({ item: list }) => (
-              <ListCell
-                key={list.id}
-                list={list}
-                navigation={navigation}
-                refetchList={() => refetch()}
+            renderItem={({ item: list }) => {
+              const currentUserEmail: string = data.me.email
+              const pending = pendingForCurrentUser(list, currentUserEmail)
+              return (
+                <ListCell
+                  key={list.id}
+                  list={list}
+                  pending={pending}
+                  refetch={refetch}
+                  navigation={navigation}
+                />
+              )
+            }}
+            contentContainerStyle={{ flexGrow: 1 }}
+            ListEmptyComponent={
+              <EmptyState
+                title="No lists"
+                body="Create your first list by tapping the + button above."
               />
-            )}
+            }
             refreshControl={
               <RefreshControl
                 refreshing={data.networkStatus === 4}

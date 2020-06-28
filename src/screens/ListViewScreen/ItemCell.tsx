@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
 import { Item, List } from '../../types'
-import Checkbox from '../../components/Checkbox'
+import Checkbox from './Checkbox'
 import QuantityStepper from './QuantityStepper'
 
 import ListContext from '../../context/ListContext'
@@ -45,6 +45,10 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
   const listContext = React.useContext(ListContext)
   const { data, refetch } = listContext
 
+  React.useEffect(() => {
+    setItemName(item.name)
+  }, [item])
+
   const [updateItem] = useMutation(UPDATE_ITEM_MUTATION, {
     optimisticResponse: {
       __typename: 'Mutation',
@@ -82,7 +86,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
             ...list,
             trip: {
               ...list.trip,
-              items: list.trip?.items?.filter(
+              items: list.trip.items?.filter(
                 (item: Item) => item.id !== deleteItemdata?.deleteItem?.id,
               ),
             },
@@ -92,23 +96,6 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
     },
   })
   if (error) console.log(error)
-
-  // const handleMenuButtonTapped = () => {
-  //   ReactNativeHapticFeedback.trigger('impactLight')
-  //   return ActionSheetIOS.showActionSheetWithOptions(
-  //     {
-  //       title: item.name,
-  //       options: ['Include in all trips...', 'Delete item...', 'Dismiss'],
-  //       destructiveButtonIndex: 1,
-  //       cancelButtonIndex: 2,
-  //     },
-  //     (buttonIdx) => {
-  //       if (buttonIdx === 1) {
-  //         handleDeleteButtonTapped()
-  //       }
-  //     },
-  //   )
-  // }
 
   const handleDeleteButtonTapped = () => {
     ReactNativeHapticFeedback.trigger('impactLight')
@@ -127,11 +114,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
   }
 
   const handleDeleteItem = () => {
-    deleteItem({
-      variables: {
-        itemId: id,
-      },
-    })
+    deleteItem({ variables: { itemId: id } })
   }
 
   const getSettings = async () => {
@@ -155,8 +138,6 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
           borderRadius: 8,
           flex: 1,
           flexDirection: 'column',
-          padding: 18,
-          paddingVertical: 20,
           marginHorizontal: 8,
           marginBottom: 8,
         }}
@@ -186,7 +167,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
                 flexDirection: 'column',
                 fontSize: 16,
                 fontWeight: '500',
-                marginLeft: 15,
+                marginLeft: 5,
                 width: 200,
               }}
               defaultValue={name}
@@ -204,7 +185,7 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
               autoCapitalize={settings.autoCapitalize ? 'words' : 'sentences'}
             />
           ) : (
-            <>
+            <View style={{ paddingTop: 20, flexDirection: 'row' }}>
               <Text
                 numberOfLines={2}
                 style={{
@@ -212,10 +193,9 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
                   fontSize: 16,
                   fontWeight: '500',
                   flexDirection: 'column',
-                  marginLeft: 15,
+                  marginLeft: 5,
                   lineHeight: 20,
                   textDecorationLine: completed ? 'line-through' : 'none',
-                  maxWidth: '80%',
                 }}>
                 {itemName}
               </Text>
@@ -232,16 +212,17 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
                   ({quantity})
                 </Text>
               )}
-            </>
+            </View>
           )}
         </View>
 
         {editingMode && !completed && (
           <View
             style={{
-              marginTop: 20,
               flexDirection: 'row',
               flex: 1,
+              padding: 20,
+              paddingTop: 10,
             }}>
             <QuantityStepper />
             <View
@@ -251,22 +232,6 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
                 justifyContent: 'center',
                 flexDirection: 'column',
               }}>
-              {/* <TouchableOpacity
-                style={{
-                  justifyContent: 'center',
-                  position: 'absolute',
-                  right: 45,
-                }}
-                onPress={() => handleMenuButtonTapped()}>
-                <FastImage
-                  style={{
-                    width: 25,
-                    height: 25,
-                  }}
-                  resizeMode="contain"
-                  source={require('../../assets/icons/More.png')}
-                />
-              </TouchableOpacity> */}
               <TouchableOpacity
                 style={{
                   justifyContent: 'center',

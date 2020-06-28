@@ -7,7 +7,7 @@
 // GraphQL mutation operation: ReorderItem
 // ====================================================
 
-export interface ReorderItem_reorderItem_trip_items {
+export interface ReorderItem_reorderItem_items {
   __typename: "Item";
   id: string;
   groceryTripId: string;
@@ -17,16 +17,9 @@ export interface ReorderItem_reorderItem_trip_items {
   position: number;
 }
 
-export interface ReorderItem_reorderItem_trip {
-  __typename: "GroceryTrip";
-  items: (ReorderItem_reorderItem_trip_items | null)[] | null;
-}
-
 export interface ReorderItem_reorderItem {
-  __typename: "List";
-  id: string;
-  name: string;
-  trip: ReorderItem_reorderItem_trip | null;
+  __typename: "GroceryTrip";
+  items: (ReorderItem_reorderItem_items | null)[] | null;
 }
 
 export interface ReorderItem {

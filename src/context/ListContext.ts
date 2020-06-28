@@ -16,6 +16,7 @@ type ListQueryData = {
 type ListContextProps = {
   data: ListQueryData
   refetch: () => void
+  subscribeToMore: any
 }
 
 const ListContext = React.createContext<ListContextProps>({
@@ -29,5 +30,6 @@ const ListContext = React.createContext<ListContextProps>({
     networkStatus: 0,
   },
   refetch: () => {},
+  subscribeToMore: () => {},
 })
 export default ListContext

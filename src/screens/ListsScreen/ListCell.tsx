@@ -1,75 +1,106 @@
 import * as React from 'react'
-import { TouchableOpacity, Text } from 'react-native'
+import { TouchableOpacity, View, Text } from 'react-native'
 import { useTheme } from '@react-navigation/native'
+import FastImage from 'react-native-fast-image'
 
 import { ListCellNavigationProp } from '../../types/Navigation'
-
-import { useMutation } from '@apollo/react-hooks'
-import { DELETE_LIST_MUTATION } from '../../queries/deleteList'
-import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
-
-import AuthContext from '../../context/AuthContext'
 import { List } from '../../types/List'
+import { listIsShared } from '../../services/list'
+import { numCompletedItems } from '../../services/trip'
+
+import PendingListOptions from './PendingListOptions'
 
 interface Props {
   list: List
+  pending: boolean
+  refetch: () => void
   navigation: ListCellNavigationProp
-  refetchList: () => void
 }
 
 const ListCell: React.FC<Props> = React.memo(
-  ({ list, navigation, refetchList }: Props) => {
+  ({ list, pending, refetch, navigation }: Props) => {
     const { colors } = useTheme()
 
-    const authContext = React.useContext(AuthContext)
-    const currentUserId = authContext.user?.id as string
-
     const { name, trip } = list
+    const isShared: boolean = listIsShared(list)
+    const completedItems: number = numCompletedItems(trip)
 
-    //TODO figure out how to avoid needing to share this useMutation
-    // everywhere and just do it in listActionSheet()
-    const [deleteList] = useMutation<
-      DeleteListTypes.DeleteList,
-      DeleteListTypes.DeleteListVariables
-    >(DELETE_LIST_MUTATION, {
-      onCompleted: (data) => {
-        console.log(data)
-        if (data.deleteList?.id) {
-          console.log('calling refetchList()')
-          refetchList()
-        }
-      },
-    })
+    const handleListViewNavigation = () => {
+      if (pending) return false
+      navigation.navigate('ListView', { list, dismiss: false })
+    }
 
     return (
-      <TouchableOpacity
-        style={{
-          backgroundColor: colors.card,
-          borderRadius: 8,
-          flex: 1,
-          marginHorizontal: 10,
-          marginBottom: 10,
-          padding: 20,
-        }}
-        activeOpacity={1}
-        onPress={() => navigation.navigate('ListView', { list })}>
-        <Text
+      <>
+        {pending && (
+          <PendingListOptions
+            list={list}
+            refetch={refetch}
+            navigation={navigation}
+          />
+        )}
+        <TouchableOpacity
           style={{
-            color: colors.text,
-            fontSize: 18,
-            fontWeight: 'bold',
+            backgroundColor: colors.card,
+            borderRadius: 8,
+            borderTopLeftRadius: pending ? 0 : 8,
+            borderTopRightRadius: pending ? 0 : 8,
+            flex: 1,
+            marginHorizontal: 10,
             marginBottom: 10,
-          }}>
-          {name}
-        </Text>
-        <Text
-          style={{
-            color: colors.subtitle,
-            fontSize: 16,
-          }}>
-          {trip.itemsCount} items
-        </Text>
-      </TouchableOpacity>
+            padding: 20,
+            height: 90,
+          }}
+          activeOpacity={1}
+          onPress={() => handleListViewNavigation()}>
+          <View style={{ flexDirection: 'row' }}>
+            <Text
+              style={{
+                color: colors.text,
+                fontSize: 18,
+                fontWeight: '700',
+                flexDirection: 'column',
+              }}>
+              {name}{' '}
+            </Text>
+            {isShared && (
+              <FastImage
+                style={{
+                  width: 20,
+                  height: 20,
+                  flexDirection: 'column',
+                  marginLeft: 5,
+                }}
+                resizeMode="contain"
+                source={require('../../assets/icons/Shared.png')}
+              />
+            )}
+            <FastImage
+              style={{
+                width: 14,
+                height: 14,
+                position: 'absolute',
+                right: 0,
+                top: 14,
+              }}
+              resizeMode="contain"
+              source={require('../../assets/icons/DisclosureIndicator.png')}
+            />
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Text
+              style={{
+                color: colors.subtitle,
+                fontSize: 16,
+                fontWeight: '500',
+                flexDirection: 'column',
+                marginTop: 8,
+              }}>
+              {completedItems}/{list.trip.items.length} items
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </>
     )
   },
 )

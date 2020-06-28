@@ -25,11 +25,19 @@ export interface List_list_trip {
   items: (List_list_trip_items | null)[] | null;
 }
 
+export interface List_list_listUsers_user {
+  __typename: "User";
+  id: string;
+  email: string;
+}
+
 export interface List_list_listUsers {
   __typename: "ListUser";
   id: string;
-  userId: string;
+  userId: string | null;
   creator: boolean;
+  email: string | null;
+  user: List_list_listUsers_user | null;
 }
 
 export interface List_list {
@@ -42,7 +50,7 @@ export interface List_list {
 
 export interface List {
   /**
-   * Retrieve a list and its items
+   * Retrieve a specific list
    */
   list: List_list | null;
 }

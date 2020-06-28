@@ -49,7 +49,6 @@ const JoinListScreen: React.FC<Props> = React.memo(
             listId: listId,
           },
         }).then((data) => {
-          console.log('here', data)
           navigation.replace('ListView', { list })
         })
       } else {

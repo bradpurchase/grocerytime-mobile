@@ -1,4 +1,5 @@
 export { CurrentUser } from './CurrentUser'
+export { User } from './User'
 export { ListUser } from './ListUser'
 export { List } from './List'
 export { Trip } from './Trip'

@@ -9,6 +9,7 @@ export const ADD_ITEM_TO_TRIP_MUTATION = gql`
       name
       quantity
       position
+      completed
       createdAt
       updatedAt
     }

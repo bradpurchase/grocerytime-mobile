@@ -1,5 +1,12 @@
 import * as React from 'react'
-import { ActivityIndicator, Image, TouchableOpacity, Text } from 'react-native'
+import {
+  ActivityIndicator,
+  Image,
+  TouchableOpacity,
+  Text,
+  ActionSheetIOS,
+  Alert,
+} from 'react-native'
 import { RouteProp, useTheme } from '@react-navigation/native'
 
 import {
@@ -10,13 +17,13 @@ import { List } from '../../types/List'
 
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import { LIST_QUERY } from '../../queries/list'
-import { NEW_ITEM_SUBSCRIPTION } from '../../queries/newItem'
 import { DELETE_LIST_MUTATION } from '../../queries/deleteList'
 import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
+import { INVITE_TO_LIST_MUTATION } from '../../queries/inviteToList'
+import * as InviteToListTypes from '../../queries/__generated__/InviteToList'
 
 import AuthContext from '../../context/AuthContext'
 import ListContext from '../../context/ListContext'
-import { listActionSheet } from '../../helpers/ListActions'
 import { currentUserIsCreator } from '../../services/list'
 
 import TripView from './TripView'
@@ -59,32 +66,30 @@ const ListViewScreen: React.FC<Props> = React.memo(
       },
     })
 
-    const list: List = data && data.list
-    const isCreator: boolean = data
-      ? currentUserIsCreator(currentUserId, list)
-      : false
-
-    React.useEffect(() => {
-      subscribeToMore({
-        document: NEW_ITEM_SUBSCRIPTION,
-        variables: { tripId: data?.list.trip.id },
-        updateQuery: (prev, { subscriptionData }) => {
-          if (!subscriptionData.data) return prev
-          console.log(subscriptionData)
-          const newItem = subscriptionData.data.newItem
-
-          return Object.assign({}, prev, {
-            list: {
-              ...list,
-              trip: {
-                ...list.trip,
-                items: [newItem, ...prev.list.trip.items],
+    const [inviteToList, { error: inviteToListError }] = useMutation<
+      InviteToListTypes.InviteToList,
+      InviteToListTypes.InviteToListVariables
+    >(INVITE_TO_LIST_MUTATION, {
+      onCompleted: (data) => {
+        if (data.inviteToList?.email?.length > 0) {
+          Alert.alert(
+            'Invite sent!',
+            'An email was just sent to the email address provided with a link to join this list!',
+            [
+              {
+                text: 'OK',
+                onPress: () => refetch(),
               },
-            },
-          })
-        },
+            ],
+          )
+        }
+      },
+    })
+    if (inviteToListError) {
+      inviteToListError?.graphQLErrors.map(({ message }, i) => {
+        return Alert.alert('Share failed', message)
       })
-    }, [])
+    }
 
     React.useLayoutEffect(() => {
       if (shouldDismiss) {
@@ -97,7 +102,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
                 paddingVertical: 10,
                 width: 85,
               }}
-              onPress={() => navigation.popToTop()}>
+              onPress={() => navigation.navigate('Lists')}>
               <Text
                 style={{
                   color: colors.primary,
@@ -109,53 +114,124 @@ const ListViewScreen: React.FC<Props> = React.memo(
           ),
         })
       }
-    }, [])
+    }, [shouldDismiss])
 
     React.useLayoutEffect(() => {
-      if (loading) return
-      if (isCreator) {
-        navigation.setOptions({
-          headerTitle: () => <HeaderTitle list={list} isCreator={true} />,
-          headerRight: () => (
-            <TouchableOpacity
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                paddingHorizontal: 10,
-                paddingVertical: 10,
-                width: 50,
-              }}
-              onPress={() =>
-                listActionSheet(
-                  list,
-                  () => {
-                    navigation.navigate('RenameList', { list })
-                  },
-                  deleteList,
-                )
-              }>
-              <Image
+      if (data) {
+        const isCreator: boolean = currentUserIsCreator(
+          currentUserId,
+          data.list,
+        )
+        if (isCreator) {
+          navigation.setOptions({
+            headerTitle: () => (
+              <HeaderTitle list={data.list} isCreator={true} />
+            ),
+            headerRight: () => (
+              <TouchableOpacity
                 style={{
-                  justifyContent: 'center',
-                  resizeMode: 'contain',
+                  flex: 1,
+                  alignItems: 'center',
+                  paddingHorizontal: 10,
+                  paddingVertical: 10,
+                  width: 50,
                 }}
-                source={require('../../assets/icons/MenuVertical.png')}
-              />
-            </TouchableOpacity>
-          ),
-        })
-      } else {
-        navigation.setOptions({
-          headerTitle: () => <HeaderTitle list={list} isCreator={false} />,
-          headerRight: () => <></>,
-        })
+                onPress={() => listActionSheet()}>
+                <Image
+                  style={{
+                    justifyContent: 'center',
+                    resizeMode: 'contain',
+                  }}
+                  source={require('../../assets/icons/MenuVertical.png')}
+                />
+              </TouchableOpacity>
+            ),
+          })
+        } else {
+          navigation.setOptions({
+            headerTitle: () => (
+              <HeaderTitle list={data.list} isCreator={false} />
+            ),
+            headerRight: () => <></>,
+          })
+        }
       }
-    }, [navigation, loading])
+    }, [navigation, data])
 
+    const deleteListConfirmationActionSheet = () => {
+      return ActionSheetIOS.showActionSheetWithOptions(
+        {
+          message:
+            'Are you sure you want to delete this list and its items? If this list is shared, the other members will be notified. You cannot undo this action.',
+          options: ['Delete', 'Dismiss'],
+          destructiveButtonIndex: 0,
+          cancelButtonIndex: 1,
+        },
+        (buttonIdx) => {
+          if (buttonIdx === 0) {
+            deleteList({ variables: { listId: data.list.id } })
+          }
+        },
+      )
+    }
+
+    const listActionSheet = () => {
+      let options = ['Share list', 'Rename list', 'Delete list', 'Dismiss']
+      let renameButtonIndex = 1
+      let destructiveButtonIndex = 2
+      let cancelButtonIndex = 3
+      // Limit sharing to up to 5 for now so we can keep tabs on subscriptions load
+      // Note: condition is greater than 5 because we don't count the list creator against the limit
+      const atShareLimit = data.list.listUsers.length > 5
+      if (atShareLimit) {
+        options.shift()
+        renameButtonIndex = renameButtonIndex - 1
+        destructiveButtonIndex = destructiveButtonIndex - 1
+        cancelButtonIndex = cancelButtonIndex - 1
+      }
+      return ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options,
+          destructiveButtonIndex,
+          cancelButtonIndex,
+        },
+        (buttonIdx) => {
+          if (!atShareLimit && buttonIdx === 0) {
+            return Alert.prompt(
+              'Share by invitation',
+              'Enter the email address of the person you want to invite to this list',
+              [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('cancel pressed'),
+                  style: 'cancel',
+                },
+                {
+                  text: 'Send Invite',
+                  onPress: (text) =>
+                    inviteToList({
+                      variables: {
+                        listId: listParam.id,
+                        email: text,
+                      },
+                    }),
+                },
+              ],
+            )
+          }
+          if (buttonIdx === renameButtonIndex) {
+            navigation.navigate('RenameList', { list: data.list })
+          }
+          if (buttonIdx === destructiveButtonIndex) {
+            deleteListConfirmationActionSheet()
+          }
+        },
+      )
+    }
     if (loading) return <ActivityIndicator size="large" />
 
     return (
-      <ListContext.Provider value={{ data, refetch }}>
+      <ListContext.Provider value={{ data, refetch, subscribeToMore }}>
         <TripView />
       </ListContext.Provider>
     )

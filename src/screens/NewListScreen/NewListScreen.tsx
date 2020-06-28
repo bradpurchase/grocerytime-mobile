@@ -78,11 +78,8 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
     onCompleted: (data) => {
       if (data.createList?.id) {
         Keyboard.dismiss()
-        navigation.navigate('ShareList', {
-          list: {
-            id: data.createList.id,
-            name: formData.name,
-          },
+        navigation.navigate('ShareNewList', {
+          list: data.createList,
         })
       }
     },
@@ -108,7 +105,7 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
     <View
       style={{
         flex: 1,
-        marginTop: 20,
+        marginTop: 30,
       }}>
       <SectionList
         sections={[
@@ -136,7 +133,7 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
               color: colors.subtitle,
               fontSize: 15,
               lineHeight: 24,
-              marginTop: 20,
+              marginTop: 10,
               paddingHorizontal: 20,
               textAlign: 'center',
             }}>

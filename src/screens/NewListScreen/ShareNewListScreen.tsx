@@ -17,7 +17,7 @@ interface Props {
   navigation: ShareListNavigationProp
 }
 
-const ShareListScreen: React.FC<Props> = React.memo(
+const ShareNewListScreen: React.FC<Props> = React.memo(
   ({ route, navigation }: Props) => {
     const { colors } = useTheme()
 
@@ -52,10 +52,10 @@ const ShareListScreen: React.FC<Props> = React.memo(
 
     return (
       <ScrollView
-        style={{
+        contentContainerStyle={{
           flex: 1,
-          marginTop: 40,
-          padding: 20,
+          justifyContent: 'center',
+          paddingHorizontal: 20,
         }}>
         <Text
           style={{
@@ -65,7 +65,7 @@ const ShareListScreen: React.FC<Props> = React.memo(
             fontWeight: '700',
             marginBottom: 30,
           }}>
-          Your list was created!
+          Next, share this list
         </Text>
         <Text
           style={{
@@ -75,9 +75,8 @@ const ShareListScreen: React.FC<Props> = React.memo(
             lineHeight: 22,
             marginBottom: 30,
           }}>
-          Next, share this list with others. Tap the button below to share this
-          list using your method of choice. Once shared, you can collaborate on
-          it together and see updates in real time.
+          Tap the button below to share this list. It's as easy as entering the
+          email address for those you want to share this list with.
         </Text>
         <Text
           style={{
@@ -87,9 +86,8 @@ const ShareListScreen: React.FC<Props> = React.memo(
             lineHeight: 22,
             marginBottom: 30,
           }}>
-          You can also receive notifications when new items are added to this
-          list by other members. Simply make sure notifications are enabled for
-          GroceryTime!
+          Once shared, you can collaborate on it together and see updates in
+          real time.
         </Text>
         <View style={{ marginTop: 10 }}>
           <Button
@@ -102,4 +100,4 @@ const ShareListScreen: React.FC<Props> = React.memo(
   },
 )
 
-export default ShareListScreen
+export default ShareNewListScreen

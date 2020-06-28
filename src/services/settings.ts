@@ -29,5 +29,4 @@ export const setDefaultSettings = async () => {
   } catch (e) {
     console.log(e)
   }
-  console.log('done setting default settings')
 }

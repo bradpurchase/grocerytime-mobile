@@ -4,6 +4,8 @@ import DraggableFlatList from 'react-native-draggable-flatlist'
 
 import { useMutation } from '@apollo/react-hooks'
 import { REORDER_ITEM_MUTATION } from '../../queries/reorderItem'
+import { NEW_ITEM_SUBSCRIPTION } from '../../queries/newItem'
+//import { UPDATED_ITEM_SUBSCRIPTION } from '../../queries/updatedItem'
 
 import ListContext from '../../context/ListContext'
 import { Trip, Item } from '../../types'
@@ -21,18 +23,64 @@ interface DragData {
 
 const TripView: React.FC = React.memo(() => {
   const listContext = React.useContext(ListContext)
-  const { data, refetch } = listContext
+  const { data, refetch, subscribeToMore } = listContext
   const { list, networkStatus } = data
   const trip: Trip = list.trip
 
   const [listItems, setListItems] = React.useState(trip.items)
 
-  // Effect for when we receive new items (i.e. item added)
+  // Effect for when we receive item updates (i.e. item added/updated)
   React.useEffect(() => {
     setListItems(trip.items)
   }, [trip.items])
 
-  const [reorderItem] = useMutation(REORDER_ITEM_MUTATION)
+  React.useEffect(() => {
+    if (trip) {
+      subscribeToMore({
+        document: NEW_ITEM_SUBSCRIPTION,
+        variables: { tripId: trip.id },
+        updateQuery: (prev, { subscriptionData }) => {
+          if (!subscriptionData.data) return prev
+          const newItem = subscriptionData.data.newItem
+
+          return Object.assign({}, prev, {
+            list: {
+              ...list,
+              trip: {
+                ...list.trip,
+                items: [newItem, ...listItems],
+              },
+            },
+          })
+        },
+      })
+    }
+
+    // subscribeToMore({
+    //   document: UPDATED_ITEM_SUBSCRIPTION,
+    //   variables: { tripId: data?.list.trip.id },
+    //   updateQuery: (prev, { subscriptionData }) => {
+    //     if (!subscriptionData.data) return prev
+
+    //     return Object.assign({}, prev, {
+    //       list: {
+    //         ...list,
+    //         trip: {
+    //           ...list.trip,
+    //           items: prev.list.trip.items,
+    //         },
+    //       },
+    //     })
+    //   },
+    // })
+  }, [])
+
+  const [reorderItem, { error }] = useMutation(REORDER_ITEM_MUTATION, {
+    onCompleted: (data) => {
+      console.log(data)
+    },
+  })
+  if (error) console.log(error)
 
   const onDragEnd = (dragData: DragData) => {
     const { data, from, to } = dragData
@@ -54,12 +102,11 @@ const TripView: React.FC = React.memo(() => {
   return (
     <View style={{ flex: 1 }}>
       <TripDetails />
-      
+
       <AddItemInput />
 
       <DraggableFlatList
         data={listItems}
-        extraData={refetch()}
         keyExtractor={(item, idx) => item.id}
         onDragEnd={onDragEnd}
         renderItem={({ item, drag }: any) => (

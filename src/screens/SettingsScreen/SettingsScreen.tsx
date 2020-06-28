@@ -32,7 +32,6 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
 
   const handleLogout = () => {
     authContext.logout()
-    //navigation.navigate('Login')
   }
 
   const settingsData = [
@@ -68,7 +67,7 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
     <View
       style={{
         flex: 1,
-        marginTop: 20,
+        marginTop: 30,
       }}>
       <SectionList
         sections={settingsData}
@@ -124,7 +123,7 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
                 marginTop: 30,
                 textAlign: 'center',
               }}>
-              GroceryTime 1.0.0 beta 4
+              GroceryTime 1.0.0 beta 5
             </Text>
           </>
         )}
