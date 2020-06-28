@@ -4,21 +4,22 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: JoinList
+// GraphQL mutation operation: DeclineListInvite
 // ====================================================
 
-export interface JoinList_joinList {
+export interface DeclineListInvite_declineListInvite {
   __typename: "ListUser";
   listId: string;
+  email: string | null;
 }
 
-export interface JoinList {
+export interface DeclineListInvite {
   /**
-   * Creates a proper ListUser membership and removes the pending state
+   * Declines a list invitation for a user
    */
-  joinList: JoinList_joinList | null;
+  declineListInvite: DeclineListInvite_declineListInvite | null;
 }
 
-export interface JoinListVariables {
+export interface DeclineListInviteVariables {
   listId: string;
 }

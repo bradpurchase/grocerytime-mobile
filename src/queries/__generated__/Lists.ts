@@ -37,6 +37,7 @@ export interface Lists_lists_listUsers {
   __typename: "ListUser";
   id: string;
   userId: string | null;
+  email: string | null;
   creator: boolean;
   user: Lists_lists_listUsers_user | null;
 }
@@ -49,9 +50,19 @@ export interface Lists_lists {
   listUsers: (Lists_lists_listUsers | null)[] | null;
 }
 
+export interface Lists_me {
+  __typename: "User";
+  id: string;
+  email: string;
+}
+
 export interface Lists {
   /**
    * Retrieve lists for the current user
    */
   lists: (Lists_lists | null)[] | null;
+  /**
+   * Retrieve the current user
+   */
+  me: Lists_me | null;
 }

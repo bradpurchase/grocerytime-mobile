@@ -80,6 +80,7 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
                   key={list.id}
                   list={list}
                   pending={pending}
+                  refetch={refetch}
                   navigation={navigation}
                 />
               )

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ToucehableOpacity, View, Text } from 'react-native'
+import { TouchableOpacity, View, Text } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 import FastImage from 'react-native-fast-image'
 
@@ -8,121 +8,36 @@ import { List } from '../../types/List'
 import { listIsShared } from '../../services/list'
 import { numCompletedItems } from '../../services/trip'
 
-import { useMutation } from '@apollo/react-hooks'
-import { JOIN_LIST_MUTATION } from '../../queries/joinList'
-import * as JoinListMutationTypes from '../../queries/__generated__/JoinList'
+import PendingListOptions from './PendingListOptions'
 
 interface Props {
   list: List
   pending: boolean
+  refetch: () => void
   navigation: ListCellNavigationProp
 }
 
 const ListCell: React.FC<Props> = React.memo(
-  ({ list, pending, navigation }: Props) => {
+  ({ list, pending, refetch, navigation }: Props) => {
     const { colors } = useTheme()
 
     const { name, trip } = list
     const isShared: boolean = listIsShared(list)
     const completedItems: number = numCompletedItems(trip)
 
-    const [joinList] = useMutation<
-      JoinListMutationTypes.JoinList,
-      JoinListMutationTypes.JoinListVariables
-    >(JOIN_LIST_MUTATION)
-
     const handleListViewNavigation = () => {
       if (pending) return false
       navigation.navigate('ListView', { list, dismiss: false })
     }
 
-    const declineListInvite = (list: List) => {
-      console.log('decline list invite pressed')
-    }
-
-    const acceptListInvite = (list: List) => {
-      joinList({
-        variables: {
-          listId: list.id,
-        },
-      }).then(() => {
-        navigation.replace('ListView', { list })
-      })
-    }
-
     return (
       <>
         {pending && (
-          <View
-            style={{
-              backgroundColor: colors.success,
-              borderRadius: 8,
-              borderBottomLeftRadius: 0,
-              borderBottomRightRadius: 0,
-              marginHorizontal: 10,
-            }}>
-            <Text
-              style={{
-                color: colors.successText,
-                fontSize: 15,
-                fontWeight: '500',
-                lineHeight: 22,
-                padding: 20,
-              }}>
-              You were invited to this list. Would you like to join?
-            </Text>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <TouchableOpacity
-                activeOpacity={0.9}
-                style={{
-                  alignSelf: 'flex-start',
-                  backgroundColor: colors.successLight,
-                  flex: 1,
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  padding: 20,
-                }}
-                onPress={() => declineListInvite(list)}>
-                <Text
-                  style={{
-                    color: colors.successText,
-                    fontSize: 16,
-                    fontWeight: '500',
-                    textAlign: 'center',
-                  }}>
-                  Decline
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.9}
-                style={{
-                  alignSelf: 'flex-start',
-                  backgroundColor: colors.successLight,
-                  borderLeftWidth: 1,
-                  borderLeftColor: colors.success,
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  padding: 20,
-                }}
-                onPress={() => acceptListInvite(list)}>
-                <Text
-                  style={{
-                    color: colors.successText,
-                    fontSize: 16,
-                    fontWeight: '500',
-                    textAlign: 'center',
-                  }}>
-                  Accept and join
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          <PendingListOptions
+            list={list}
+            refetch={refetch}
+            navigation={navigation}
+          />
         )}
         <TouchableOpacity
           style={{

@@ -36,6 +36,7 @@ export interface List_list_listUsers {
   id: string;
   userId: string | null;
   creator: boolean;
+  email: string | null;
   user: List_list_listUsers_user | null;
 }
 

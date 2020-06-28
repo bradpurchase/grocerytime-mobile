@@ -191,9 +191,6 @@ const ListViewScreen: React.FC<Props> = React.memo(
         },
         (buttonIdx) => {
           if (!atShareLimit && buttonIdx === 0) {
-            // navigation.navigate('ShareList', {
-            //   list: data.list,
-            // })
             return Alert.prompt(
               'Share by invitation',
               'Enter the email address of the person you want to invite to this list',
