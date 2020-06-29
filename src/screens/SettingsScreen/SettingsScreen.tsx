@@ -123,7 +123,7 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
                 marginTop: 30,
                 textAlign: 'center',
               }}>
-              GroceryTime 1.0.0 beta 5
+              GroceryTime 1.0.0 beta 6
             </Text>
           </>
         )}

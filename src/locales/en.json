@@ -1,0 +1,12 @@
+{
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "log_in": "Log in",
+    "no_account_yet": "I don't have an account yet!",
+    "sign_up": "Sign up"
+  },
+  "loading": {
+    "working_on_it": "Working on it..."
+  }
+}

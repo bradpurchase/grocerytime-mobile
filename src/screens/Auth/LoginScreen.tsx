@@ -10,6 +10,7 @@ import {
   Alert,
 } from 'react-native'
 const { width, height } = Dimensions.get('window')
+import i18n from '../../i18n'
 
 import { useMutation } from '@apollo/react-hooks'
 import { ApolloError } from 'apollo-boost'
@@ -77,7 +78,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
             <TextInput
               placeholderTextColor="#666"
               style={styles.textInput}
-              placeholder="Email"
+              placeholder={i18n.t('auth.email')}
               keyboardType="email-address"
               autoCompleteType="email"
               autoCapitalize="none"
@@ -87,7 +88,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
             <TextInput
               placeholderTextColor="#666"
               style={styles.textInput}
-              placeholder="Password"
+              placeholder={i18n.t('auth.password')}
               secureTextEntry
               returnKeyType="done"
               onChangeText={(text) => setPassword(text)}
@@ -95,14 +96,18 @@ const LoginScreen: React.FC<Props> = ({ navigation }: Props) => {
               onSubmitEditing={() => handleLoginButtonPress()}
             />
             <Button
-              label={submitting ? 'Working on it...' : 'Log in'}
+              label={
+                submitting
+                  ? i18n.t('loading.working_on_it')
+                  : i18n.t('auth.log_in')
+              }
               onPress={handleLoginButtonPress}
               disabled={
                 email.length === 0 || password.length === 0 || submitting
               }
             />
             <Button
-              label="I don't have an account yet!"
+              label={i18n.t('auth.no_account_yet')}
               onPress={() => navigation.navigate('Signup')}
               transparent
             />
