@@ -9,6 +9,7 @@ import {
   Alert,
 } from 'react-native'
 import { useTheme } from '@react-navigation/native'
+import i18n from '../../i18n'
 
 import { NewListNavigationProp } from '../../types/Navigation'
 
@@ -17,6 +18,7 @@ import { CREATE_LIST_MUTATION } from '../../queries/createList'
 import * as CreateListTypes from '../../queries/__generated__/CreateList'
 
 import { getSettingValue } from '../../services/settings'
+import { t } from 'i18n-js'
 
 interface NewListInputSettings {
   autoCapitalize: boolean
@@ -61,7 +63,7 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
               fontSize: 16,
               opacity: nameEmpty ? 0.7 : 1,
             }}>
-            Done
+            {i18n.t('global.done')}
           </Text>
         </TouchableOpacity>
       ),
@@ -110,8 +112,8 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
       <SectionList
         sections={[
           {
-            title: 'List details',
-            data: ['Name your list'],
+            title: i18n.t('lists.list_details'),
+            data: [i18n.t('lists.name_your_list')],
           },
         ]}
         renderSectionHeader={({ section: { title } }) => (
@@ -137,8 +139,7 @@ const NewListScreen: React.FC<Props> = React.memo(({ navigation }: Props) => {
               paddingHorizontal: 20,
               textAlign: 'center',
             }}>
-            After creating this list, you can share it with others and work on
-            it together.
+            {i18n.t('lists.after_creating_desc')}
           </Text>
         )}
         renderItem={({ item }) => (

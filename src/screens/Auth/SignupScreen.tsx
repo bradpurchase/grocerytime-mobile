@@ -53,7 +53,6 @@ const SignupScreen: React.FC<Props> = React.memo(
         password: formData.password,
       },
       onCompleted: (data) => {
-        //TODO if listParam is not undefined, join and redirect to list after signup
         authContext.login(data.signup)
         setFormData({ ...formData, submitting: false })
       },
@@ -75,8 +74,8 @@ const SignupScreen: React.FC<Props> = React.memo(
         signup()
       } else {
         Alert.alert(
-          'Oops!',
-          "That doesn't appear to be a valid email address. Please check it and try again.",
+          i18n.t('errors.oops'),
+          i18n.t('errors.validations.invalid_email'),
         )
       }
     }

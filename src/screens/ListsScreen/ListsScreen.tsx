@@ -8,6 +8,7 @@ import {
   Image,
   StyleSheet,
 } from 'react-native'
+import i18n from '../../i18n'
 
 import { useQuery } from '@apollo/react-hooks'
 import { LISTS_QUERY } from '../../queries/lists'
@@ -68,7 +69,7 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
         <ActivityIndicator />
       ) : (
         <>
-          <ScreenTitle title="Lists" />
+          <ScreenTitle title={i18n.t('lists.title')} />
           <FlatList
             data={data.lists}
             extraData={refetch()}
@@ -88,8 +89,8 @@ const ListsScreen: React.FC<Props> = ({ navigation }: Props) => {
             contentContainerStyle={{ flexGrow: 1 }}
             ListEmptyComponent={
               <EmptyState
-                title="No lists"
-                body="Create your first list by tapping the + button above."
+                title={i18n.t('lists.empty_state.heading')}
+                body={i18n.t('lists.empty_state.body')}
               />
             }
             refreshControl={

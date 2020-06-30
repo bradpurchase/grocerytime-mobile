@@ -2,6 +2,7 @@ import * as React from 'react'
 import { TouchableOpacity, View, Text } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 import FastImage from 'react-native-fast-image'
+import i18n from '../../i18n'
 
 import { ListCellNavigationProp } from '../../types/Navigation'
 import { List } from '../../types/List'
@@ -96,7 +97,9 @@ const ListCell: React.FC<Props> = React.memo(
                 flexDirection: 'column',
                 marginTop: 8,
               }}>
-              {completedItems}/{list.trip.items.length} items
+              {i18n.t('items.items_to_pickup_count', {
+                count: list.trip.items.length - completedItems,
+              })}
             </Text>
           </View>
         </TouchableOpacity>

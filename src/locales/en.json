@@ -4,9 +4,55 @@
     "password": "Password",
     "log_in": "Log in",
     "no_account_yet": "I don't have an account yet!",
-    "sign_up": "Sign up"
+    "sign_up": "Sign up",
+    "errors": {
+      "login_failed": "Login failed"
+    }
+  },
+  "lists": {
+    "title": "Lists",
+    "list_details": "List details",
+    "name_your_list": "Name your list",
+    "after_creating_desc": "After creating this list, you can share it with others and work on it together.",
+    "invite": {
+      "body": "You were invited to this list. Would you like to join?",
+      "accept_and_join": "Accept and join",
+      "accept_invite": "Accept Invite",
+      "accept_confirm_heading": "Accept invite?",
+      "accept_confirm_body": "Are you sure you want to accept this list invite? You will become a member of this list and can add items and receive updates.",
+      "decline_invite": "Decline Invite",
+      "decline_confirm_heading": "Decline invite?",
+      "decline_confirm_body": "Are you sure you want to decline this list invite? You won't become a member of this list and it will disappear from this screen."
+    },
+    "empty_state": {
+      "heading": "No lists",
+      "body": "Create your first list by tapping the + button above."
+    }
+  },
+  "items": {
+    "items_completed_num": {
+      "zero": "{{numCompleted}} of 0 items",
+      "one": "{{numCompleted}} of 1 item",
+      "other": "{{numCompleted}} of {{count}} items"
+    },
+    "items_to_pickup_count": {
+      "zero": "All items picked up",
+      "one": "{{count}} item to pick up",
+      "other": "{{count}} items to pick up"
+    }
+  },
+  "global": {
+    "decline": "Decline",
+    "cancel": "Cancel",
+    "done": "Done"
   },
   "loading": {
     "working_on_it": "Working on it..."
+  },
+  "errors": {
+    "oops": "Oops!",
+    "validations": {
+      "invalid_email": "That doesn't appear to be a valid email address. Please check it and try again."
+    }
   }
 }

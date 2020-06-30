@@ -30,7 +30,6 @@ import { LightTheme, DarkTheme } from './src/styles/themes'
 
 import LoginScreen from './src/screens/Auth/LoginScreen'
 import SignupScreen from './src/screens/Auth/SignupScreen'
-import JoinListScreen from './src/screens/JoinListScreen/JoinListScreen'
 import ListsScreen from './src/screens/ListsScreen/ListsScreen'
 import NewListScreen from './src/screens/NewListScreen/NewListScreen'
 import ShareNewListScreen from './src/screens/NewListScreen/ShareNewListScreen'
@@ -150,14 +149,6 @@ const App = () => {
 
   if (!loaded || !navStateReady) return <ActivityIndicator />
 
-  const linking = {
-    prefixes: ['grocerytime://'],
-    config: {
-      JoinList: {
-        path: 'joinlist/:id',
-      },
-    },
-  }
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
       <AppearanceProvider>
@@ -166,8 +157,7 @@ const App = () => {
           onStateChange={(state) =>
             AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
           }
-          theme={scheme === 'dark' ? DarkTheme : LightTheme}
-          linking={linking}>
+          theme={scheme === 'dark' ? DarkTheme : LightTheme}>
           <RootStack.Navigator screenOptions={screenOptions}>
             {user.token ? (
               <>
@@ -219,11 +209,6 @@ const App = () => {
                 />
               </>
             )}
-            <RootStack.Screen
-              name="JoinList"
-              component={JoinListScreen}
-              options={{ title: '', headerShown: false }}
-            />
           </RootStack.Navigator>
 
           <StatusBar

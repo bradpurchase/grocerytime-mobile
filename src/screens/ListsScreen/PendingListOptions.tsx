@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { TouchableOpacity, View, Text, Alert } from 'react-native'
 import { useTheme } from '@react-navigation/native'
+import i18n from '../../i18n'
 
 import { ListCellNavigationProp } from '../../types/Navigation'
 import { List } from '../../types/List'
@@ -47,16 +48,16 @@ const PendingListOptions: React.FC<Props> = React.memo(
 
     const handleDeclineListInvite = () => {
       Alert.alert(
-        'Decline invite?',
-        "Are you sure you want to decline this list invite? You won't become a member of this list and it will disappear from this screen.",
+        i18n.t('lists.invite.decline_confirm_heading'),
+        i18n.t('lists.invite.decline_confirm_body'),
         [
           {
-            text: 'Cancel',
+            text: i18n.t('global.cancel'),
             onPress: () => console.log('cancel pressed'),
             style: 'cancel',
           },
           {
-            text: 'Decline Invite',
+            text: i18n.t('lists.invite.decline_invite'),
             onPress: () => declineListInvite(),
           },
         ],
@@ -65,16 +66,16 @@ const PendingListOptions: React.FC<Props> = React.memo(
 
     const handleAcceptListInvite = () => {
       Alert.alert(
-        'Accept invite?',
-        'Are you sure you want to accept this list invite? You will become a member of this list and can add items and receive updates.',
+        i18n.t('lists.invite.accept_confirm_heading'),
+        i18n.t('lists.invite.accept_confirm_body'),
         [
           {
-            text: 'Cancel',
+            text: i18n.t('global.cancel'),
             onPress: () => console.log('cancel pressed'),
             style: 'cancel',
           },
           {
-            text: 'Accept Invite',
+            text: i18n.t('lists.invite.accept_invite'),
             onPress: () => joinList(),
           },
         ],
@@ -98,7 +99,7 @@ const PendingListOptions: React.FC<Props> = React.memo(
             lineHeight: 22,
             padding: 20,
           }}>
-          You were invited to this list. Would you like to join?
+          {i18n.t('lists.invite.body')}
         </Text>
         <View
           style={{
@@ -124,7 +125,7 @@ const PendingListOptions: React.FC<Props> = React.memo(
                 fontWeight: '500',
                 textAlign: 'center',
               }}>
-              Decline
+              {i18n.t('global.decline')}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -147,7 +148,7 @@ const PendingListOptions: React.FC<Props> = React.memo(
                 fontWeight: '500',
                 textAlign: 'center',
               }}>
-              Accept and join
+              {i18n.t('lists.invite.accept_and_join')}
             </Text>
           </TouchableOpacity>
         </View>
