@@ -8,6 +8,7 @@ import {
   Alert,
 } from 'react-native'
 import { RouteProp, useTheme } from '@react-navigation/native'
+import i18n from '../../i18n'
 
 import {
   RootStackParamList,
@@ -21,6 +22,8 @@ import { DELETE_LIST_MUTATION } from '../../queries/deleteList'
 import * as DeleteListTypes from '../../queries/__generated__/DeleteList'
 import { INVITE_TO_LIST_MUTATION } from '../../queries/inviteToList'
 import * as InviteToListTypes from '../../queries/__generated__/InviteToList'
+import { LEAVE_LIST_MUTATION } from '../../queries/leaveList'
+import * as LeaveListMutationTypes from '../../queries/__generated__/LeaveList'
 
 import AuthContext from '../../context/AuthContext'
 import ListContext from '../../context/ListContext'
@@ -91,6 +94,18 @@ const ListViewScreen: React.FC<Props> = React.memo(
       })
     }
 
+    const [leaveList] = useMutation<
+      LeaveListMutationTypes.LeaveList,
+      LeaveListMutationTypes.LeaveListVariables
+    >(LEAVE_LIST_MUTATION, {
+      variables: {
+        listId: listParam.id,
+      },
+      onCompleted: () => {
+        navigation.navigate('Lists')
+      },
+    })
+
     React.useLayoutEffect(() => {
       if (shouldDismiss) {
         navigation.setOptions({
@@ -136,7 +151,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
                   paddingVertical: 10,
                   width: 50,
                 }}
-                onPress={() => listActionSheet()}>
+                onPress={() => listCreatorActionSheet()}>
                 <Image
                   style={{
                     justifyContent: 'center',
@@ -152,7 +167,25 @@ const ListViewScreen: React.FC<Props> = React.memo(
             headerTitle: () => (
               <HeaderTitle list={data.list} isCreator={false} />
             ),
-            headerRight: () => <></>,
+            headerRight: () => (
+              <TouchableOpacity
+                style={{
+                  flex: 1,
+                  alignItems: 'center',
+                  paddingHorizontal: 10,
+                  paddingVertical: 10,
+                  width: 50,
+                }}
+                onPress={() => listMemberActionSheet()}>
+                <Image
+                  style={{
+                    justifyContent: 'center',
+                    resizeMode: 'contain',
+                  }}
+                  source={require('../../assets/icons/MenuVertical.png')}
+                />
+              </TouchableOpacity>
+            ),
           })
         }
       }
@@ -175,7 +208,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
       )
     }
 
-    const listActionSheet = () => {
+    const listCreatorActionSheet = () => {
       let options = ['Share list', 'Rename list', 'Delete list', 'Dismiss']
       let renameButtonIndex = 1
       let destructiveButtonIndex = 2
@@ -228,6 +261,37 @@ const ListViewScreen: React.FC<Props> = React.memo(
         },
       )
     }
+
+    const listMemberActionSheet = () => {
+      return ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options: [i18n.t('lists.leave_list'), i18n.t('global.dismiss')],
+          destructiveButtonIndex: 0,
+          cancelButtonIndex: 1,
+        },
+        (buttonIdx) => {
+          if (buttonIdx === 0) {
+            Alert.alert(
+              i18n.t('lists.leave_list_confirm_heading'),
+              i18n.t('lists.leave_list_confirm_body'),
+              [
+                {
+                  text: i18n.t('global.cancel'),
+                  onPress: () => console.log('Cancel pressed...'),
+                  style: 'cancel',
+                },
+                {
+                  text: i18n.t('lists.leave_list_confirm_cta'),
+                  onPress: () => leaveList(),
+                  style: 'destructive',
+                },
+              ],
+            )
+          }
+        },
+      )
+    }
+
     if (loading) return <ActivityIndicator size="large" />
 
     return (

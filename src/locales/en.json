@@ -14,6 +14,10 @@
     "list_details": "List details",
     "name_your_list": "Name your list",
     "after_creating_desc": "After creating this list, you can share it with others and work on it together.",
+    "leave_list": "Leave list",
+    "leave_list_confirm_heading": "Leave List?",
+    "leave_list_confirm_body": "Are you sure you want to leave this list? You will no longer have access to it.",
+    "leave_list_confirm_cta": "Leave List",
     "invite": {
       "body": "You were invited to this list. Would you like to join?",
       "accept_and_join": "Accept and join",
@@ -44,7 +48,8 @@
   "global": {
     "decline": "Decline",
     "cancel": "Cancel",
-    "done": "Done"
+    "done": "Done",
+    "dismiss": "Dismiss"
   },
   "loading": {
     "working_on_it": "Working on it..."
