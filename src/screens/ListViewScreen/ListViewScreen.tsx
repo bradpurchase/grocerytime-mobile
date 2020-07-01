@@ -31,6 +31,7 @@ import { currentUserIsCreator } from '../../services/list'
 
 import TripView from './TripView'
 import HeaderTitle from './HeaderTitle'
+import { t } from 'i18n-js'
 
 interface Props {
   route: RouteProp<RootStackParamList, 'ListView'>
@@ -76,11 +77,11 @@ const ListViewScreen: React.FC<Props> = React.memo(
       onCompleted: (data) => {
         if (data.inviteToList?.email?.length > 0) {
           Alert.alert(
-            'Invite sent!',
-            'An email was just sent to the email address provided with a link to join this list!',
+            i18n.t('lists.invite.invite_sent'),
+            i18n.t('lists.invite.invite_sent_body'),
             [
               {
-                text: 'OK',
+                text: i18n.t('global.ok'),
                 onPress: () => refetch(),
               },
             ],
@@ -90,7 +91,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
     })
     if (inviteToListError) {
       inviteToListError?.graphQLErrors.map(({ message }, i) => {
-        return Alert.alert('Share failed', message)
+        return Alert.alert(i18n.t('lists.errors.share_failed'), message)
       })
     }
 
@@ -194,9 +195,8 @@ const ListViewScreen: React.FC<Props> = React.memo(
     const deleteListConfirmationActionSheet = () => {
       return ActionSheetIOS.showActionSheetWithOptions(
         {
-          message:
-            'Are you sure you want to delete this list and its items? If this list is shared, the other members will be notified. You cannot undo this action.',
-          options: ['Delete', 'Dismiss'],
+          message: i18n.t('lists.delete_list_confirm_body'),
+          options: [i18n.t('global.delete'), i18n.t('global.dismiss')],
           destructiveButtonIndex: 0,
           cancelButtonIndex: 1,
         },
@@ -231,16 +231,16 @@ const ListViewScreen: React.FC<Props> = React.memo(
         (buttonIdx) => {
           if (!atShareLimit && buttonIdx === 0) {
             return Alert.prompt(
-              'Share by invitation',
-              'Enter the email address of the person you want to invite to this list',
+              i18n.t('lists.invite.share_prompt_heading'),
+              i18n.t('lists.invite.share_prompt_body'),
               [
                 {
-                  text: 'Cancel',
+                  text: i18n.t('global.cancel'),
                   onPress: () => console.log('cancel pressed'),
                   style: 'cancel',
                 },
                 {
-                  text: 'Send Invite',
+                  text: t('lists.send_invite'),
                   onPress: (text) =>
                     inviteToList({
                       variables: {

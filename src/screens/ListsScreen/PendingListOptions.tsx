@@ -99,7 +99,7 @@ const PendingListOptions: React.FC<Props> = React.memo(
             lineHeight: 22,
             padding: 20,
           }}>
-          {i18n.t('lists.invite.body')}
+          {i18n.t('lists.invite.join_body')}
         </Text>
         <View
           style={{
