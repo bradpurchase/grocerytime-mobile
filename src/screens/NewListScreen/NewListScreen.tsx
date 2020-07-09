@@ -9,6 +9,7 @@ import {
   Alert,
 } from 'react-native'
 import { useTheme } from '@react-navigation/native'
+
 import i18n from '../../i18n'
 
 import { NewListNavigationProp } from '../../types/Navigation'
@@ -18,7 +19,6 @@ import { CREATE_LIST_MUTATION } from '../../queries/createList'
 import * as CreateListTypes from '../../queries/__generated__/CreateList'
 
 import { getSettingValue } from '../../services/settings'
-import { t } from 'i18n-js'
 
 interface NewListInputSettings {
   autoCapitalize: boolean

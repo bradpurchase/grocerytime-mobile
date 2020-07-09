@@ -5,6 +5,9 @@
     "log_in": "Log in",
     "no_account_yet": "I don't have an account yet!",
     "sign_up": "Sign up",
+    "log_out": "Log Out",
+    "log_out_prompt_heading": "Log Out?",
+    "log_out_prompt_body": "Are you sure you want to log out?",
     "errors": {
       "login_failed": "Login failed"
     }
@@ -13,13 +16,25 @@
     "title": "Lists",
     "list_details": "List details",
     "name_your_list": "Name your list",
+    "list_name": "List name",
     "after_creating_desc": "After creating this list, you can share it with others and work on it together.",
     "delete_list_confirm_body": "Are you sure you want to delete this list and its items? If this list is shared, the other members will be notified. You cannot undo this action.",
     "leave_list": "Leave list",
     "leave_list_confirm_heading": "Leave List?",
     "leave_list_confirm_body": "Are you sure you want to leave this list? You will no longer have access to it.",
     "leave_list_confirm_cta": "Leave List",
+    "people_in_this_list": "People in this list",
+    "shared_with_num": {
+      "zero": "Not shared",
+      "one": "Shared with {{count}} person",
+      "other": "Shared with {{count}} people"
+    },
+    "shared_with_you": "Shared with you",
     "invite": {
+      "share_this_list": "Share this list",
+      "share_after_create_heading": "Next, share this list",
+      "share_after_create_body1": "Tap the button below to share this list. It's as easy as entering the email address for those you want to share this list with.",
+      "share_after_create_body2": "Once shared, you can collaborate on it together and see updates in real time.",
       "share_prompt_heading": "Share by invitation",
       "share_prompt_body": "Enter the email address of the person you want to invite to this list",
       "send_invite": "Send Invite",
@@ -32,7 +47,8 @@
       "decline_confirm_heading": "Decline invite?",
       "decline_confirm_body": "Are you sure you want to decline this list invite? You won't become a member of this list and it will disappear from this screen.",
       "invite_sent": "Invite sent!",
-      "invite_sent_body": "An email was just sent to the email address provided with a link to join this list!"
+      "invite_sent_body": "An email was just sent to the email address provided with a link to join this list!",
+      "invite_sent_status": "invite sent"
     },
     "errors": {
       "share_failed": "Share failed"
@@ -43,6 +59,11 @@
     }
   },
   "items": {
+    "add_an_item": "Add an item...",
+    "delete_item_prompt_heading": "Delete item?",
+    "delete_item_prompt_heading_body": "Are you sure you want to delete this item?",
+    "zero_qty_delete_item_prompt_heading_body": "Setting the quantity to zero will delete the item. Are you sure you want to do this?",
+    "delete_item": "Delete Item",
     "items_completed_num": {
       "zero": "{{numCompleted}} of 0 items",
       "one": "{{numCompleted}} of 1 item",
@@ -52,7 +73,25 @@
       "zero": "All items picked up",
       "one": "{{count}} item to pick up",
       "other": "{{count}} items to pick up"
+    },
+    "empty_state": {
+      "heading": "No items",
+      "body": "Add your first item by typing above."
     }
+  },
+  "trips": {
+    "complete_trip_prompt_heading": "Complete this trip?",
+    "complete_trip_prompt_body": "Done with this trip? We'll create your next trip for you automatically.",
+    "items_remaining_complete_trip_prompt_body": "You still have items remaining in this trip. Would you like to carry the remaining items over to your next grocery trip, or start fresh?",
+    "complete_trip": "Complete trip",
+    "complete_and_copy_items": "Complete and copy items over",
+    "complete_and_start_fresh_trip": "Complete and start fresh trip",
+    "enter_trip_name": "Enter trip name"
+  },
+  "settings": {
+    "editing": "Editing",
+    "auto_capitalize": "Capitalize first letter of each word",
+    "auto_correct": "Use autocorrect"
   },
   "global": {
     "decline": "Decline",
@@ -60,7 +99,8 @@
     "done": "Done",
     "dismiss": "Dismiss",
     "ok": "OK",
-    "delete": "Delete"
+    "delete": "Delete",
+    "creator": "Creator"
   },
   "loading": {
     "working_on_it": "Working on it..."

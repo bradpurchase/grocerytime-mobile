@@ -4,6 +4,8 @@ import { useTheme } from '@react-navigation/native'
 import FastImage from 'react-native-fast-image'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
+import i18n from '../../i18n'
+
 import { useMutation } from '@apollo/react-hooks'
 import { UPDATE_TRIP_MUTATION } from '../../queries/updateTrip'
 import * as UpdateTripTypes from '../../queries/__generated__/UpdateTrip'
@@ -73,22 +75,18 @@ const TripDetails: React.FC = React.memo(() => {
 
   const handleCompleteTripTapped = () => {
     ReactNativeHapticFeedback.trigger('impactLight')
-    let body =
-      'You still have items remaining in this trip. Would you like to carry the remaining items over to your next grocery trip, or start fresh?'
-    if (tripFinished) {
-    }
+    let body = i18n.t('trips.items_remaining_complete_trip_prompt_body')
     let options = [
       {
-        text: 'Cancel',
+        text: i18n.t('global.cancel'),
         onPress: () => console.log('Cancel pressed...'),
         style: 'cancel',
       },
     ]
     if (tripFinished) {
-      body =
-        "Done with this trip? We'll create your next trip for you automatically."
+      body = i18n.t('trips.complete_trip_prompt_body')
       options.push({
-        text: 'Complete trip',
+        text: i18n.t('trips.complete_trip'),
         onPress: () =>
           updateTrip({ variables: { tripId: trip.id, completed: true } }),
         style: 'default',
@@ -96,7 +94,7 @@ const TripDetails: React.FC = React.memo(() => {
     } else {
       options.push(
         {
-          text: 'Complete and copy items over',
+          text: i18n.t('trips.complete_and_copy_items'),
           onPress: () =>
             updateTrip({
               variables: {
@@ -108,14 +106,14 @@ const TripDetails: React.FC = React.memo(() => {
           style: 'default',
         },
         {
-          text: 'Complete and start fresh trip',
+          text: i18n.t('trips.complete_and_start_fresh_trip'),
           onPress: () =>
             updateTrip({ variables: { tripId: trip.id, completed: true } }),
           style: 'default',
         },
       )
     }
-    Alert.alert('Complete this trip?', body, options)
+    Alert.alert(i18n.t('trips.complete_trip_prompt_heading'), body, options)
   }
 
   const handleUpdateTripName = () => {
@@ -150,7 +148,7 @@ const TripDetails: React.FC = React.memo(() => {
           defaultValue={tripName}
           returnKeyType="done"
           clearTextOnFocus
-          placeholder={'Enter trip name'}
+          placeholder={i18n.t('trips.enter_trip_name')}
           onChangeText={(text) => setTripName(text)}
           onSubmitEditing={() => handleUpdateTripName()}
           autoCorrect={settings.autoCorrect ?? false}
@@ -184,10 +182,12 @@ const TripDetails: React.FC = React.memo(() => {
             }}>
             {trip.itemsCount > 0 ? (
               <>
-                {completedItems}/{trip.itemsCount} items
+                {i18n.t('items.items_to_pickup_count', {
+                  count: trip.itemsCount - completedItems,
+                })}
               </>
             ) : (
-              <>No items</>
+              <>{i18n.t('items.empty_state.heading')}</>
             )}
           </Text>
         </TouchableOpacity>

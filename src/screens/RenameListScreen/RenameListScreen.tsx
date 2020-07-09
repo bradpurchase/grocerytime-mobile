@@ -7,19 +7,18 @@ import {
   TextInput,
   Alert,
 } from 'react-native'
-
 import { RouteProp, useTheme } from '@react-navigation/native'
+
+import i18n from '../../i18n'
 
 import { useMutation } from '@apollo/react-hooks'
 import { UPDATE_LIST_MUTATION } from '../../queries/updateList'
 import * as UpdateListTypes from '../../queries/__generated__/UpdateList'
-import { LIST_QUERY } from '../../queries/list'
 
 import {
   RootStackParamList,
   RenameListNavigationProp,
 } from '../../types/Navigation'
-import { List } from '../../types'
 
 import { getSettingValue } from '../../services/settings'
 
@@ -72,7 +71,7 @@ const RenameListScreen: React.FC<Props> = React.memo(
                 fontSize: 16,
                 opacity: nameEmpty ? 0.7 : 1,
               }}>
-              Done
+              {i18n.t('global.done')}
             </Text>
           </TouchableOpacity>
         ),
@@ -94,7 +93,7 @@ const RenameListScreen: React.FC<Props> = React.memo(
       },
     })
     if (error && error.graphQLErrors) {
-      Alert.alert('Oops!', error.graphQLErrors[0].message)
+      Alert.alert(i18n.t('errors.oops'), error.graphQLErrors[0].message)
     }
 
     const getSettings = async () => {
@@ -118,8 +117,8 @@ const RenameListScreen: React.FC<Props> = React.memo(
         <SectionList
           sections={[
             {
-              title: 'List name',
-              data: ['Name your list'],
+              title: i18n.t('lists.list_name'),
+              data: [i18n.t('lists.name_your_list')],
             },
           ]}
           renderSectionHeader={({ section: { title } }) => (

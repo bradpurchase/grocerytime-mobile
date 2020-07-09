@@ -8,6 +8,7 @@ import {
   Alert,
 } from 'react-native'
 import { RouteProp, useTheme } from '@react-navigation/native'
+
 import i18n from '../../i18n'
 
 import {
@@ -31,7 +32,6 @@ import { currentUserIsCreator } from '../../services/list'
 
 import TripView from './TripView'
 import HeaderTitle from './HeaderTitle'
-import { t } from 'i18n-js'
 
 interface Props {
   route: RouteProp<RootStackParamList, 'ListView'>
@@ -240,7 +240,7 @@ const ListViewScreen: React.FC<Props> = React.memo(
                   style: 'cancel',
                 },
                 {
-                  text: t('lists.send_invite'),
+                  text: i18n.t('lists.invite.send_invite'),
                   onPress: (text) =>
                     inviteToList({
                       variables: {

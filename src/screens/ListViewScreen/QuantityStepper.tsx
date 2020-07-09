@@ -3,6 +3,8 @@ import { View, TouchableOpacity, Text, Alert } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
+import i18n from '../../i18n'
+
 import { useMutation } from '@apollo/react-hooks'
 import { UPDATE_ITEM_MUTATION } from '../../queries/updateItem'
 import * as UpdateItemTypes from '../../queries/__generated__/UpdateItem'
@@ -73,16 +75,16 @@ const QuantityStepper: React.FC = React.memo(() => {
       updateItem({ variables: { itemId: id, quantity: newQuantity } })
     } else if (newQuantity === 0) {
       Alert.alert(
-        'Delete item?',
-        'Setting the quantity to zero will delete the item. Are you sure you want to do this?',
+        i18n.t('items.delete_item_prompt_heading'),
+        i18n.t('items.zero_qty_delete_item_prompt_heading_body'),
         [
           {
-            text: 'Cancel',
+            text: i18n.t('global.cancel'),
             onPress: () => console.log('Cancel pressed...'),
             style: 'cancel',
           },
           {
-            text: 'Delete Item',
+            text: i18n.t('items.delete_item'),
             onPress: () => handleDeleteItem(),
             style: 'destructive',
           },

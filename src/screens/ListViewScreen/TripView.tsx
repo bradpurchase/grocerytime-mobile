@@ -2,6 +2,8 @@ import * as React from 'react'
 import { View, RefreshControl } from 'react-native'
 import DraggableFlatList from 'react-native-draggable-flatlist'
 
+import i18n from '../../i18n'
+
 import { useMutation } from '@apollo/react-hooks'
 import { REORDER_ITEM_MUTATION } from '../../queries/reorderItem'
 import { NEW_ITEM_SUBSCRIPTION } from '../../queries/newItem'
@@ -115,8 +117,8 @@ const TripView: React.FC = React.memo(() => {
         contentContainerStyle={{ flexGrow: 1 }}
         ListEmptyComponent={
           <EmptyState
-            title="No items"
-            body="Add your first item by typing above."
+            title={i18n.t('items.empty_state.heading')}
+            body={i18n.t('items.empty_state.body')}
           />
         }
         refreshControl={

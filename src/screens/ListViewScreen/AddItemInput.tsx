@@ -5,6 +5,8 @@ import { useColorScheme } from 'react-native-appearance'
 import 'react-native-get-random-values'
 import { v4 as uuidv4 } from 'uuid'
 
+import i18n from '../../i18n'
+
 import { useMutation } from '@apollo/react-hooks'
 import { LIST_QUERY } from '../../queries/list'
 import { ADD_ITEM_TO_TRIP_MUTATION } from '../../queries/addItemToTrip'
@@ -136,7 +138,7 @@ const AddItemInput: React.FC = React.memo(() => {
           fontSize: 17,
           fontWeight: '500',
         }}
-        placeholder="Add an item..."
+        placeholder={i18n.t('items.add_an_item')}
         placeholderTextColor={colorScheme === 'dark' ? '#ddd' : '#333'}
         returnKeyType="done"
         ref={textInputRef}

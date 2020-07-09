@@ -1,6 +1,7 @@
 import * as React from 'react'
-import { ScrollView, View, TouchableOpacity, Text } from 'react-native'
+import { ScrollView, View, Text } from 'react-native'
 import { List, ListUser } from '../../types'
+import i18n from '../../i18n'
 
 import { useTheme } from '@react-navigation/native'
 
@@ -24,7 +25,7 @@ const ListUsersActionSheet: React.FC<Props> = React.memo(({ list }) => {
             fontWeight: '700',
             textAlign: 'center',
           }}>
-          People in this list
+          {i18n.t('lists.people_in_this_list')}
         </Text>
       </View>
       <ScrollView
@@ -63,7 +64,7 @@ const ListUsersActionSheet: React.FC<Props> = React.memo(({ list }) => {
                   marginLeft: 5,
                   lineHeight: 20,
                 }}>
-                (creator)
+                ({i18n.t('global.creator')})
               </Text>
             )}
             {listUser.email.length > 0 && (
@@ -76,7 +77,7 @@ const ListUsersActionSheet: React.FC<Props> = React.memo(({ list }) => {
                   marginLeft: 5,
                   lineHeight: 20,
                 }}>
-                (invite sent)
+                ({i18n.t('lists.invite.invite_sent_status')})
               </Text>
             )}
           </View>

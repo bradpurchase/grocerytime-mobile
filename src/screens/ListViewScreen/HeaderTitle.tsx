@@ -1,9 +1,11 @@
 import * as React from 'react'
-import { Text, View, TouchableOpacity, Dimensions } from 'react-native'
+import { Text, View, TouchableOpacity } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 import ActionSheet from 'react-native-actions-sheet'
 
-import { List, ListUser } from '../../types'
+import i18n from '../../i18n'
+
+import { List } from '../../types'
 import { listIsShared, listUsersCount } from '../../services/list'
 import ListUsersActionSheet from './ListUsersActionSheet'
 
@@ -46,14 +48,9 @@ const HeaderTitle: React.FC<Props> = React.memo(
                 fontSize: 12,
                 fontWeight: '400',
               }}>
-              Shared with{' '}
-              {isCreator ? (
-                <>
-                  {numShared} {numShared && numShared > 1 ? 'people' : 'person'}
-                </>
-              ) : (
-                <>you</>
-              )}
+              {isCreator
+                ? i18n.t('lists.shared_with_num', { count: numShared })
+                : i18n.t('lists.shared_with_you')}
             </Text>
           </TouchableOpacity>
           <ActionSheet ref={actionSheetRef}>

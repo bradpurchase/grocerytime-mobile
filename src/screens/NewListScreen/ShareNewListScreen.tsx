@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native'
 
+import i18n from '../../i18n'
+
 import { RouteProp, useTheme } from '@react-navigation/native'
 import {
   RootStackParamList,
@@ -65,7 +67,7 @@ const ShareNewListScreen: React.FC<Props> = React.memo(
             fontWeight: '700',
             marginBottom: 30,
           }}>
-          Next, share this list
+          {i18n.t('lists.invite.share_after_create_heading')}
         </Text>
         <Text
           style={{
@@ -75,8 +77,7 @@ const ShareNewListScreen: React.FC<Props> = React.memo(
             lineHeight: 22,
             marginBottom: 30,
           }}>
-          Tap the button below to share this list. It's as easy as entering the
-          email address for those you want to share this list with.
+          {i18n.t('lists.invite.share_after_create_body1')}
         </Text>
         <Text
           style={{
@@ -86,12 +87,11 @@ const ShareNewListScreen: React.FC<Props> = React.memo(
             lineHeight: 22,
             marginBottom: 30,
           }}>
-          Once shared, you can collaborate on it together and see updates in
-          real time.
+          {i18n.t('lists.invite.share_after_create_body2')}
         </Text>
         <View style={{ marginTop: 10 }}>
           <Button
-            label="Share this List"
+            label={i18n.t('lists.invite.share_this_list')}
             onPress={() => shareActionSheet(list)}
           />
         </View>

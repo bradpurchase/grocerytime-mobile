@@ -2,8 +2,8 @@ import * as React from 'react'
 import { View, Text, TouchableOpacity, SectionList, Alert } from 'react-native'
 import { useTheme } from '@react-navigation/native'
 
+import i18n from '../../i18n'
 import { SettingsNavigationProp } from '../../types/Navigation'
-
 import AuthContext from '../../context/AuthContext'
 
 import SettingsCell from './SettingsCell'
@@ -18,17 +18,21 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
   const authContext = React.useContext(AuthContext)
 
   const logoutAlert = () =>
-    Alert.alert('Log out?', 'Are you sure you want to log out?', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel pressed'),
-        style: 'cancel',
-      },
-      {
-        text: 'Log Out',
-        onPress: () => handleLogout(),
-      },
-    ])
+    Alert.alert(
+      i18n.t('auth.log_out_prompt_heading'),
+      i18n.t('auth.log_out_prompt_body'),
+      [
+        {
+          text: i18n.t('global.cancel'),
+          onPress: () => console.log('Cancel pressed'),
+          style: 'cancel',
+        },
+        {
+          text: i18n.t('auth.log_out'),
+          onPress: () => handleLogout(),
+        },
+      ],
+    )
 
   const handleLogout = () => {
     authContext.logout()
@@ -47,16 +51,16 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
     //   ],
     // },
     {
-      title: 'Editing',
+      title: i18n.t('settings.editing'),
       data: [
         {
           key: 'settings.autoCapitalize',
-          name: 'Capitalize first letter of each word',
+          name: i18n.t('settings.auto_capitalize'),
           type: 'switch',
         },
         {
           key: 'settings.autoCorrect',
-          name: 'Use autocorrect',
+          name: i18n.t('settings.auto_correct'),
           type: 'switch',
         },
       ],
@@ -113,7 +117,7 @@ const SettingsScreen: React.FC<Props> = React.memo(({ navigation }) => {
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                 }}>
-                Log Out
+                {i18n.t('auth.log_out')}
               </Text>
             </TouchableOpacity>
             <Text

@@ -4,6 +4,8 @@ import { useTheme } from '@react-navigation/native'
 import FastImage from 'react-native-fast-image'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
+import i18n from '../../i18n'
+
 import { Item, List } from '../../types'
 import Checkbox from './Checkbox'
 import QuantityStepper from './QuantityStepper'
@@ -99,18 +101,22 @@ const ItemCell: React.FC<Props> = React.memo(({ item, drag }) => {
 
   const handleDeleteButtonTapped = () => {
     ReactNativeHapticFeedback.trigger('impactLight')
-    Alert.alert('Delete item?', 'Are you sure you want to delete this item?', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel pressed...'),
-        style: 'cancel',
-      },
-      {
-        text: 'Delete Item',
-        onPress: () => handleDeleteItem(),
-        style: 'destructive',
-      },
-    ])
+    Alert.alert(
+      i18n.t('items.delete_item_prompt_heading'),
+      i18n.t('items.delete_item_prompt_heading_body'),
+      [
+        {
+          text: i18n.t('global.cancel'),
+          onPress: () => console.log('Cancel pressed...'),
+          style: 'cancel',
+        },
+        {
+          text: i18n.t('items.delete_item'),
+          onPress: () => handleDeleteItem(),
+          style: 'destructive',
+        },
+      ],
+    )
   }
 
   const handleDeleteItem = () => {
