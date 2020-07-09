@@ -162,6 +162,7 @@ const TripDetails: React.FC = React.memo(() => {
           }}
           onPress={() => setEditingMode(!editingMode)}>
           <Text
+            adjustsFontSizeToFit
             numberOfLines={1}
             style={{
               color: colors.text,
