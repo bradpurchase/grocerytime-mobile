@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ScrollView, View, Text, TouchableOpacity } from 'react-native'
+import { ScrollView, View, Text, TouchableOpacity, Alert } from 'react-native'
 
 import i18n from '../../i18n'
 
@@ -8,6 +8,10 @@ import {
   RootStackParamList,
   ShareListNavigationProp,
 } from '../../types/Navigation'
+
+import { useMutation } from '@apollo/react-hooks'
+import { INVITE_TO_LIST_MUTATION } from '../../queries/inviteToList'
+import * as InviteToListTypes from '../../queries/__generated__/InviteToList'
 
 import { List } from '../../types/List'
 import { shareActionSheet } from '../../helpers/ListActions'
@@ -24,6 +28,32 @@ const ShareNewListScreen: React.FC<Props> = React.memo(
     const { colors } = useTheme()
 
     const list: List = route.params.list
+
+    //TODO dry this up - this code is shared with ListViewScreen
+    const [inviteToList, { error: inviteToListError }] = useMutation<
+      InviteToListTypes.InviteToList,
+      InviteToListTypes.InviteToListVariables
+    >(INVITE_TO_LIST_MUTATION, {
+      onCompleted: (data) => {
+        if (data.inviteToList?.email?.length > 0) {
+          Alert.alert(
+            i18n.t('lists.invite.invite_sent'),
+            i18n.t('lists.invite.invite_sent_body'),
+            [
+              {
+                text: i18n.t('global.ok'),
+                onPress: () => console.log('invite sent alert dismissed'),
+              },
+            ],
+          )
+        }
+      },
+    })
+    if (inviteToListError) {
+      inviteToListError?.graphQLErrors.map(({ message }, i) => {
+        return Alert.alert(i18n.t('lists.errors.share_failed'), message)
+      })
+    }
 
     React.useLayoutEffect(() => {
       navigation.setOptions({
@@ -92,7 +122,29 @@ const ShareNewListScreen: React.FC<Props> = React.memo(
         <View style={{ marginTop: 10 }}>
           <Button
             label={i18n.t('lists.invite.share_this_list')}
-            onPress={() => shareActionSheet(list)}
+            onPress={() => {
+              return Alert.prompt(
+                i18n.t('lists.invite.share_prompt_heading'),
+                i18n.t('lists.invite.share_prompt_body'),
+                [
+                  {
+                    text: i18n.t('global.cancel'),
+                    onPress: () => console.log('cancel pressed'),
+                    style: 'cancel',
+                  },
+                  {
+                    text: i18n.t('lists.invite.send_invite'),
+                    onPress: (text) =>
+                      inviteToList({
+                        variables: {
+                          listId: list.id,
+                          email: text,
+                        },
+                      }),
+                  },
+                ],
+              )
+            }}
           />
         </View>
       </ScrollView>

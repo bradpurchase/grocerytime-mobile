@@ -97,9 +97,15 @@ const ListCell: React.FC<Props> = React.memo(
                 flexDirection: 'column',
                 marginTop: 8,
               }}>
-              {i18n.t('items.items_to_pickup_count', {
-                count: list.trip.items.length - completedItems,
-              })}
+              {list.trip.items.length > 0 ? (
+                <>
+                  {i18n.t('items.items_to_pickup_count', {
+                    count: list.trip.items.length - completedItems,
+                  })}
+                </>
+              ) : (
+                <>{i18n.t('items.empty_state.heading')}</>
+              )}
             </Text>
           </View>
         </TouchableOpacity>

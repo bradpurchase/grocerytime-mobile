@@ -33,8 +33,8 @@
     "invite": {
       "share_this_list": "Share this list",
       "share_after_create_heading": "Next, share this list",
-      "share_after_create_body1": "Tap the button below to share this list. It's as easy as entering the email address for those you want to share this list with.",
-      "share_after_create_body2": "Once shared, you can collaborate on it together and see updates in real time.",
+      "share_after_create_body1": "Tap the button below to share this list. It's as easy as entering the email address for the person you want to share this list with. Feel free to invite a few people, if you'd like!",
+      "share_after_create_body2": "Once your list is shared, you can collaborate on it together and see updates in real time.",
       "share_prompt_heading": "Share by invitation",
       "share_prompt_body": "Enter the email address of the person you want to invite to this list",
       "send_invite": "Send Invite",
